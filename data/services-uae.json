@@ -1,0 +1,221 @@
+[
+  {
+    "slug": "accounting-bookkeeping-uae",
+    "title": "Accounting and Bookkeeping (UAE)",
+    "overview": "Professional maintenance of financial records in compliance with UAE Cabinet Decisions and Federal Decree-Laws. We ensure that your business transactions are recorded systematically to support management decisions and meet regulatory scrutiny.",
+    "who_needs_this": "Any taxable person or registered business in the UAE required to maintain proper books of account as per the UAE Commercial Companies Law and Tax Procedures Law.",
+    "scope_of_work": [
+      "Recording of daily sales, purchases, receipts, and payments",
+      "Bank account and credit card reconciliations",
+      "Maintenance of general ledger, accounts receivable, and accounts payable",
+      "Fixed asset register maintenance",
+      "Preparation of monthly or quarterly financial statements (Balance Sheet, Profit & Loss)"
+    ],
+    "process": [
+      "Data Collection: Gathering invoices, bank statements, and expense receipts via secure digital channels.",
+      "Data Entry & Reconciliation: Categorization of transactions and matching with bank statements.",
+      "Review & Adjustments: Reviewing ledgers for accruals, prepayments, and regulatory tax compliance.",
+      "Reporting: Finalizing the trial balance and generating management reports."
+    ],
+    "deliverables": [
+      "Monthly Balance Sheet & Income Statement",
+      "Bank Reconciliation Reports",
+      "Aged Receivables & Payables Ledger",
+      "General Ledger export for audit trail"
+    ],
+    "faq": [
+      {
+        "question": "Is it mandatory to maintain accounting records in the UAE?",
+        "answer": "Yes. Under the UAE Commercial Companies Law and Federal Decree-Law on Tax Procedures, all businesses must keep proper books of accounts for at least 5 years."
+      },
+      {
+        "question": "Can the accounting records be kept in any language?",
+        "answer": "Tax records must be maintained in Arabic or English. We maintain all records in English, structured in accordance with International Financial Reporting Standards (IFRS)."
+      }
+    ],
+    "meta_title": "Accounting & Bookkeeping Services UAE | Joyce J Charuvila & Associates",
+    "meta_description": "Professional IFRS-compliant accounting and bookkeeping services for UAE businesses. Systematic recording, bank reconciliation, and management reporting."
+  },
+  {
+    "slug": "audit-support",
+    "title": "Audit Support",
+    "overview": "Assisting businesses in preparing for statutory, internal, or tax audits. We organize financial records, verify supporting documents, and coordinate with external auditors to ensure a smooth audit process.",
+    "who_needs_this": "UAE-based businesses required to submit audited financial statements to free zone authorities, banks, or federal departments.",
+    "scope_of_work": [
+      "Preparation of audit schedules and working papers",
+      "Reconciliation of major balance sheet accounts (fixed assets, inventory, intercompany)",
+      "Liaison with external auditors to address queries and clarify accounting treatments",
+      "Verification of internal controls and record completeness prior to audit start"
+    ],
+    "process": [
+      "Pre-Audit Review: Reviewing existing ledgers and identifying discrepancies or missing documentation.",
+      "Schedule Preparation: Compiling depreciation schedules, inventory listings, and confirmation letters.",
+      "Auditor Liaison: Managing communications, delivering files, and resolving audit notes.",
+      "Audit Closing: Implementing adjustments proposed by auditors and finalizing statements."
+    ],
+    "deliverables": [
+      "Clean Audit File ready for external auditors",
+      "Reconciled Balance Sheet Schedules",
+      "Representation letters and verification logs",
+      "Finalized draft financial statements"
+    ],
+    "faq": [
+      {
+        "question": "Do free zones require audited financial statements?",
+        "answer": "Yes, most UAE Free Zones (such as DMCC, DAFZA, JAFSA) require companies to submit their audited financial statements annually within a specified timeframe."
+      },
+      {
+        "question": "What is the difference between accounting and audit support?",
+        "answer": "Accounting is the day-to-day recording of transactions. Audit support is the specialized preparation and collation of evidence, reconciliations, and disclosures to satisfy external auditors."
+      }
+    ],
+    "meta_title": "Audit Support Services in UAE | Joyce J Charuvila & Associates",
+    "meta_description": "Prepare your financial records for external audits. We organize schedules, coordinate with auditors, and resolve complex accounting disclosures."
+  },
+  {
+    "slug": "vat-registration-deregistration",
+    "title": "VAT Registration and Deregistration",
+    "overview": "Professional advisory and submission of applications for Value Added Tax (VAT) registration or deregistration with the Federal Tax Authority (FTA) in the UAE.",
+    "who_needs_this": "Businesses whose taxable supplies and imports exceed the mandatory threshold of AED 375,000 (registration) or businesses closing down or no longer making taxable supplies (deregistration).",
+    "scope_of_work": [
+      "Assessment of VAT registration liability (mandatory vs. voluntary thresholds)",
+      "Review of corporate documents, trade licenses, and financial calculations",
+      "Preparation and filing of the VAT registration application on the FTA EmaraTax portal",
+      "Responding to FTA clarification requests",
+      "Preparation and filing of VAT deregistration applications when applicable"
+    ],
+    "process": [
+      "Threshold Evaluation: Factual review of historical sales and 30-day projections.",
+      "Document Preparation: Compiling passport copies, trade licenses, and financial turnover letters signed by management.",
+      "Portal Submission: Drafting and submitting application forms on the FTA EmaraTax platform.",
+      "Clarification Handling: Providing any additional data requested by the tax officer."
+    ],
+    "deliverables": [
+      "VAT Registration Certificate (with Tax Registration Number - TRN)",
+      "FTA Approval confirmation",
+      "Deregistration certificate (if applicable)"
+    ],
+    "faq": [
+      {
+        "question": "What is the voluntary VAT registration threshold in the UAE?",
+        "answer": "The voluntary VAT registration threshold is AED 187,500, allowing start-ups and small businesses to register to claim input VAT credit."
+      },
+      {
+        "question": "What is the penalty for late VAT registration?",
+        "answer": "The administrative penalty for failing to submit a registration application within the timeframe specified by tax law is AED 10,000."
+      }
+    ],
+    "meta_title": "UAE VAT Registration & Deregistration | Joyce J Charuvila & Associates",
+    "meta_description": "Structured assistance for UAE VAT registration and deregistration on the EmaraTax portal. Stay compliant and avoid late registration penalties."
+  },
+  {
+    "slug": "vat-filing",
+    "title": "VAT Filing",
+    "overview": "Reviewing transactions, compiling tax figures, and preparing VAT returns for filing with the Federal Tax Authority. We ensure correct treatment of standard-rated, zero-rated, and exempt transactions.",
+    "who_needs_this": "All businesses registered for VAT in the UAE, required to submit VAT returns on a monthly or quarterly basis.",
+    "scope_of_work": [
+      "Review of sales and purchase invoices for VAT compliance",
+      "Calculation of Output VAT and recoverable Input VAT",
+      "Review of Import VAT and Reverse Charge Mechanism (RCM) transactions",
+      "Preparation of the VAT return form (VAT201)",
+      "Submission of returns via the FTA portal and payment advice"
+    ],
+    "process": [
+      "Data Collation: Compiling tax invoice logs and export documentation.",
+      "Compliance Audit: Reviewing sample tax invoices to verify legal elements like TRN, tax amounts, and format.",
+      "Return Preparation: Drafting the VAT201 return and reviewing the Net VAT Payable/Refundable.",
+      "Submission: Filing the approved return on the FTA portal and issuing payment instructions."
+    ],
+    "deliverables": [
+      "Completed VAT Return Draft (Form VAT201)",
+      "Detailed VAT Calculation Sheet",
+      "Filing Confirmation receipt from FTA",
+      "Payment guidelines and instructions"
+    ],
+    "faq": [
+      {
+        "question": "What is the standard VAT rate in the UAE?",
+        "answer": "The standard VAT rate is 5%, which applies to most goods and services, with certain items zero-rated (like international transport) or exempt (like residential rent)."
+      },
+      {
+        "question": "How often do I need to file VAT returns?",
+        "answer": "The tax period is assigned by the FTA (usually quarterly or monthly). Returns must be filed and payment cleared by the 28th day of the month following the end of the tax period."
+      }
+    ],
+    "meta_title": "UAE VAT Return Filing Services | Joyce J Charuvila & Associates",
+    "meta_description": "Accurate calculation and filing of UAE VAT201 returns. Avoid penalties and optimize input tax recovery under FTA guidelines."
+  },
+  {
+    "slug": "corporate-tax-registration",
+    "title": "Corporate Tax Registration",
+    "overview": "Professional guidance and application filing for Corporate Tax registration in the UAE, in accordance with Federal Decree-Law No. 47 of 2022. We ensure your business is correctly set up under the new tax regime.",
+    "who_needs_this": "All UAE judicial persons (including Free Zone companies) and individual businesses with taxable income exceeding AED 1 million.",
+    "scope_of_work": [
+      "Assessment of tax residency and permanent establishment status",
+      "Review of corporate structure and ownership records",
+      "Compilation and verification of required KYC and legal documents",
+      "Submission of the Corporate Tax registration application on the EmaraTax portal",
+      "Management of follow-up queries from the FTA"
+    ],
+    "process": [
+      "Analysis: Evaluation of the entity type, free zone category, and registration deadlines.",
+      "Document Prep: Gathering trade licenses, articles of association, and authorized signatory documentation.",
+      "Submission: Filling out the application and uploading PDFs on the EmaraTax platform.",
+      "Follow-up: Responding to tax authority requests to obtain the Corporate Tax Registration Number (CTRN)."
+    ],
+    "deliverables": [
+      "Corporate Tax Registration Number (CTRN)",
+      "FTA Approval confirmation",
+      "Compliance registration records"
+    ],
+    "faq": [
+      {
+        "question": "When must UAE businesses register for Corporate Tax?",
+        "answer": "The FTA has defined specific registration deadlines based on the month of trade license issuance. Failing to register by the deadline results in a penalty of AED 10,000."
+      },
+      {
+        "question": "Are Free Zone companies exempt from Corporate Tax registration?",
+        "answer": "No. All Free Zone entities must register for Corporate Tax, even if they qualify for a 0% tax rate as a Qualifying Free Zone Person."
+      }
+    ],
+    "meta_title": "UAE Corporate Tax Registration | Joyce J Charuvila & Associates",
+    "meta_description": "Register your UAE business for Corporate Tax under Federal Decree-Law No. 47. Timely filing on EmaraTax to avoid penalties."
+  },
+  {
+    "slug": "corporate-tax-filing",
+    "title": "Corporate Tax Filing",
+    "overview": "Calculation of corporate taxable income, accounting adjustments, transfer pricing checks, and filing of the annual Corporate Tax return with the FTA.",
+    "who_needs_this": "All UAE companies and taxable businesses subject to the 9% standard corporate tax rate or qualifying for free zone incentives.",
+    "scope_of_work": [
+      "Adjustment of accounting profit to taxable profit (depreciation, non-deductible expenses)",
+      "Analysis of qualifying free zone income and transactions",
+      "Verification of compliance with transfer pricing regulations (arms-length principle)",
+      "Preparation of Corporate Tax computations",
+      "Filing the annual Corporate Tax return on the FTA portal"
+    ],
+    "process": [
+      "Financial Review: Reviewing audited financial statements and general ledger entries.",
+      "Tax Reconciliation: Making statutory adjustments (e.g. entertainment expenses, director fees).",
+      "Filing Draft: Preparing the tax computation sheets and obtaining client authorization.",
+      "Submission: Filing the return and generating payment reference numbers."
+    ],
+    "deliverables": [
+      "Taxable Income Computation Sheets",
+      "Corporate Tax Return Draft",
+      "Filing Confirmation receipt from the FTA",
+      "Tax payment advice documentation"
+    ],
+    "faq": [
+      {
+        "question": "What is the corporate tax rate in the UAE?",
+        "answer": "The standard rate is 9% on taxable income exceeding AED 375,000. Taxable income below this threshold is subject to a 0% rate."
+      },
+      {
+        "question": "What is the deadline for filing the Corporate Tax return?",
+        "answer": "The return must be filed and any tax due paid within 9 months from the end of the relevant tax period (financial year)."
+      }
+    ],
+    "meta_title": "UAE Corporate Tax Return Filing | Joyce J Charuvila & Associates",
+    "meta_description": "Annual Corporate Tax calculation, statutory adjustments, and return filing in the UAE. Maintain compliance with the 9% tax regime."
+  }
+]

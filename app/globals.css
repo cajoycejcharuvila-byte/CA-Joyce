@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+/* Disable dark mode styles completely by mapping the dark variant to an unused selector */
+@custom-variant dark (&:where(.never-match-dark, .never-match-dark *));
+
+@theme {
+  --font-display: var(--font-display), "Cormorant Garamond", serif;
+  --font-sans: var(--font-body), "Inter", sans-serif;
+  --font-mono: var(--font-mono), "IBM Plex Sans", monospace;
+
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-border: var(--brand-border);
+  --color-brand-divider: var(--brand-divider);
+  --color-brand-glass: var(--brand-glass);
+
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-3xl: 32px;
+
+  --shadow-soft: 0 8px 30px rgba(15, 23, 42, 0.08);
+  --shadow-glass: 0 20px 60px rgba(15, 23, 42, 0.10);
+}
+
+:root {
+  --background: #FAFAF8;
+  --foreground: #0F172A;
+  
+  --brand-bg: #FAFAF8;
+  --brand-dark: #0A0F1C;
+  --brand-primary: #0F172A;
+  --brand-secondary: #475569;
+  --brand-accent: #1B5283;
+  --brand-border: rgba(15, 23, 42, 0.08);
+  --brand-divider: rgba(15, 23, 42, 0.06);
+  --brand-glass: rgba(255, 255, 255, 0.65);
+  
+  scroll-behavior: auto; /* Managed by Lenis smooth scroll */
+  color-scheme: light; /* Lock user-agent style overrides to light mode */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-divider);
+  border-radius: 5px;
+  border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-secondary);
+}
+
+/* Subtle animated grain background overlay */
+.grain-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.grain-bg::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 1;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* Hide scrollbar for snapping carousel container */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Lens Smooth Scroll helper */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overflow: clip;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Hardened performance: Disable animations for prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* CSS-First Responsive Reset Toggles for Mobile (<768px) */
+@media (max-width: 768px) {
+  /* Disable transitions and hover animations under 768px */
+  *, *::before, *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+  .floating-card-mobile-reset {
+    transform: none !important;
+  }
+  .parallax-image-mobile-reset {
+    transform: none !important;
+    height: 100% !important;
+    top: 0% !important;
+  }
+  .reveal-text-mobile-reset {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
+
+/* Clamp-based responsive heading typography */
+h1 {
+  font-size: clamp(1.75rem, 5vw + 0.5rem, 4.5rem) !important;
+  line-height: 1.1 !important;
+}
+h2 {
+  font-size: clamp(1.4rem, 3.5vw + 0.4rem, 3rem) !important;
+  line-height: 1.15 !important;
+}
+h3 {
+  font-size: clamp(1.2rem, 2vw + 0.3rem, 2rem) !important;
+  line-height: 1.2 !important;
+}
+
+/* Enforce minimum body text size */
+p {
+  font-size: max(14px, 0.875rem);
+}
+
+/* CSS-First Media Query Smooth Scroll Control */
+:root {
+  --smooth-scroll-disabled: false;
+}
+@media (max-width: 768px) {
+  :root {
+    --smooth-scroll-disabled: true;
+  }
+}

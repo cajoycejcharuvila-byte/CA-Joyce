@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Trading",
+    "description": "Inventory cost control, cross-border shipping document audits, and custom duties compliance."
+  },
+  {
+    "name": "Retail",
+    "description": "Point-of-Sale (POS) reconciliations, cash management, GST/VAT input tax matching, and retail billing audits."
+  },
+  {
+    "name": "Construction",
+    "description": "Project-based cost accounting, tax deduction at source (TDS) on contracts, and material cost audits."
+  },
+  {
+    "name": "Manufacturing",
+    "description": "Cost sheet analysis, factory overhead allocations, inventory audits, and manufacturing GST compliance."
+  },
+  {
+    "name": "Healthcare",
+    "description": "Hospital billing compliance, medical equipment asset management, and doctor professional fee accounts."
+  },
+  {
+    "name": "Hospitality",
+    "description": "Service tax history reviews, luxury tax records compliance, daily cash/card audit trails, and supplier audits."
+  },
+  {
+    "name": "Small Businesses",
+    "description": "Simplified accounting systems, monthly statutory compliance, tax planning, and loan feasibility assistance."
+  },
+  {
+    "name": "Startups",
+    "description": "Business structure advisory, initial registration (GST/IE code), projected cash flow sheets, and equity valuation."
+  }
+]

@@ -1,0 +1,368 @@
+[
+  {
+    "slug": "accounting-bookkeeping-india",
+    "title": "Accounting and Bookkeeping (India)",
+    "overview": "Maintenance of primary books of accounts in compliance with the Companies Act 2013, Indian Accounting Standards (Ind AS), and Income Tax rules. We record transactions systematically to build transparent financial trails.",
+    "who_needs_this": "Proprietorships, partnerships, LLPs, and private limited companies operating in India that need organized books of account.",
+    "scope_of_work": [
+      "Recording of cash, bank, purchase, and sales transactions",
+      "Maintenance of sales ledger and purchase ledger",
+      "Reconciliation of bank statements, GST ledgers, and Form 26AS/AIS",
+      "Fixed asset depreciation calculations under Companies Act and Income Tax Act",
+      "Preparation of trial balance and balance sheet schedules"
+    ],
+    "process": [
+      "Document Intake: Collecting digital copies of bank statements, tax invoices, and vouchers.",
+      "Bookkeeping: Categorizing expenses and receipts in accounting software (e.g. Tally or Zoho Books).",
+      "Tax Reconciliation: Cross-referencing purchase registers with GSTR-2B monthly.",
+      "Review & Reports: Preparing financial drafts and management accounts."
+    ],
+    "deliverables": [
+      "Monthly/Quarterly Profit & Loss Account and Balance Sheet",
+      "Bank Reconciliation Statement (BRS)",
+      "General Ledgers and Sub-Ledgers",
+      "GST input tax credit matching sheet"
+    ],
+    "faq": [
+      {
+        "question": "Is it mandatory for a partnership firm to keep accounts?",
+        "answer": "Yes, if the business sales exceed specified thresholds under Section 44AA of the Income Tax Act, maintaining books of account is mandatory."
+      },
+      {
+        "question": "What is GSTR-2B reconciliation?",
+        "answer": "It is the process of matching purchases entered in your books with GSTR-2B (generated from suppliers' filings) to ensure input tax credit (ITC) is claimed correctly."
+      }
+    ],
+    "meta_title": "Accounting & Bookkeeping Services India | Joyce J Charuvila & Associates",
+    "meta_description": "Accurate accounting and bookkeeping in India under Companies Act and Tax guidelines. Monthly reporting, BRS, and GST reconciliation."
+  },
+  {
+    "slug": "statutory-audit",
+    "title": "Statutory Audit",
+    "overview": "Independent evaluation of an entity's financial statements to express an opinion on whether they present a true and fair view of its financial position, in accordance with Indian Accounting Standards and Companies Act 2013 requirements.",
+    "who_needs_this": "All registered Private Limited Companies, Public Limited Companies, and LLPs meeting statutory thresholds in India.",
+    "scope_of_work": [
+      "Review of internal control systems and financial reporting practices",
+      "Verification of transactions, vouchers, bank balances, and physical assets",
+      "Assessing compliance with Accounting Standards and CARO (Companies Auditor's Report Order)",
+      "Drafting independent auditor reports and management representation letters",
+      "Assistance with e-filing of audited financial statements (Form AOC-4)"
+    ],
+    "process": [
+      "Planning: Formulating an audit plan, setting materiality thresholds, and performing risk assessment.",
+      "Fieldwork: Testing transaction samples, verifying bank balances, and checking ledger compliance.",
+      "Review: Discussing audit findings, adjustments, and accounting estimates with management.",
+      "Reporting: Issuing the independent auditor's report containing our opinion."
+    ],
+    "deliverables": [
+      "Independent Auditor's Report",
+      "Audited Financial Statements (Balance Sheet, P&L, Notes to Accounts)",
+      "CARO disclosure report (if applicable)",
+      "Management Letter highlighting control weaknesses"
+    ],
+    "faq": [
+      {
+        "question": "Is statutory audit mandatory for small private limited companies?",
+        "answer": "Yes, statutory audit is mandatory for all registered companies in India, regardless of their turnover or capital."
+      },
+      {
+        "question": "What is the penalty for not filing audited financial statements on time?",
+        "answer": "Late filing of AOC-4 attracts daily penalties and can lead to prosecution of the directors under the Companies Act."
+      }
+    ],
+    "meta_title": "Statutory Audit Services in India | Joyce J Charuvila & Associates",
+    "meta_description": "Statutory audit services for private and public companies in India. Independent evaluation of financial accounts under Companies Act 2013."
+  },
+  {
+    "slug": "bank-concurrent-audit",
+    "title": "Bank Concurrent Audit",
+    "overview": "Real-time, continuous examination of bank transactions to detect discrepancies, ensure compliance with Reserve Bank of India (RBI) guidelines, and verify adherence to internal credit controls.",
+    "who_needs_this": "Public and private sector bank branches in India mandated by RBI to undergo concurrent audit reviews.",
+    "scope_of_work": [
+      "Daily audit of cash transactions, clearing, and demand drafts",
+      "Verification of new loan approvals, documentation, and securities valuation",
+      "Review of Non-Performing Asset (NPA) classification and recovery actions",
+      "Verification of compliance with KYC and Anti-Money Laundering (AML) standards",
+      "Review of treasury operations and foreign exchange transactions at the branch"
+    ],
+    "process": [
+      "Daily/Weekly Checklist: Reviewing daily transaction logs and credit accounts.",
+      "Documentation Audit: Verifying charge creation and checking security registrations.",
+      "NPA Tracking: Monitoring irregular accounts to prevent slippage into NPAs.",
+      "Monthly Reporting: Compiling concurrent audit findings and submitting to bank regional offices."
+    ],
+    "deliverables": [
+      "Monthly/Quarterly Concurrent Audit Report",
+      "Early warning signals memo for high-risk accounts",
+      "Compliance verification certificate",
+      "KYC discrepancy logs"
+    ],
+    "faq": [
+      {
+        "question": "What is a concurrent audit in banking?",
+        "answer": "It is a systematic and timely examination of financial transactions at bank branches on a daily or concurrent basis, minimizing the gap between transaction occurrence and audit review."
+      },
+      {
+        "question": "Who appoints the concurrent auditor?",
+        "answer": "Concurrent auditors are appointed by the bank's head office or regional management from empanelled Chartered Accountant firms."
+      }
+    ],
+    "meta_title": "Bank Concurrent Audit Services | Joyce J Charuvila & Associates",
+    "meta_description": "Continuous, real-time audit reviews of bank branches. Ensuring compliance with RBI directives, credit guidelines, and KYC rules."
+  },
+  {
+    "slug": "gst-registration-filing",
+    "title": "GST Registration and Filing",
+    "overview": "Assistance with GST registration, monthly/quarterly tax calculations, input tax credit (ITC) reconciliation, and return filing with the GST Department.",
+    "who_needs_this": "Businesses and service providers with annual turnover exceeding the threshold limit (INR 40 Lakhs for goods, INR 20 Lakhs for services in Kerala), or those engaged in interstate sales.",
+    "scope_of_work": [
+      "Application for GST registration and amendment filings",
+      "Review of outbound tax invoices and inbound purchase registers",
+      "Monthly reconciliation of GSTR-2B with books of account to prevent ITC leakage",
+      "Filing of monthly/quarterly returns (GSTR-1, GSTR-3B)",
+      "Preparation and filing of GST Annual Returns (GSTR-9) and Reconciliation Statements (GSTR-9C)"
+    ],
+    "process": [
+      "Reconciliation: Pulling GST portal data and comparing invoice records.",
+      "Tax Computation: Offsetting liability with available ITC and preparing cash ledger adjustments.",
+      "Draft Review: Sending tax numbers to client for confirmation.",
+      "Return Submission: E-filing on GSTN portal and tracking payments."
+    ],
+    "deliverables": [
+      "Filed GST Return receipts (GSTR-1, GSTR-3B)",
+      "Monthly ITC Reconciliation sheets",
+      "GST payment challans",
+      "GSTR-9 & 9C filings (annually)"
+    ],
+    "faq": [
+      {
+        "question": "What is GSTR-9C?",
+        "answer": "GSTR-9C is a reconciliation statement between the audited annual financial statements and the GST annual return GSTR-9, required for businesses with turnover exceeding a specific threshold."
+      },
+      {
+        "question": "What happens if I claim excess ITC?",
+        "answer": "Claiming excess or ineligible ITC attracts recovery proceedings, interest at 18%, and potential penalties from the GST department."
+      }
+    ],
+    "meta_title": "GST Registration & Filing Services India | Joyce J Charuvila & Associates",
+    "meta_description": "GST compliance services in India. Monthly GSTR-1 and GSTR-3B filings, annual GSTR-9 returns, and rigorous input tax credit reconciliation."
+  },
+  {
+    "slug": "income-tax-audit-return-filing",
+    "title": "Income Tax Audit & Return Filing",
+    "overview": "Professional calculation of total taxable income, deductions, and filing of Income Tax Returns (ITR) for individuals, partnership firms, and companies.",
+    "who_needs_this": "Any individual with income exceeding basic exemption limits, and all partnership firms, LLPs, and companies operating in India.",
+    "scope_of_work": [
+      "Analysis of income under five heads: Salary, House Property, Business/Profession, Capital Gains, and Other Sources",
+      "Review of tax-saving investments and deduction eligibility (under Chapter VI-A)",
+      "Verification of advance tax liability and TDS/TCS credits via Form 26AS/AIS",
+      "Drafting and e-filing of relevant ITR forms (ITR-1 to ITR-6)",
+      "Assistance in responding to income tax notices and checking refund statuses"
+    ],
+    "process": [
+      "Tax Review: Collecting Form 16, bank interest statements, and capital gains logs.",
+      "AIS Verification: Reconciling client data with the Annual Information Statement (AIS).",
+      "Computation: Calculating tax liability under old vs. new tax regimes to choose the optimal path.",
+      "Filing: E-filing the ITR on the Income Tax e-filing portal and verifying via e-verification."
+    ],
+    "deliverables": [
+      "Tax Computation Statement",
+      "Income Tax Return Acknowledgement (ITR-V)",
+      "Advance tax payment schedules",
+      "Advice on response to tax notices"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between old and new tax regimes?",
+        "answer": "The new regime offers lower tax slab rates but withdraws most exemptions and deductions (like 80C, 80D, and HRA). We analyze both to identify the lower tax liability."
+      },
+      {
+        "question": "What is the Annual Information Statement (AIS)?",
+        "answer": "AIS is a detailed statement issued by the Income Tax Department showing all financial transactions of a taxpayer, such as share trading, mutual funds, interest, and high-value transactions."
+      }
+    ],
+    "meta_title": "Income Tax Audit & Return Filing India | Joyce J Charuvila & Associates",
+    "meta_description": "Professional income tax audit and ITR filing for individuals, partnerships, and corporations. Reconciliations with AIS and Form 26AS."
+  },
+  {
+    "slug": "tds-filing",
+    "title": "TDS Filing",
+    "overview": "Calculation of Tax Deducted at Source (TDS), preparation of monthly payments, and filing of quarterly TDS returns in compliance with Income Tax regulations.",
+    "who_needs_this": "All business entities and individuals required to deduct tax at source while making payments like salaries, professional fees, contractor payments, or rent.",
+    "scope_of_work": [
+      "Calculation of TDS rates based on payment categories (Section 192, 194C, 194J, 194I, etc.)",
+      "Preparation of monthly TDS payment challans",
+      "Quarterly reconciliation of TDS ledger with payment records",
+      "Filing of quarterly TDS returns (Form 24Q, 26Q, 27Q)",
+      "Generation and distribution of Form 16 and Form 16A certificates for deductees"
+    ],
+    "process": [
+      "Deduction Review: Reviewing transactions monthly for TDS applicability.",
+      "Payment: Preparing challans to deposit TDS by the 7th of the following month.",
+      "Return Preparation: Drafting the quarterly NSDL text files and checking PAN validations.",
+      "Filing: Submitting the returns through registered Tin-FC centers or online."
+    ],
+    "deliverables": [
+      "Filed quarterly TDS Return receipts",
+      "TDS payment challan records",
+      "Form 16A certificate PDFs for suppliers",
+      "TDS correction files (if required)"
+    ],
+    "faq": [
+      {
+        "question": "What is the penalty for late filing of TDS return?",
+        "answer": "Under Section 234E, a late filing fee of INR 200 per day is levied for each day the return remains unfiled, up to the TDS amount."
+      },
+      {
+        "question": "What is Form 16A?",
+        "answer": "Form 16A is a quarterly TDS certificate issued by the deductor to the deductee for payments other than salary, reflecting tax deducted and deposited."
+      }
+    ],
+    "meta_title": "Quarterly TDS Return Filing | Joyce J Charuvila & Associates",
+    "meta_description": "TDS calculations, monthly tax deposits, and quarterly Form 26Q and 24Q return filings. Avoid interest charges and late fees."
+  },
+  {
+    "slug": "project-finance-loan-assistance",
+    "title": "Project Finance and Loan Assistance",
+    "overview": "Preparation of Detailed Project Reports (DPR), CMA data, and financial projections required by banks and financial institutions for securing working capital and term loans.",
+    "who_needs_this": "Enterprises, startups, and developers looking to raise debt or credit facilities from commercial banks or financial institutions.",
+    "scope_of_work": [
+      "Conducting financial feasibility and break-even studies",
+      "Preparation of Credit Monitoring Arrangement (CMA) data sheets",
+      "Formulating detailed cash flow, balance sheet, and profit & loss projections",
+      "Assistance in answering credit officer queries during loan appraisal",
+      "Structure advice for optimum debt-to-equity ratio"
+    ],
+    "process": [
+      "Discussion: Understanding project requirements, capital expenditure, and working capital cycle.",
+      "Model Building: Creating financial spreadsheets forecasting revenues, costs, and interest obligations.",
+      "CMA Preparation: Compiling historical and projected numbers in bank-prescribed CMA format.",
+      "Bank Interaction: Delivering reports and clarifying financial metrics to banking credit teams."
+    ],
+    "deliverables": [
+      "Detailed Project Report (DPR)",
+      "Bank-compliant CMA Data Sheets",
+      "Financial Projection spreadsheets",
+      "Feasibility Study Certificate"
+    ],
+    "faq": [
+      {
+        "question": "What is CMA Data?",
+        "answer": "Credit Monitoring Arrangement (CMA) data is a structured financial report detailing past and projected performance, required by banks to analyze working capital loan requests."
+      },
+      {
+        "question": "Can the firm guarantee loan approval?",
+        "answer": "No. Loan approval depends entirely on the lending bank's evaluation of creditworthiness, security, and viability. We ensure your financial projections are structured logically and professionally."
+      }
+    ],
+    "meta_title": "Project Finance & CMA Data Assistance | Joyce J Charuvila & Associates",
+    "meta_description": "Feasibility studies, CMA data, and Detailed Project Reports (DPR) to support corporate term loans and bank credit lines."
+  },
+  {
+    "slug": "internal-audit-business-advisory",
+    "title": "Internal Audit and Business Advisory",
+    "overview": "Evaluating the adequacy of internal control systems, identifying operational leakages, and advising on risk management strategies to improve business performance.",
+    "who_needs_this": "Mid-sized businesses, retail chains, and manufacturing units seeking to secure operations and streamline cost controls.",
+    "scope_of_work": [
+      "Review of internal controls, cash handling, and stock verification processes",
+      "Standard Operating Procedures (SOP) compliance testing",
+      "Fraud risk assessment and purchase-to-pay transaction audits",
+      "Process optimization advice and cost-benefit analysis",
+      "Management advisory for corporate restructuring"
+    ],
+    "process": [
+      "Understanding Operations: Meeting department heads to understand business workflows.",
+      "Testing: Evaluating sample transactions against policies to detect control gaps.",
+      "Audit Findings: Compiling gaps, quantifying leakages, and formulating remedies.",
+      "Reporting: Presenting executive summaries and corrective action plans to management."
+    ],
+    "deliverables": [
+      "Internal Audit Report with risk rating",
+      "Internal Financial Control (IFC) matrices",
+      "Standard Operating Procedure (SOP) review reports",
+      "Cost saving recommendations document"
+    ],
+    "faq": [
+      {
+        "question": "How is internal audit different from statutory audit?",
+        "answer": "Statutory audit focus is on expressing an opinion on the truth and fairness of financial statements for external stakeholders. Internal audit focus is on checking internal operations, controls, efficiency, and risk mitigation for internal management."
+      },
+      {
+        "question": "How often should internal audits be conducted?",
+        "answer": "Depending on size and complexity, internal audits can be conducted monthly, quarterly, or on a continuous basis for critical departments."
+      }
+    ],
+    "meta_title": "Internal Audit & Business Advisory Services | Joyce J Charuvila & Associates",
+    "meta_description": "Independent review of internal controls, stock checks, and risk matrices. Helping Indian businesses prevent leakages and optimize cost structures."
+  },
+  {
+    "slug": "certification-services",
+    "title": "Certification Services",
+    "overview": "Issuance of professional certificates required by government authorities, financial institutions, and tax departments under various Indian statutes.",
+    "who_needs_this": "Entities needing certification for Net Worth, Turnover, Utilization of Funds, Import-Export controls, or RBI compliance.",
+    "scope_of_work": [
+      "Verification of records and issuance of Net Worth Certificates for visa and tendering",
+      "Turnover Certificates for tenders and vendor registrations",
+      "Utilization Certificates for government grants and subsidies",
+      "Certifications required under FEMA and RBI regulations for foreign remittances",
+      "UDIN (Unique Document Identification Number) generation for all certificates to ensure authenticity"
+    ],
+    "process": [
+      "Verification: Examining bank statements, asset deeds, or financial books to verify claims.",
+      "Drafting: Preparing the certificate draft citing verification sources.",
+      "UDIN Generation: Registering the certificate on the ICAI portal to generate a UDIN.",
+      "Issuance: Signing and delivering the certified document."
+    ],
+    "deliverables": [
+      "Signed CA Certificate with UDIN",
+      "Verification workings log for client record"
+    ],
+    "faq": [
+      {
+        "question": "What is UDIN?",
+        "answer": "UDIN stands for Unique Document Identification Number, which ICAI has made mandatory for all documents and certificates signed by practicing Chartered Accountants to prevent forgery."
+      },
+      {
+        "question": "Can I get a Net Worth Certificate for my student visa?",
+        "answer": "Yes, we verify assets, liabilities, and bank statements to issue Net Worth Certificates for visa applications."
+      }
+    ],
+    "meta_title": "CA Certification Services | Joyce J Charuvila & Associates",
+    "meta_description": "Official Chartered Accountant certificates including Net Worth, turnover, utilization certificates, and UDIN verification."
+  },
+  {
+    "slug": "valuation-services",
+    "title": "Valuation Services",
+    "overview": "Independent valuation of shares, assets, and business enterprises under the Income Tax Act, FEMA, or Companies Act using recognized valuation models.",
+    "who_needs_this": "Companies raising capital, issuing shares, undertaking mergers, or complying with cross-border investment rules (FEMA).",
+    "scope_of_work": [
+      "Enterprise valuation for business sales or equity financing",
+      "Valuation of equity shares under Income Tax Rule 11UA",
+      "Valuation for FEMA compliance during foreign direct investment (FDI)",
+      "Financial model reviews and cost-of-capital assessments"
+    ],
+    "process": [
+      "Data Gathering: Analyzing historical statements, projections, and industry reports.",
+      "Model Selection: Choosing appropriate methods (e.g. Discounted Cash Flow - DCF, Net Asset Value - NAV, or Market Multiples).",
+      "Valuation: Running calculations and determining fair value range.",
+      "Report Issuance: Drafting the valuation report and explaining assumptions."
+    ],
+    "deliverables": [
+      "Business Valuation Report",
+      "Share Valuation Certificate under relevant acts",
+      "DCF calculation templates"
+    ],
+    "faq": [
+      {
+        "question": "When is Rule 11UA valuation required?",
+        "answer": "Rule 11UA of the Income Tax Rules applies when a company issues shares at a premium, to verify that the share price matches fair market value."
+      },
+      {
+        "question": "What is DCF method?",
+        "answer": "Discounted Cash Flow (DCF) is a valuation method that estimates the value of an investment based on its expected future cash flows, discounted to present value."
+      }
+    ],
+    "meta_title": "Business & Share Valuation Services | Joyce J Charuvila & Associates",
+    "meta_description": "Factual valuation reports for shares and businesses under FEMA, Income Tax, and Companies Act. DCF and NAV modeling."
+  }
+]
