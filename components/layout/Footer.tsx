@@ -133,38 +133,28 @@ export default function Footer({ companyInfo }: FooterProps) {
             </ul>
           </div>
 
-          {/* CA Branding Badge */}
+          {/* CA Branding & UDIN Verification Link */}
           <div className="flex flex-col justify-between">
-            {company.registrations?.icaiMembership ? (
-              <div>
-                <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-slate-400 font-bold mb-6">
-                  Professional Credentials
-                </h4>
-                <div className="flex items-center space-x-3 mb-4">
-                  {/* CA Emblem Icon */}
-                  <div className="relative w-10 h-10 shrink-0 bg-slate-900 border border-slate-800 rounded-full flex items-center justify-center">
-                    <Image
-                      src="/logo.png"
-                      alt="CA India"
-                      fill
-                      className="object-contain p-1.5"
-                    />
-                  </div>
-                  <div className="font-sans text-xs text-slate-400 leading-tight">
-                    <p className="text-white font-medium">Practicing CA India</p>
-                    <p>ICAI Member ID: {company.registrations.icaiMembership}</p>
-                  </div>
-                </div>
-                <p className="font-sans text-xs text-slate-500">
-                  All Indian audit certifications require UDIN generation under the Institute of Chartered Accountants of India.
-                </p>
-              </div>
-            ) : (
-              <div />
-            )}
+            <div>
+              <h4 className="font-sans text-xs uppercase tracking-[0.2em] text-slate-400 font-bold mb-6">
+                Verification & ICAI Compliance
+              </h4>
+              <p className="font-sans text-xs text-slate-400 leading-relaxed mb-4">
+                Audit reports and statutory certificates issued by our firm carry a Unique Document Identification Number (UDIN) as mandated by the ICAI.
+              </p>
+              <a
+                href="https://udin.icai.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 text-xs text-brand-accent hover:underline font-sans font-medium"
+              >
+                <span>Verify Audit Reports on ICAI UDIN Portal</span>
+                <span className="text-[10px]">↗</span>
+              </a>
+            </div>
             
             <p className="font-sans text-xs text-slate-500 pt-8 mt-auto">
-              &copy; {new Date().getFullYear()} Joyce J Charuvila & Associates. All rights reserved. Est. 2026.
+              &copy; {new Date().getFullYear()} JOYCE J CHARUVILA & ASSOCIATES. All rights reserved. Est. {company.established || 2026}.
             </p>
           </div>
         </div>

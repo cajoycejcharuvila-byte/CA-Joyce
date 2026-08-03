@@ -207,29 +207,130 @@ export default function HomePageClient({
         </div>
       </section>
 
-      {/* SECTION 01.5: TRUST METRICS & KEY HIGHLIGHTS SHOWCASE */}
-      <section className="py-12 md:py-20 bg-white border-y border-brand-divider">
+      {/* SECTION 01.5: CLIENT PREPARATION & REQUIRED DOCUMENTS CHECKLIST */}
+      <section className="py-16 md:py-24 bg-white border-y border-brand-divider">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            <div className="bg-slate-50/80 border border-brand-border p-6 md:p-8 rounded-[24px] text-left transition-all duration-300 hover:shadow-soft">
-              <span className="font-display text-4xl md:text-5xl font-bold text-brand-accent block mb-2">9+</span>
-              <h4 className="font-sans text-xs md:text-sm font-bold text-brand-primary uppercase tracking-wider mb-1">Years Experience</h4>
-              <p className="font-sans text-xs text-brand-secondary">Auditing, taxation & statutory compliance across India and the UAE.</p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 text-left">
+            <div>
+              <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-3 block">
+                Filing Preparation
+              </span>
+              <h2 className="font-display text-3xl md:text-5xl font-normal text-brand-primary tracking-tight">
+                Client Documents Checklist
+              </h2>
             </div>
-            <div className="bg-slate-50/80 border border-brand-border p-6 md:p-8 rounded-[24px] text-left transition-all duration-300 hover:shadow-soft">
-              <span className="font-display text-4xl md:text-5xl font-bold text-brand-accent block mb-2">100%</span>
-              <h4 className="font-sans text-xs md:text-sm font-bold text-brand-primary uppercase tracking-wider mb-1">UDIN Compliant</h4>
-              <p className="font-sans text-xs text-brand-secondary">Official ICAI Unique Document Identification Number verification on all filings.</p>
+            <p className="font-sans text-sm text-brand-secondary max-w-md">
+              Prepare these core records in advance to streamline your annual audit, tax filing, or compliance consultation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            {/* Box 1: Income Tax & GST India */}
+            <div className="bg-slate-50 border border-brand-border p-8 rounded-[28px] flex flex-col justify-between">
+              <div>
+                <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
+                  India • Tax & GST Filings
+                </span>
+                <h3 className="font-display text-2xl text-brand-primary font-normal mb-4">
+                  Tax Returns & GST
+                </h3>
+                <ul className="space-y-3 font-sans text-xs text-brand-secondary">
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>PAN Card & Aadhaar of Primary Signatory</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Bank Account Statements (Full Financial Year)</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Form 26AS, AIS & TIS Tax Information Summaries</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Monthly Sales & Purchase Invoices for GST</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="pt-6 border-t border-brand-divider mt-6">
+                <Link href="/services/india/gst-registration-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1">
+                  <span>Explore India Tax Services</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
-            <div className="bg-slate-50/80 border border-brand-border p-6 md:p-8 rounded-[24px] text-left transition-all duration-300 hover:shadow-soft">
-              <span className="font-display text-4xl md:text-5xl font-bold text-brand-accent block mb-2">Dual</span>
-              <h4 className="font-sans text-xs md:text-sm font-bold text-brand-primary uppercase tracking-wider mb-1">Jurisdiction</h4>
-              <p className="font-sans text-xs text-brand-secondary">Cross-border accounting, Corporate Tax, and VAT filings in Dubai & Abu Dhabi.</p>
+
+            {/* Box 2: Statutory & Bank Audit */}
+            <div className="bg-slate-50 border border-brand-border p-8 rounded-[28px] flex flex-col justify-between">
+              <div>
+                <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
+                  India • Statutory Audit
+                </span>
+                <h3 className="font-display text-2xl text-brand-primary font-normal mb-4">
+                  Financial Audits
+                </h3>
+                <ul className="space-y-3 font-sans text-xs text-brand-secondary">
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Final Trial Balance, Ledger & Balance Sheet Drafts</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Certificate of Incorporation & MOA / AOA</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Prior Year Financial Audit Reports & Schedules</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Fixed Asset Register & Loan Sanction Letters</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="pt-6 border-t border-brand-divider mt-6">
+                <Link href="/services/india/statutory-audit" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1">
+                  <span>Explore Audit Services</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
-            <div className="bg-slate-50/80 border border-brand-border p-6 md:p-8 rounded-[24px] text-left transition-all duration-300 hover:shadow-soft">
-              <span className="font-display text-4xl md:text-5xl font-bold text-brand-accent block mb-2">Direct</span>
-              <h4 className="font-sans text-xs md:text-sm font-bold text-brand-primary uppercase tracking-wider mb-1">CA Consultation</h4>
-              <p className="font-sans text-xs text-brand-secondary">Personalized oversight by CA Joyce J Charuvila for corporate & individual clients.</p>
+
+            {/* Box 3: UAE Corporate Tax & VAT */}
+            <div className="bg-slate-50 border border-brand-border p-8 rounded-[28px] flex flex-col justify-between">
+              <div>
+                <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
+                  UAE • Corporate Tax & VAT
+                </span>
+                <h3 className="font-display text-2xl text-brand-primary font-normal mb-4">
+                  UAE Compliance
+                </h3>
+                <ul className="space-y-3 font-sans text-xs text-brand-secondary">
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Valid UAE Trade License & Commercial Registry</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Emirates ID & Passport Copies of Partners</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>FTA EmaraTax Account Credentials (if registered)</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <span className="text-brand-accent font-bold">✓</span>
+                    <span>Audited / Management Accounts & Bank Statements</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="pt-6 border-t border-brand-divider mt-6">
+                <Link href="/services/uae/corporate-tax-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1">
+                  <span>Explore UAE Tax Services</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
