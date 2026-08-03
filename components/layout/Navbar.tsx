@@ -94,127 +94,157 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                 <ChevronDown className="w-3.5 h-3.5" />
               </button>
 
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-white border border-brand-border rounded-[32px] shadow-glass p-8 w-[720px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]">
-                <div className="grid grid-cols-2 gap-8">
-                  {/* India Services Column */}
-                  <div>
-                    <Link
-                      href="/services/india"
-                      className="font-sans text-xs uppercase tracking-[0.2em] text-brand-accent font-bold mb-4 block hover:text-brand-primary transition-colors duration-200"
-                    >
-                      India Compliance Services
-                    </Link>
-                    <div className="space-y-2">
-                      <Link
-                        href="/services/india/accounting-bookkeeping-india"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Accounting & Bookkeeping
-                      </Link>
-                      <Link
-                        href="/services/india/statutory-audit"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Statutory Audit
-                      </Link>
-                      <Link
-                        href="/services/india/bank-concurrent-audit"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Bank Concurrent Audit
-                      </Link>
-                      <Link
-                        href="/services/india/gst-registration-filing"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        GST Registration & Filing
-                      </Link>
-                      <Link
-                        href="/services/india/income-tax-audit-return-filing"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Income Tax Audit & Return Filing
-                      </Link>
-                      <Link
-                        href="/services/india/tds-filing"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        TDS Filing
-                      </Link>
-                      <Link
-                        href="/services/india/project-finance-loan-assistance"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Project Finance & Loan Assistance
-                      </Link>
-                      <Link
-                        href="/services/india/internal-audit-business-advisory"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Internal Audit & Advisory
-                      </Link>
-                      <Link
-                        href="/services/india/certification-services"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Certification Services
-                      </Link>
-                      <Link
-                        href="/services/india/valuation-services"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Valuation Services
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-white border border-slate-200 rounded-[28px] shadow-glass p-8 w-[760px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]">
+                <div className="grid grid-cols-2 gap-8 text-left">
+                  
+                  {/* India Practice Column */}
+                  <div className="bg-slate-50/70 border border-slate-200/80 rounded-[20px] p-5 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+                        <Link
+                          href="/services/india"
+                          className="font-sans text-xs uppercase tracking-[0.2em] text-brand-primary font-bold hover:text-brand-accent transition-colors duration-200"
+                        >
+                          India Practice
+                        </Link>
+                        <span className="font-sans text-[10px] uppercase tracking-widest bg-amber-50 text-amber-800 border border-amber-200/70 px-2.5 py-0.5 rounded-full font-bold">
+                          India
+                        </span>
+                      </div>
+                      <div className="space-y-1">
+                        <Link
+                          href="/services/india/statutory-audit"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Statutory Audit</p>
+                            <p className="font-sans text-[11px] text-slate-500">Companies Act audit & financials</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/india/gst-registration-filing"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">GST Registration & Filing</p>
+                            <p className="font-sans text-[11px] text-slate-500">GSTR 1, 3B & annual reconciliation</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/india/income-tax-audit-return-filing"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Income Tax & Tax Audit</p>
+                            <p className="font-sans text-[11px] text-slate-500">Form 3CD & annual tax return filing</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/india/accounting-bookkeeping-india"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Accounting & Bookkeeping</p>
+                            <p className="font-sans text-[11px] text-slate-500">Monthly ledger & MIS statements</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/india/bank-concurrent-audit"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Bank Concurrent Audit</p>
+                            <p className="font-sans text-[11px] text-slate-500">Branch audits & loan portfolio review</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="pt-3 border-t border-slate-200 mt-3 text-right">
+                      <Link href="/services/india" className="font-sans text-[11px] font-bold text-brand-accent hover:underline">
+                        View All 10 India Services →
                       </Link>
                     </div>
                   </div>
 
-                  {/* UAE Services Column */}
-                  <div>
-                    <Link
-                      href="/services/uae"
-                      className="font-sans text-xs uppercase tracking-[0.2em] text-brand-accent font-bold mb-4 block hover:text-brand-primary transition-colors duration-200"
-                    >
-                      UAE Compliance Services
-                    </Link>
-                    <div className="space-y-2">
-                      <Link
-                        href="/services/uae/accounting-bookkeeping-uae"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Accounting & Bookkeeping
-                      </Link>
-                      <Link
-                        href="/services/uae/audit-support"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Audit Support Services
-                      </Link>
-                      <Link
-                        href="/services/uae/vat-registration-deregistration"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        VAT Registration & De-registration
-                      </Link>
-                      <Link
-                        href="/services/uae/vat-filing"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        VAT Filing & Compliance
-                      </Link>
-                      <Link
-                        href="/services/uae/corporate-tax-registration"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Corporate Tax Registration
-                      </Link>
-                      <Link
-                        href="/services/uae/corporate-tax-filing"
-                        className="block font-sans text-sm text-brand-secondary hover:text-brand-primary transition-colors duration-200"
-                      >
-                        Corporate Tax Filing
+                  {/* UAE Practice Column */}
+                  <div className="bg-slate-50/70 border border-slate-200/80 rounded-[20px] p-5 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+                        <Link
+                          href="/services/uae"
+                          className="font-sans text-xs uppercase tracking-[0.2em] text-brand-primary font-bold hover:text-brand-accent transition-colors duration-200"
+                        >
+                          UAE Practice
+                        </Link>
+                        <span className="font-sans text-[10px] uppercase tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-200/70 px-2.5 py-0.5 rounded-full font-bold">
+                          UAE
+                        </span>
+                      </div>
+                      <div className="space-y-1">
+                        <Link
+                          href="/services/uae/corporate-tax-filing"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Corporate Tax Filing</p>
+                            <p className="font-sans text-[11px] text-slate-500">Decree-Law No. 47 annual tax return</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/uae/corporate-tax-registration"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Corporate Tax Registration</p>
+                            <p className="font-sans text-[11px] text-slate-500">FTA EmaraTax TRN registration</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/uae/vat-filing"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">VAT Filing & Compliance</p>
+                            <p className="font-sans text-[11px] text-slate-500">Quarterly VAT201 return submissions</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/uae/accounting-bookkeeping-uae"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Accounting & Bookkeeping</p>
+                            <p className="font-sans text-[11px] text-slate-500">IFRS compliant financial accounts</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                        <Link
+                          href="/services/uae/audit-support"
+                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
+                        >
+                          <div>
+                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Audit Support Services</p>
+                            <p className="font-sans text-[11px] text-slate-500">Mainland & Free Zone audit assistance</p>
+                          </div>
+                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="pt-3 border-t border-slate-200 mt-3 text-right">
+                      <Link href="/services/uae" className="font-sans text-[11px] font-bold text-brand-accent hover:underline">
+                        View All UAE Services →
                       </Link>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
