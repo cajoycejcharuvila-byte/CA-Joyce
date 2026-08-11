@@ -80,8 +80,8 @@ export function getLocalBusinessSchema() {
     "email": "cajoycejcharuvilauae@gmail.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Joyce J Charuvila & Associates, Pathanamthitta",
-      "addressLocality": "Pathanamthitta",
+      "streetAddress": "Joyce J Charuvila & Associates, Omalloor, Pathanamthitta",
+      "addressLocality": "Omalloor, Pathanamthitta",
       "addressRegion": "Kerala",
       "postalCode": "689645",
       "addressCountry": "IN"
@@ -131,8 +131,8 @@ export function getProfessionalServiceSchema(serviceTitle: string, serviceDescri
     "telephone": "+919061680043",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Joyce J Charuvila & Associates, Pathanamthitta",
-      "addressLocality": "Pathanamthitta",
+      "streetAddress": "Joyce J Charuvila & Associates, Omalloor, Pathanamthitta",
+      "addressLocality": "Omalloor, Pathanamthitta",
       "addressRegion": "Kerala",
       "addressCountry": "IN"
     },
