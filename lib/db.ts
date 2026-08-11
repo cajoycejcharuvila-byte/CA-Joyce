@@ -12,7 +12,7 @@ function getDbClient(): Pool {
   if (!pool) {
     const dbUrl = process.env.DATABASE_URL;
     if (!dbUrl) {
-      throw new Error("DATABASE_URL environment variable is missing. Database required in production.");
+      throw new Error("DATABASE_URL is not configured.");
     }
     pool = new Pool({
       connectionString: dbUrl,
