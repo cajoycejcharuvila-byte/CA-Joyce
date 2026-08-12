@@ -14,6 +14,7 @@ export default function ScrollCapabilities({ capabilities }: ScrollCapabilitiesP
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
+    offset: ["start start", "end end"]
   });
 
   // Moves the inner flex container left by its width minus the viewport width
