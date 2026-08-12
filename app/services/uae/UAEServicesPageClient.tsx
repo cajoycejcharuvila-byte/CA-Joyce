@@ -6,7 +6,8 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, Calculator, ClipboardCheck, Percent, FileCheck, 
-  Building2, FileSpreadsheet, ArrowRight 
+  Building2, FileSpreadsheet, ArrowRight,
+  ShoppingCart, Building, Factory, HeartPulse, Utensils, Briefcase, Rocket
 } from "lucide-react";
 import GlassCard from "@/components/cards/GlassCard";
 import { getUAEServices, getIndustries, getFAQs, getCompanyInfo } from "@/lib/cms";
@@ -316,30 +317,34 @@ export default function UAEServicesPageClient() {
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {industries.map((ind, idx) => (
-              <GlassCard key={idx} className="p-6 bg-white flex flex-col justify-between relative overflow-hidden group min-h-[220px]" hoverLift={true}>
-                {ind.image && (
-                  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <Image
-                      src={ind.image}
-                      alt={ind.name}
-                      fill
-                      className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/20" />
+            {industries.map((ind, idx) => {
+              // Map icons based on industry name
+              let Icon = ArrowRight;
+              if (ind.name === "Trading") Icon = ArrowUpRight;
+              if (ind.name === "Retail") Icon = ShoppingCart;
+              if (ind.name === "Construction") Icon = Building;
+              if (ind.name === "Manufacturing") Icon = Factory;
+              if (ind.name === "Healthcare") Icon = HeartPulse;
+              if (ind.name === "Hospitality") Icon = Utensils;
+              if (ind.name === "Small Businesses") Icon = Briefcase;
+              if (ind.name === "Startups") Icon = Rocket;
+
+              return (
+                <GlassCard key={idx} className="p-8 bg-white flex flex-col relative overflow-hidden group min-h-[220px] border border-brand-border hover:border-brand-primary/20 transition-all duration-300" hoverLift={true}>
+                  <div className="mb-6 w-12 h-12 rounded-2xl bg-brand-bg flex items-center justify-center border border-brand-divider group-hover:bg-brand-accent group-hover:border-brand-accent group-hover:scale-110 transition-all duration-500">
+                    <Icon className="w-6 h-6 text-brand-primary group-hover:text-white transition-colors duration-500" />
                   </div>
-                )}
-                <div className="relative z-10">
-                  <h3 className="font-display text-xl font-semibold text-brand-primary mb-2.5">
-                    {ind.name}
-                  </h3>
-                  <p className="font-sans text-xs text-slate-600 leading-relaxed font-medium">
-                    {ind.description}
-                  </p>
-                </div>
-              </GlassCard>
-            ))}
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-brand-primary mb-3">
+                      {ind.name}
+                    </h3>
+                    <p className="font-sans text-xs text-brand-secondary leading-relaxed font-medium">
+                      {ind.description}
+                    </p>
+                  </div>
+                </GlassCard>
+              );
+            })}
           </div>
         </div>
 
