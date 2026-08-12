@@ -34,7 +34,8 @@
       }
     ],
     "meta_title": "Accounting & Bookkeeping Services UAE | Joyce J Charuvila & Associates",
-    "meta_description": "Professional IFRS-compliant accounting and bookkeeping services for UAE businesses. Systematic recording, bank reconciliation, and management reporting."
+    "meta_description": "Professional IFRS-compliant accounting and bookkeeping services for UAE businesses. Systematic recording, bank reconciliation, and management reporting.",
+    "image": "/images/services/uae/accounting-bookkeeping-uae.jpg"
   },
   {
     "slug": "audit-support",
@@ -70,7 +71,8 @@
       }
     ],
     "meta_title": "Audit Support Services in UAE | Joyce J Charuvila & Associates",
-    "meta_description": "Prepare your financial records for external audits. We organize schedules, coordinate with auditors, and resolve complex accounting disclosures."
+    "meta_description": "Prepare your financial records for external audits. We organize schedules, coordinate with auditors, and resolve complex accounting disclosures.",
+    "image": "/images/services/uae/audit-support.jpg"
   },
   {
     "slug": "vat-registration-deregistration",
@@ -106,7 +108,8 @@
       }
     ],
     "meta_title": "UAE VAT Registration & Deregistration | Joyce J Charuvila & Associates",
-    "meta_description": "Structured assistance for UAE VAT registration and deregistration on the EmaraTax portal. Stay compliant and avoid late registration penalties."
+    "meta_description": "Structured assistance for UAE VAT registration and deregistration on the EmaraTax portal. Stay compliant and avoid late registration penalties.",
+    "image": "/images/services/uae/vat-registration-deregistration.jpg"
   },
   {
     "slug": "vat-filing",
@@ -143,7 +146,8 @@
       }
     ],
     "meta_title": "UAE VAT Return Filing Services | Joyce J Charuvila & Associates",
-    "meta_description": "Accurate calculation and filing of UAE VAT201 returns. Avoid penalties and optimize input tax recovery under FTA guidelines."
+    "meta_description": "Accurate calculation and filing of UAE VAT201 returns. Avoid penalties and optimize input tax recovery under FTA guidelines.",
+    "image": "/images/services/uae/vat-filing.jpg"
   },
   {
     "slug": "corporate-tax-registration",
@@ -179,7 +183,8 @@
       }
     ],
     "meta_title": "UAE Corporate Tax Registration | Joyce J Charuvila & Associates",
-    "meta_description": "Register your UAE business for Corporate Tax under Federal Decree-Law No. 47. Timely filing on EmaraTax to avoid penalties."
+    "meta_description": "Register your UAE business for Corporate Tax under Federal Decree-Law No. 47. Timely filing on EmaraTax to avoid penalties.",
+    "image": "/images/services/uae/corporate-tax-registration.jpg"
   },
   {
     "slug": "corporate-tax-filing",
@@ -216,6 +221,7 @@
       }
     ],
     "meta_title": "UAE Corporate Tax Return Filing | Joyce J Charuvila & Associates",
-    "meta_description": "Annual Corporate Tax calculation, statutory adjustments, and return filing in the UAE. Maintain compliance with the 9% tax regime."
+    "meta_description": "Annual Corporate Tax calculation, statutory adjustments, and return filing in the UAE. Maintain compliance with the 9% tax regime.",
+    "image": "/images/services/uae/corporate-tax-filing.jpg"
   }
 ]

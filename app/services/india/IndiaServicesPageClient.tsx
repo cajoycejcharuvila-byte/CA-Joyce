@@ -344,10 +344,10 @@ export default function IndiaServicesPageClient() {
                       src={ind.image}
                       alt={ind.name}
                       fill
-                      className="object-cover opacity-15 group-hover:opacity-25 group-hover:scale-105 transition-all duration-500"
+                      className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                       sizes="(max-width: 768px) 100vw, 25vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/20" />
                   </div>
                 )}
                 <div className="relative z-10">

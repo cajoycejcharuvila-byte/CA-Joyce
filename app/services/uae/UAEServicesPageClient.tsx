@@ -46,14 +46,15 @@ function getCategoryTag(slug: string) {
   return "Compliance";
 }
 
-// Helper to map slug to local WebP image path
-function getServiceImagePath(slug: string) {
-  if (slug.includes("accounting")) return "/images/services/uae/accounting.webp";
-  if (slug.includes("audit")) return "/images/services/uae/audit-support.webp";
-  if (slug.includes("vat-registration")) return "/images/services/uae/vat-registration.webp";
-  if (slug.includes("vat-filing")) return "/images/services/uae/vat-filing.webp";
-  if (slug.includes("corporate-tax-registration")) return "/images/services/uae/corporate-tax-registration.webp";
-  if (slug.includes("corporate-tax-filing")) return "/images/services/uae/corporate-tax-filing.webp";
+// Helper to map slug to local image path
+function getServiceImagePath(slug: string, serviceImage?: string) {
+  if (serviceImage) return serviceImage;
+  if (slug.includes("accounting")) return "/images/services/uae/accounting-bookkeeping-uae.jpg";
+  if (slug.includes("audit")) return "/images/services/uae/audit-support.jpg";
+  if (slug.includes("vat-registration")) return "/images/services/uae/vat-registration-deregistration.jpg";
+  if (slug.includes("vat-filing")) return "/images/services/uae/vat-filing.jpg";
+  if (slug.includes("corporate-tax-registration")) return "/images/services/uae/corporate-tax-registration.jpg";
+  if (slug.includes("corporate-tax-filing")) return "/images/services/uae/corporate-tax-filing.jpg";
   return "/images/services/uae-tax-documents.webp"; // fallback
 }
 
@@ -62,7 +63,7 @@ function InteractiveServiceCard({ service }: { service: ServiceItem }) {
   const [expanded, setExpanded] = useState(false);
   const icon = getServiceIcon(service.slug);
   const category = getCategoryTag(service.slug);
-  const imageSrc = getServiceImagePath(service.slug);
+  const imageSrc = getServiceImagePath(service.slug, service.image);
   const seoNode = SEO_GRAPH[service.slug];
 
   return (
@@ -323,10 +324,10 @@ export default function UAEServicesPageClient() {
                       src={ind.image}
                       alt={ind.name}
                       fill
-                      className="object-cover opacity-15 group-hover:opacity-25 group-hover:scale-105 transition-all duration-500"
+                      className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                       sizes="(max-width: 768px) 100vw, 25vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/20" />
                   </div>
                 )}
                 <div className="relative z-10">
