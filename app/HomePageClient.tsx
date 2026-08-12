@@ -119,7 +119,7 @@ export default function HomePageClient({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* Left Column: Text & Cards */}
-            <div className="lg:col-span-7 flex flex-col justify-center text-left">
+            <div className="lg:col-span-6 flex flex-col justify-center text-left">
               <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-6 block">
                 Firm Established {company.established}
               </span>
@@ -172,7 +172,7 @@ export default function HomePageClient({
             </div>
 
             {/* Right Column: Hero Image */}
-            <div className="lg:col-span-5 relative h-[500px] md:h-[650px] lg:h-[750px] w-full rounded-[32px] overflow-hidden shadow-glass group">
+            <div className="lg:col-span-6 relative h-[500px] md:h-[650px] lg:h-[750px] w-full rounded-[32px] overflow-hidden shadow-glass group">
               <img
                 src={heroImageSrc}
                 alt="Joyce J Charuvila & Associates Office Architecture"
