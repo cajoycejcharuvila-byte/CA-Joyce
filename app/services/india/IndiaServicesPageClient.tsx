@@ -335,14 +335,26 @@ export default function IndiaServicesPageClient() {
               Sectors We Serve
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {industries.map((ind, idx) => (
-              <GlassCard key={idx} className="p-6 bg-white flex flex-col justify-between" hoverLift={true}>
-                <div>
-                  <h3 className="font-display text-xl font-normal text-brand-primary mb-2">
+              <GlassCard key={idx} className="p-6 bg-white flex flex-col justify-between relative overflow-hidden group min-h-[220px]" hoverLift={true}>
+                {ind.image && (
+                  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                    <Image
+                      src={ind.image}
+                      alt={ind.name}
+                      fill
+                      className="object-cover opacity-15 group-hover:opacity-25 group-hover:scale-105 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95" />
+                  </div>
+                )}
+                <div className="relative z-10">
+                  <h3 className="font-display text-xl font-semibold text-brand-primary mb-2.5">
                     {ind.name}
                   </h3>
-                  <p className="font-sans text-xs text-brand-secondary leading-relaxed">
+                  <p className="font-sans text-xs text-slate-600 leading-relaxed font-medium">
                     {ind.description}
                   </p>
                 </div>

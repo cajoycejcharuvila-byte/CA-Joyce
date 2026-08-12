@@ -1,34 +1,42 @@
 [
   {
     "name": "Trading",
-    "description": "Inventory cost control, cross-border shipping document audits, and custom duties compliance."
+    "description": "Inventory cost control, cross-border shipping document audits, and custom duties compliance.",
+    "image": "/images/industries/trading.webp"
   },
   {
     "name": "Retail",
-    "description": "Point-of-Sale (POS) reconciliations, cash management, GST/VAT input tax matching, and retail billing audits."
+    "description": "Point-of-Sale (POS) reconciliations, cash management, GST/VAT input tax matching, and retail billing audits.",
+    "image": "/images/industries/retail.webp"
   },
   {
     "name": "Construction",
-    "description": "Project-based cost accounting, tax deduction at source (TDS) on contracts, and material cost audits."
+    "description": "Project-based cost accounting, tax deduction at source (TDS) on contracts, and material cost audits.",
+    "image": "/images/industries/construction.webp"
   },
   {
     "name": "Manufacturing",
-    "description": "Cost sheet analysis, factory overhead allocations, inventory audits, and manufacturing GST compliance."
+    "description": "Cost sheet analysis, factory overhead allocations, inventory audits, and manufacturing GST compliance.",
+    "image": "/images/industries/manufacturing.webp"
   },
   {
     "name": "Healthcare",
-    "description": "Hospital billing compliance, medical equipment asset management, and doctor professional fee accounts."
+    "description": "Hospital billing compliance, medical equipment asset management, and doctor professional fee accounts.",
+    "image": "/images/industries/healthcare.webp"
   },
   {
     "name": "Hospitality",
-    "description": "Service tax history reviews, luxury tax records compliance, daily cash/card audit trails, and supplier audits."
+    "description": "Service tax history reviews, luxury tax records compliance, daily cash/card audit trails, and supplier audits.",
+    "image": "/images/industries/hospitality.webp"
   },
   {
     "name": "Small Businesses",
-    "description": "Simplified accounting systems, monthly statutory compliance, tax planning, and loan feasibility assistance."
+    "description": "Simplified accounting systems, monthly statutory compliance, tax planning, and loan feasibility assistance.",
+    "image": "/images/industries/smes.webp"
   },
   {
     "name": "Startups",
-    "description": "Business structure advisory, initial registration (GST/IE code), projected cash flow sheets, and equity valuation."
+    "description": "Business structure advisory, initial registration (GST/IE code), projected cash flow sheets, and equity valuation.",
+    "image": "/images/industries/startups.webp"
   }
 ]

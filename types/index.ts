@@ -70,6 +70,7 @@ export interface ServiceItem {
 export interface IndustryItem {
   name: string;
   description: string;
+  image?: string;
 }
 
 export interface CapabilityItem {
