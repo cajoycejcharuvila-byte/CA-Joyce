@@ -3,13 +3,20 @@ import { Award, GraduationCap, Mail, MessageSquare } from "lucide-react";
 import { getDbCompanyInfo, getDbPageSettings } from "@/lib/db";
 import { getPersonSchema, getBreadcrumbSchema } from "@/lib/seo";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Founder | CA Joyce J Charuvila",
+  description: "Meet CA Joyce J Charuvila, the founder of Joyce J Charuvila & Associates, leading a team of experts in India and the UAE.",
+};
+
 export const revalidate = 0; // Dynamic server rendering
 
 export default async function FounderPage() {
   const company = await getDbCompanyInfo();
   const founder = await getDbPageSettings("founder_settings");
 
-  const portraitSrc = `${founder.portraitImage || "/images/founder/portrait.webp"}?v=1.1`;
+  const portraitSrc = founder.portraitImage || "/images/founder/portrait.webp";
   const bioParagraphs = founder.biography || [];
   const timelineItems = founder.timeline || [];
 

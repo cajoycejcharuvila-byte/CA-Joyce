@@ -3,6 +3,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 interface ParallaxImageProps {
   src: string;
@@ -53,20 +54,22 @@ export default function ParallaxImage({
           style={{ y: yTranslate }} 
           className="absolute inset-0 w-full h-[124%] top-[-12%] parallax-image-mobile-reset"
         >
-          <img
+          <Image
             src={src}
             alt={alt}
-            className="w-full h-full object-cover absolute inset-0 transition-transform duration-500 hover:scale-[1.02]"
-            loading="lazy"
+            fill
+            className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </motion.div>
       ) : (
         <div className="absolute inset-0 w-full h-[100%] top-0">
-          <img
+          <Image
             src={src}
             alt={alt}
-            className="w-full h-full object-cover absolute inset-0"
-            loading="lazy"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>
       )}

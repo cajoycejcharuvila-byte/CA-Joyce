@@ -26,7 +26,7 @@ interface AboutPageClientProps {
 export default function AboutPageClient({ aboutSettings, founderInfo, company }: AboutPageClientProps) {
   const headingVal = aboutSettings.heading || "CA Joyce J Charuvila, MCom, ACA, CMA Final";
   const bioParagraphs = aboutSettings.bioParagraphs || [];
-  const portraitSrc = `${aboutSettings.portraitImage || "/images/founder/portrait.webp"}?v=1.1`;
+  const portraitSrc = aboutSettings.portraitImage || "/images/founder/portrait.webp";
   const hasIcaiMembership = !!(company?.registrations?.icaiMembership);
 
   return (

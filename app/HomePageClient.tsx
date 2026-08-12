@@ -48,6 +48,15 @@ export default function HomePageClient({
     <ShieldCheck className="w-7 h-7 text-brand-accent shrink-0" key="internal" />
   ];
 
+  const images = [
+    "/images/capabilities/audit-assurance.webp",
+    "/images/capabilities/tax-compliance.webp",
+    "/images/capabilities/financial-reporting.webp",
+    "/images/capabilities/business-advisory.webp",
+    "/images/capabilities/crossborder-tax.webp",
+    "/images/capabilities/internal-controls.webp"
+  ];
+
   const practiceLinks = [
     "/services/india/statutory-audit",
     "/services/india/gst-registration-filing",
@@ -57,8 +66,8 @@ export default function HomePageClient({
     "/services/india/statutory-audit"
   ];
 
-  const heroImageSrc = `${homeSettings.heroImage || "/images/hero/hero-office.webp"}?v=1.1`;
-  const founderImageSrc = `${aboutSettings.portraitImage || "/images/founder/portrait.webp"}?v=1.1`;
+  const heroImageSrc = homeSettings.heroImage || "/images/hero/hero-office.webp";
+  const founderImageSrc = aboutSettings.portraitImage || "/images/founder/portrait.webp";
 
   return (
     <div className="flex flex-col w-full text-left">
@@ -173,10 +182,13 @@ export default function HomePageClient({
 
             {/* Right Column: Hero Image */}
             <div className="lg:col-span-6 relative h-[500px] md:h-[650px] lg:h-[750px] w-full rounded-[32px] overflow-hidden shadow-glass group">
-              <img
+              <Image
                 src={heroImageSrc}
                 alt="Joyce J Charuvila & Associates Office Architecture"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                priority
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
               <div className="absolute inset-0 border border-brand-border pointer-events-none rounded-[32px]" />
               <div className="absolute inset-0 bg-brand-primary/5 pointer-events-none mix-blend-multiply" />
@@ -372,19 +384,34 @@ export default function HomePageClient({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {capabilities.map((cap, index) => (
               <GlassCard key={index} className="flex flex-col justify-between min-h-[320px] p-8 md:p-10 hover:shadow-glass group">
-                <div>
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-[rgba(15,23,42,0.04)]">
-                    {practiceIcons[index % practiceIcons.length]}
-                    <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-widest">
-                      0{index + 1}
-                    </span>
+                <div className="flex flex-col h-full">
+                  <div className="relative h-48 mb-6 -mx-8 -mt-8 overflow-hidden md:-mx-10 md:-mt-10 rounded-t-2xl">
+                    <Image
+                      src={images[index % images.length]}
+                      alt={cap.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                    <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
+                      <div className="bg-white/20 backdrop-blur-md p-2 rounded-lg border border-white/10 text-white">
+                        {practiceIcons[index % practiceIcons.length]}
+                      </div>
+                      <span className="font-mono text-xs text-white/80 font-bold uppercase tracking-widest bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+                        0{index + 1}
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-4 font-normal group-hover:text-brand-accent transition-colors duration-300">
-                    {cap.title}
-                  </h3>
-                  <p className="font-sans text-sm text-brand-secondary leading-relaxed">
-                    {cap.description}
-                  </p>
+                  
+                  <div className="flex-grow">
+                    <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-4 font-normal group-hover:text-brand-accent transition-colors duration-300">
+                      {cap.title}
+                    </h3>
+                    <p className="font-sans text-sm text-brand-secondary leading-relaxed">
+                      {cap.description}
+                    </p>
+                  </div>
                 </div>
                 
                 <Link

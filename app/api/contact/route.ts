@@ -105,7 +105,12 @@ export async function POST(request: Request) {
       submittedAt: new Date().toISOString(),
     };
     
-    await insertDbEnquiry(newSubmission);
+    try {
+      await insertDbEnquiry(newSubmission);
+      console.log("Successfully persisted enquiry to database.");
+    } catch (dbErr) {
+      console.warn("Database insertion failed (possibly missing DATABASE_URL). Skipping DB persistence. Error:", dbErr);
+    }
 
     // Send email notifications (non-blocking — failures do not affect form success)
     try {

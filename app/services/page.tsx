@@ -1,8 +1,12 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Calculator, Building2, FileSpreadsheet } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Services & Practice Areas | Joyce J Charuvila & Associates",
+  description: "Explore our dual-jurisdiction advisory and assurance services in India and the UAE.",
+};
 
 export default function ServicesLandingPage() {
   return (
