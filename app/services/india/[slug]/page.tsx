@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight, MessageSquare, PhoneCall, HelpCircle, CheckCircle2 } from "lucide-react";
 import { getServiceBySlug, getIndiaServices, getCompanyInfo } from "@/lib/cms";
 import { generateMetadata as seoGenerateMetadata, getProfessionalServiceSchema, getBreadcrumbSchema } from "@/lib/seo";
@@ -109,7 +110,7 @@ export default async function IndiaServiceDetailPage({ params }: PageProps) {
         </div>
 
         {/* Hero Section */}
-        <div className="max-w-4xl mb-16">
+        <div className="max-w-4xl mb-12">
           <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
             India Regulatory Compliance
           </span>
@@ -120,6 +121,21 @@ export default async function IndiaServiceDetailPage({ params }: PageProps) {
             {service.overview}
           </p>
         </div>
+
+        {/* Featured Service Image Banner */}
+        {service.image && (
+          <div className="w-full relative h-[320px] md:h-[450px] rounded-[32px] overflow-hidden mb-16 shadow-soft border border-brand-border">
+            <Image
+              src={service.image}
+              alt={service.title}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 1200px) 100vw, 1200px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </div>
+        )}
 
         {/* Core Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">

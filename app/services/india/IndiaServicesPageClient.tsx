@@ -62,18 +62,19 @@ function getCategoryTag(slug: string) {
   return "Compliance";
 }
 
-// Helper to map slug to local WebP image path
-function getServiceImagePath(slug: string) {
-  if (slug.includes("accounting-bookkeeping")) return "/images/services/india/accounting-bookkeeping.webp";
-  if (slug.includes("statutory-audit")) return "/images/services/india/statutory-audit.webp";
-  if (slug.includes("bank-concurrent")) return "/images/services/india/bank-audit.webp";
-  if (slug.includes("gst-registration")) return "/images/services/india/gst-registration.webp";
-  if (slug.includes("income-tax")) return "/images/services/india/income-tax.webp";
-  if (slug.includes("tds")) return "/images/services/india/tds-filing.webp";
-  if (slug.includes("project-finance")) return "/images/services/india/project-finance.webp";
-  if (slug.includes("internal-audit")) return "/images/services/india/internal-audit.webp";
-  if (slug.includes("certification")) return "/images/services/india/certification-services.webp";
-  if (slug.includes("valuation")) return "/images/services/india/valuation-services.webp";
+// Helper to map slug to local image path
+function getServiceImagePath(slug: string, serviceImage?: string) {
+  if (serviceImage) return serviceImage;
+  if (slug.includes("accounting-bookkeeping")) return "/images/services/india/accounting-bookkeeping-india.jpg";
+  if (slug.includes("statutory-audit")) return "/images/services/india/statutory-audit.jpg";
+  if (slug.includes("bank-concurrent")) return "/images/services/india/bank-concurrent-audit.jpg";
+  if (slug.includes("gst-registration")) return "/images/services/india/gst-registration-filing.jpg";
+  if (slug.includes("income-tax")) return "/images/services/india/income-tax-audit-return-filing.jpg";
+  if (slug.includes("tds")) return "/images/services/india/tds-filing.jpg";
+  if (slug.includes("project-finance")) return "/images/services/india/project-finance-loan-assistance.jpg";
+  if (slug.includes("internal-audit")) return "/images/services/india/internal-audit-business-advisory.jpg";
+  if (slug.includes("certification")) return "/images/services/india/certification-services.jpg";
+  if (slug.includes("valuation")) return "/images/services/india/valuation-services.jpg";
   return "/images/services/audit-documents.webp"; // fallback
 }
 
@@ -82,7 +83,7 @@ function InteractiveServiceCard({ service }: { service: ServiceItem }) {
   const [expanded, setExpanded] = useState(false);
   const icon = getServiceIcon(service.slug);
   const category = getCategoryTag(service.slug);
-  const imageSrc = getServiceImagePath(service.slug);
+  const imageSrc = getServiceImagePath(service.slug, service.image);
   const seoNode = SEO_GRAPH[service.slug];
 
   return (

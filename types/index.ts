@@ -64,6 +64,7 @@ export interface ServiceItem {
   faq: ServiceFAQ[];
   meta_title: string;
   meta_description: string;
+  image?: string;
 }
 
 export interface IndustryItem {

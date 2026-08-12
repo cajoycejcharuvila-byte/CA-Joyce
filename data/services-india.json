@@ -34,7 +34,8 @@
       }
     ],
     "meta_title": "Accounting & Bookkeeping Services India | Joyce J Charuvila & Associates",
-    "meta_description": "Accurate accounting and bookkeeping in India under Companies Act and Tax guidelines. Monthly reporting, BRS, and GST reconciliation."
+    "meta_description": "Accurate accounting and bookkeeping in India under Companies Act and Tax guidelines. Monthly reporting, BRS, and GST reconciliation.",
+    "image": "/images/services/india/accounting-bookkeeping-india.jpg"
   },
   {
     "slug": "statutory-audit",
@@ -71,7 +72,8 @@
       }
     ],
     "meta_title": "Statutory Audit Services in India | Joyce J Charuvila & Associates",
-    "meta_description": "Statutory audit services for private and public companies in India. Independent evaluation of financial accounts under Companies Act 2013."
+    "meta_description": "Statutory audit services for private and public companies in India. Independent evaluation of financial accounts under Companies Act 2013.",
+    "image": "/images/services/india/statutory-audit.jpg"
   },
   {
     "slug": "bank-concurrent-audit",
@@ -108,7 +110,8 @@
       }
     ],
     "meta_title": "Bank Concurrent Audit Services | Joyce J Charuvila & Associates",
-    "meta_description": "Continuous, real-time audit reviews of bank branches. Ensuring compliance with RBI directives, credit guidelines, and KYC rules."
+    "meta_description": "Continuous, real-time audit reviews of bank branches. Ensuring compliance with RBI directives, credit guidelines, and KYC rules.",
+    "image": "/images/services/india/bank-concurrent-audit.jpg"
   },
   {
     "slug": "gst-registration-filing",
@@ -145,7 +148,8 @@
       }
     ],
     "meta_title": "GST Registration & Filing Services India | Joyce J Charuvila & Associates",
-    "meta_description": "GST compliance services in India. Monthly GSTR-1 and GSTR-3B filings, annual GSTR-9 returns, and rigorous input tax credit reconciliation."
+    "meta_description": "GST compliance services in India. Monthly GSTR-1 and GSTR-3B filings, annual GSTR-9 returns, and rigorous input tax credit reconciliation.",
+    "image": "/images/services/india/gst-registration-filing.jpg"
   },
   {
     "slug": "income-tax-audit-return-filing",
@@ -182,7 +186,8 @@
       }
     ],
     "meta_title": "Income Tax Audit & Return Filing India | Joyce J Charuvila & Associates",
-    "meta_description": "Professional income tax audit and ITR filing for individuals, partnerships, and corporations. Reconciliations with AIS and Form 26AS."
+    "meta_description": "Professional income tax audit and ITR filing for individuals, partnerships, and corporations. Reconciliations with AIS and Form 26AS.",
+    "image": "/images/services/india/income-tax-audit-return-filing.jpg"
   },
   {
     "slug": "tds-filing",
@@ -219,7 +224,8 @@
       }
     ],
     "meta_title": "Quarterly TDS Return Filing | Joyce J Charuvila & Associates",
-    "meta_description": "TDS calculations, monthly tax deposits, and quarterly Form 26Q and 24Q return filings. Avoid interest charges and late fees."
+    "meta_description": "TDS calculations, monthly tax deposits, and quarterly Form 26Q and 24Q return filings. Avoid interest charges and late fees.",
+    "image": "/images/services/india/tds-filing.jpg"
   },
   {
     "slug": "project-finance-loan-assistance",
@@ -256,7 +262,8 @@
       }
     ],
     "meta_title": "Project Finance & CMA Data Assistance | Joyce J Charuvila & Associates",
-    "meta_description": "Feasibility studies, CMA data, and Detailed Project Reports (DPR) to support corporate term loans and bank credit lines."
+    "meta_description": "Feasibility studies, CMA data, and Detailed Project Reports (DPR) to support corporate term loans and bank credit lines.",
+    "image": "/images/services/india/project-finance-loan-assistance.jpg"
   },
   {
     "slug": "internal-audit-business-advisory",
@@ -293,7 +300,8 @@
       }
     ],
     "meta_title": "Internal Audit & Business Advisory Services | Joyce J Charuvila & Associates",
-    "meta_description": "Independent review of internal controls, stock checks, and risk matrices. Helping Indian businesses prevent leakages and optimize cost structures."
+    "meta_description": "Independent review of internal controls, stock checks, and risk matrices. Helping Indian businesses prevent leakages and optimize cost structures.",
+    "image": "/images/services/india/internal-audit-business-advisory.jpg"
   },
   {
     "slug": "certification-services",
@@ -328,7 +336,8 @@
       }
     ],
     "meta_title": "CA Certification Services | Joyce J Charuvila & Associates",
-    "meta_description": "Official Chartered Accountant certificates including Net Worth, turnover, utilization certificates, and UDIN verification."
+    "meta_description": "Official Chartered Accountant certificates including Net Worth, turnover, utilization certificates, and UDIN verification.",
+    "image": "/images/services/india/certification-services.jpg"
   },
   {
     "slug": "valuation-services",
@@ -363,6 +372,7 @@
       }
     ],
     "meta_title": "Business & Share Valuation Services | Joyce J Charuvila & Associates",
-    "meta_description": "Factual valuation reports for shares and businesses under FEMA, Income Tax, and Companies Act. DCF and NAV modeling."
+    "meta_description": "Factual valuation reports for shares and businesses under FEMA, Income Tax, and Companies Act. DCF and NAV modeling.",
+    "image": "/images/services/india/valuation-services.jpg"
   }
 ]
