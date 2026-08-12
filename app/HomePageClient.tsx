@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import ParallaxImage from "@/components/sections/ParallaxImage";
 import GlassCard from "@/components/cards/GlassCard";
+import ScrollCapabilities from "@/components/sections/ScrollCapabilities";
 import { InsightItem } from "@/lib/cms";
 
 interface HomePageClientProps {
@@ -362,58 +363,8 @@ export default function HomePageClient({
         </div>
       </section>
 
-      {/* SECTION 03: AREAS OF PRACTICE */}
-      <section className="py-16 md:py-28 bg-brand-bg" id="practice-areas">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-16">
-            <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
-              Capabilities
-            </span>
-            <h2 className="font-display text-4xl md:text-6xl font-normal text-brand-primary tracking-tight">
-              Areas of Practice
-            </h2>
-            <p className="font-sans text-slate-500 max-w-lg mx-auto mt-4 text-sm md:text-base">
-              Providing technical precision across audit, assurance, tax compliance, and business advisory assignments in India and the UAE.
-            </p>
-          </div>
-
-          {/* 3-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {capabilities.map((cap, index) => (
-              <GlassCard key={index} className="flex flex-col justify-between min-h-[320px] p-8 md:p-10 hover:shadow-glass group">
-                <div>
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-[rgba(15,23,42,0.04)]">
-                    {practiceIcons[index % practiceIcons.length]}
-                    <span className="font-mono text-xs text-slate-400 font-bold uppercase tracking-widest">
-                      0{index + 1}
-                    </span>
-                  </div>
-                  <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-4 font-normal group-hover:text-brand-accent transition-colors duration-300">
-                    {cap.title}
-                  </h3>
-                  <p className="font-sans text-sm text-brand-secondary leading-relaxed">
-                    {cap.description}
-                  </p>
-                </div>
-                
-                <Link
-                  href={practiceLinks[index % practiceLinks.length]}
-                  className="pt-6 flex items-center justify-between border-t border-brand-divider mt-6 w-full group/btn"
-                >
-                  <span className="font-sans text-xs uppercase tracking-widest font-semibold text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-                    Learn More
-                  </span>
-                  <div 
-                    className="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary group-hover/btn:text-white group-hover/btn:bg-brand-accent group-hover/btn:border-brand-accent transition-all duration-300"
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </Link>
-              </GlassCard>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* SECTION 03: AREAS OF PRACTICE (Scroll Animation) */}
+      <ScrollCapabilities capabilities={capabilities} />
 
       {/* SECTION 04: UPDATES & INSIGHTS (Editorial Split Layout) */}
       <section className="py-16 md:py-28 bg-white border-t border-brand-divider">
