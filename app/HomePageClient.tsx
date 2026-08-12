@@ -113,30 +113,42 @@ export default function HomePageClient({
         }}
       />
 
-      {/* SECTION 01: HERO (Restored Premium Minimal Composition) */}
-      <section className="relative min-h-[calc(100vh-90px)] flex items-center bg-brand-bg pt-10 pb-20 md:py-28 overflow-hidden">
-        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 z-10 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* SECTION 01: HERO */}
+      <section className="relative min-h-[calc(100vh-90px)] flex flex-col justify-center bg-brand-bg pt-10 pb-20 md:py-20 overflow-hidden">
+        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 z-10 relative flex flex-col h-full">
+          
+          {/* Top Text Content */}
+          <div className="max-w-4xl mb-12 text-left">
+            <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
+              Firm Established {company.established}
+            </span>
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight text-brand-primary mb-6">
+              {homeSettings.heroTitle || "JOYCE J CHARUVILA & ASSOCIATES"}
+            </h1>
             
-            {/* Left Column Heading & Panels (70%) */}
-            <div className="lg:col-span-8 flex flex-col justify-center text-left">
-              <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
-                Firm Established {company.established}
-              </span>
-              <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight text-brand-primary mb-8 max-w-3xl">
-                {homeSettings.heroTitle || "JOYCE J CHARUVILA & ASSOCIATES"}
-              </h1>
-              
-              <p className="font-sans text-lg md:text-xl text-brand-secondary font-medium mb-12 max-w-2xl leading-relaxed">
-                {homeSettings.heroSubtitle || "Professional accounting, audit, taxation and advisory services for businesses and individuals in India and the United Arab Emirates."}
-              </p>
+            <p className="font-sans text-lg md:text-xl text-brand-secondary font-medium leading-relaxed max-w-2xl">
+              {homeSettings.heroSubtitle || "Professional accounting, audit, taxation and advisory services for businesses and individuals in India and the United Arab Emirates."}
+            </p>
+          </div>
 
-              {/* INDIA & UAE DESTINATION CARDS */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full mb-12">
+          {/* Wide Banner Image with Overlaid Cards */}
+          <div className="relative w-full h-[500px] md:h-[600px] rounded-[32px] overflow-hidden shadow-glass group mt-auto">
+            <img
+              src={heroImageSrc}
+              alt="Joyce J Charuvila & Associates Office Architecture"
+              className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* Dark gradient overlay so cards stand out and image doesn't clash */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 border border-brand-border pointer-events-none rounded-[32px]" />
+
+            {/* Overlaid Cards Container */}
+            <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 z-20">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
                 
                 {/* UAE Destination Panel */}
-                <Link href="/services/uae" className="group">
-                  <div className="min-h-[240px] w-full bg-slate-50 border border-slate-200 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
+                <Link href="/services/uae" className="group/card block">
+                  <div className="h-full bg-white/95 backdrop-blur-md border border-white/40 rounded-[24px] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
                     <div>
                       <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
                         UAE Services
@@ -148,16 +160,16 @@ export default function HomePageClient({
                         Professional Accounting, Corporate Tax, and VAT compliance services.
                       </p>
                     </div>
-                    <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
+                    <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover/card:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
                       <span>Explore Services</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/card:translate-x-1.5" />
                     </div>
                   </div>
                 </Link>
 
                 {/* India Destination Panel */}
-                <Link href="/services/india" className="group">
-                  <div className="min-h-[240px] w-full bg-white border border-slate-200 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
+                <Link href="/services/india" className="group/card block">
+                  <div className="h-full bg-white/95 backdrop-blur-md border border-white/40 rounded-[24px] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
                     <div>
                       <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
                         India Services
@@ -169,41 +181,17 @@ export default function HomePageClient({
                         Statutory Audits, Taxation, and advisory services for businesses.
                       </p>
                     </div>
-                    <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
+                    <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover/card:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
                       <span>Explore Services</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/card:translate-x-1.5" />
                     </div>
                   </div>
                 </Link>
-                
-              </div>
 
-              <div className="flex items-center space-x-8 pt-6 border-t border-brand-divider max-w-xl">
-                <div>
-                  <p className="font-sans text-xs text-brand-secondary uppercase tracking-widest font-semibold">Location</p>
-                  <p className="font-sans text-sm text-brand-primary font-medium">{company.location.city}, {company.location.state}</p>
-                </div>
-                <div className="w-[1px] h-8 bg-brand-border" />
-                <div>
-                  <p className="font-sans text-xs text-brand-secondary uppercase tracking-widest font-semibold">Practice</p>
-                  <p className="font-sans text-sm text-brand-primary font-medium">Dual-Jurisdiction India + UAE</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Architectural Photo (Shown on all screen sizes) */}
-            <div className="lg:col-span-4 block mt-8 lg:mt-0 relative z-10">
-              <div className="relative aspect-[16/9] sm:aspect-[4/3] lg:aspect-[3/4] w-full rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-glass">
-                <img
-                  src={heroImageSrc}
-                  alt="Joyce J Charuvila & Associates Office Architecture"
-                  className="w-full h-full object-cover absolute inset-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/10 to-transparent pointer-events-none" />
-                <div className="absolute inset-0 border border-brand-border pointer-events-none rounded-[28px] sm:rounded-[32px]" />
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
