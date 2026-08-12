@@ -50,12 +50,12 @@ function getCategoryTag(slug: string) {
 // Helper to map slug to local image path
 function getServiceImagePath(slug: string, serviceImage?: string) {
   if (serviceImage) return serviceImage;
-  if (slug.includes("accounting")) return "/images/services/uae/accounting-bookkeeping-uae.jpg";
-  if (slug.includes("audit")) return "/images/services/uae/audit-support.jpg";
-  if (slug.includes("vat-registration")) return "/images/services/uae/vat-registration-deregistration.jpg";
-  if (slug.includes("vat-filing")) return "/images/services/uae/vat-filing.jpg";
-  if (slug.includes("corporate-tax-registration")) return "/images/services/uae/corporate-tax-registration.jpg";
-  if (slug.includes("corporate-tax-filing")) return "/images/services/uae/corporate-tax-filing.jpg";
+  if (slug.includes("accounting")) return "/images/services/uae/accounting-new.jpg";
+  if (slug.includes("audit")) return "/images/services/uae/audit-new.jpg";
+  if (slug.includes("vat-registration")) return "/images/services/uae/vat-reg-new.jpg";
+  if (slug.includes("vat-filing")) return "/images/services/uae/vat-filing-new.jpg";
+  if (slug.includes("corporate-tax-registration")) return "/images/services/uae/ct-reg-new.jpg";
+  if (slug.includes("corporate-tax-filing")) return "/images/services/uae/ct-filing-new.jpg";
   return "/images/services/uae-tax-documents.webp"; // fallback
 }
 

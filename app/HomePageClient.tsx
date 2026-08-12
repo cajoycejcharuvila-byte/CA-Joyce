@@ -114,84 +114,78 @@ export default function HomePageClient({
       />
 
       {/* SECTION 01: HERO */}
-      <section className="relative min-h-[calc(100vh-90px)] flex flex-col justify-center bg-brand-bg pt-10 pb-20 md:py-20 overflow-hidden">
-        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 z-10 relative flex flex-col h-full">
+      <section className="relative min-h-[calc(100vh-90px)] flex flex-col justify-center pt-24 pb-16 overflow-hidden">
+        {/* Full width background image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={heroImageSrc}
+            alt="Joyce J Charuvila & Associates Office Architecture"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-slate-900/60" />
+        </div>
+
+        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 z-10 relative flex flex-col h-full justify-between">
           
-          {/* Top Text Content */}
-          <div className="max-w-4xl mb-12 text-left">
-            <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
+          <div className="max-w-4xl mb-16 mt-8">
+            <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block drop-shadow-sm">
               Firm Established {company.established}
             </span>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight text-brand-primary mb-6">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight text-white mb-6 drop-shadow-md">
               {homeSettings.heroTitle || "JOYCE J CHARUVILA & ASSOCIATES"}
             </h1>
             
-            <p className="font-sans text-lg md:text-xl text-brand-secondary font-medium leading-relaxed max-w-2xl">
+            <p className="font-sans text-lg md:text-xl text-white/90 font-medium leading-relaxed max-w-2xl drop-shadow-sm">
               {homeSettings.heroSubtitle || "Professional accounting, audit, taxation and advisory services for businesses and individuals in India and the United Arab Emirates."}
             </p>
           </div>
 
-          {/* Wide Banner Image with Overlaid Cards */}
-          <div className="relative w-full h-[500px] md:h-[600px] rounded-[32px] overflow-hidden shadow-glass group mt-auto">
-            <img
-              src={heroImageSrc}
-              alt="Joyce J Charuvila & Associates Office Architecture"
-              className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-            />
-            {/* Dark gradient overlay so cards stand out and image doesn't clash */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 border border-brand-border pointer-events-none rounded-[32px]" />
-
-            {/* Overlaid Cards Container */}
-            <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 z-20">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
-                
-                {/* UAE Destination Panel */}
-                <Link href="/services/uae" className="group/card block">
-                  <div className="h-full bg-white/95 backdrop-blur-md border border-white/40 rounded-[24px] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
-                    <div>
-                      <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
-                        UAE Services
-                      </span>
-                      <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary leading-tight">
-                        Accounting & Corporate Tax
-                      </h3>
-                      <p className="font-sans text-xs md:text-sm text-brand-secondary mt-2">
-                        Professional Accounting, Corporate Tax, and VAT compliance services.
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover/card:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
-                      <span>Explore Services</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/card:translate-x-1.5" />
-                    </div>
-                  </div>
-                </Link>
-
-                {/* India Destination Panel */}
-                <Link href="/services/india" className="group/card block">
-                  <div className="h-full bg-white/95 backdrop-blur-md border border-white/40 rounded-[24px] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
-                    <div>
-                      <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
-                        India Services
-                      </span>
-                      <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary leading-tight">
-                        Audit & Tax Compliance
-                      </h3>
-                      <p className="font-sans text-xs md:text-sm text-brand-secondary mt-2">
-                        Statutory Audits, Taxation, and advisory services for businesses.
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover/card:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
-                      <span>Explore Services</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/card:translate-x-1.5" />
-                    </div>
-                  </div>
-                </Link>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-4xl">
+            
+            {/* UAE Destination Panel */}
+            <Link href="/services/uae" className="group/card block">
+              <div className="h-full bg-white/95 backdrop-blur-md border border-white/40 rounded-[24px] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
+                <div>
+                  <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
+                    UAE Services
+                  </span>
+                  <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary leading-tight">
+                    Accounting & Corporate Tax
+                  </h3>
+                  <p className="font-sans text-xs md:text-sm text-brand-secondary mt-2">
+                    Professional Accounting, Corporate Tax, and VAT compliance services.
+                  </p>
+                </div>
+                <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover/card:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
+                  <span>Explore Services</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/card:translate-x-1.5" />
+                </div>
               </div>
-            </div>
-          </div>
+            </Link>
 
+            {/* India Destination Panel */}
+            <Link href="/services/india" className="group/card block">
+              <div className="h-full bg-white/95 backdrop-blur-md border border-white/40 rounded-[24px] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer shadow-soft hover:shadow-glass hover:border-brand-primary/20 text-left">
+                <div>
+                  <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
+                    India Services
+                  </span>
+                  <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary leading-tight">
+                    Audit & Tax Compliance
+                  </h3>
+                  <p className="font-sans text-xs md:text-sm text-brand-secondary mt-2">
+                    Statutory Audits, Taxation, and advisory services for businesses.
+                  </p>
+                </div>
+                <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover/card:text-brand-accent transition-colors pt-4 border-t border-brand-divider mt-6">
+                  <span>Explore Services</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/card:translate-x-1.5" />
+                </div>
+              </div>
+            </Link>
+
+          </div>
         </div>
       </section>
 
