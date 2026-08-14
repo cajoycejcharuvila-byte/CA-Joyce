@@ -22,6 +22,7 @@ export interface InsightItem {
   slug: string;
   title: string;
   category: string;
+  image?: string;
   readTime: string;
   date: string;
   author: string;

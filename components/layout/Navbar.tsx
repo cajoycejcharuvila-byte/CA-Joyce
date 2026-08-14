@@ -140,7 +140,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                     animate="visible"
                     exit="exit"
                     id="services-mega-menu" 
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white/95 backdrop-blur-2xl border border-brand-border rounded-[32px] shadow-glass p-10 w-[850px] z-50 before:content-[''] before:absolute before:top-[-20px] before:left-0 before:right-0 before:h-[20px]"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-brand-primary backdrop-blur-2xl border border-slate-800 rounded-[32px] shadow-2xl p-10 w-[850px] z-50 before:content-[''] before:absolute before:top-[-20px] before:left-0 before:right-0 before:h-[20px]"
                   >
                     <div className="grid grid-cols-2 gap-16 text-left">
                       
@@ -162,18 +162,18 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                           ].map((item, idx) => (
                             <motion.li key={idx} variants={itemVariants}>
                               <Link href={item.href} className="group block">
-                                <h4 className="font-display text-lg text-brand-primary group-hover:text-brand-accent transition-colors duration-300 flex items-center justify-between">
+                                <h4 className="font-display text-lg text-white group-hover:text-brand-accent transition-colors duration-300 flex items-center justify-between">
                                   <span>{item.name}</span>
                                   <ArrowRight className="w-4 h-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-brand-accent" />
                                 </h4>
-                                <p className="font-sans text-xs text-slate-500 mt-0.5">{item.sub}</p>
-                                <div className="h-[1px] w-0 bg-brand-accent/20 mt-3 group-hover:w-full transition-all duration-500"></div>
+                                <p className="font-sans text-xs text-slate-400 mt-0.5">{item.sub}</p>
+                                <div className="h-[1px] w-0 bg-brand-accent/40 mt-3 group-hover:w-full transition-all duration-500"></div>
                               </Link>
                             </motion.li>
                           ))}
                         </motion.ul>
                         <div className="mt-6">
-                          <Link href="/services/india" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 group/link">
+                          <Link href="/services/india" className="font-sans text-xs font-semibold text-slate-300 hover:text-white flex items-center space-x-1 group/link">
                             <span>Explore all India services</span>
                             <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
                           </Link>
@@ -198,18 +198,18 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                           ].map((item, idx) => (
                             <motion.li key={idx} variants={itemVariants}>
                               <Link href={item.href} className="group block">
-                                <h4 className="font-display text-lg text-brand-primary group-hover:text-emerald-700 transition-colors duration-300 flex items-center justify-between">
+                                <h4 className="font-display text-lg text-white group-hover:text-emerald-400 transition-colors duration-300 flex items-center justify-between">
                                   <span>{item.name}</span>
-                                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-emerald-700" />
+                                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-emerald-400" />
                                 </h4>
-                                <p className="font-sans text-xs text-slate-500 mt-0.5">{item.sub}</p>
-                                <div className="h-[1px] w-0 bg-emerald-700/20 mt-3 group-hover:w-full transition-all duration-500"></div>
+                                <p className="font-sans text-xs text-slate-400 mt-0.5">{item.sub}</p>
+                                <div className="h-[1px] w-0 bg-emerald-500/40 mt-3 group-hover:w-full transition-all duration-500"></div>
                               </Link>
                             </motion.li>
                           ))}
                         </motion.ul>
                         <div className="mt-6">
-                          <Link href="/services/uae" className="font-sans text-xs font-semibold text-brand-primary hover:text-emerald-700 flex items-center space-x-1 group/link">
+                          <Link href="/services/uae" className="font-sans text-xs font-semibold text-slate-300 hover:text-white flex items-center space-x-1 group/link">
                             <span>Explore all UAE services</span>
                             <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
                           </Link>

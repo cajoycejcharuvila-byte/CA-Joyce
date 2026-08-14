@@ -202,32 +202,35 @@ export default function IndiaServicesPageClient() {
             </h2>
           </div>
 
-          <div className="flex flex-col">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {services.slice(0, 3).map((service, index) => (
               <Link 
                 href={`/services/india/${service.slug}`} 
                 key={service.slug}
-                className="group flex flex-col md:flex-row md:items-start gap-4 md:gap-8 py-8 border-b border-brand-divider last:border-b-0"
+                className="group relative bg-white border border-brand-border rounded-[32px] overflow-hidden hover:shadow-glass hover:-translate-y-2 transition-all duration-500 flex flex-col h-full min-h-[340px] p-8 md:p-10"
               >
-                <div className="flex items-center gap-4 shrink-0">
-                  <span className="font-mono text-sm text-brand-accent font-bold uppercase tracking-widest bg-brand-accent/5 px-3 py-1.5 rounded-full border border-brand-accent/10">
-                    0{index + 1}
-                  </span>
-                  <div className="bg-white p-2.5 rounded-xl border border-brand-border text-brand-primary group-hover:text-brand-accent transition-colors shadow-soft">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-brand-accent/5 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/3 group-hover:bg-brand-accent/10 transition-colors duration-500 pointer-events-none"></div>
+                
+                <div className="flex items-center justify-between mb-10 z-10">
+                  <div className="bg-brand-bg p-3.5 rounded-2xl border border-brand-border text-brand-primary group-hover:text-brand-accent group-hover:scale-110 transition-all duration-500 shadow-sm">
                     {getServiceIcon(service.slug)}
                   </div>
+                  <span className="font-mono text-xs text-brand-accent font-bold uppercase tracking-widest bg-brand-accent/5 px-3 py-1.5 rounded-full border border-brand-accent/10">
+                    0{index + 1}
+                  </span>
                 </div>
-                <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-2 font-normal group-hover:text-brand-accent transition-colors duration-300">
-                      {service.title}
-                    </h3>
-                    <p className="font-sans text-sm md:text-base text-brand-secondary leading-relaxed max-w-2xl">
-                      {service.overview}
-                    </p>
-                  </div>
-                  <div className="w-10 h-10 shrink-0 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary group-hover:text-white group-hover:bg-brand-accent group-hover:border-brand-accent transition-all duration-300 self-start sm:self-center mt-2 sm:mt-0">
-                    <ArrowRight className="w-5 h-5" />
+                
+                <div className="flex-1 flex flex-col justify-end z-10">
+                  <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-4 font-normal group-hover:text-brand-accent transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="font-sans text-sm text-brand-secondary leading-relaxed mb-8 line-clamp-3">
+                    {service.overview}
+                  </p>
+                  
+                  <div className="flex items-center space-x-2 font-sans text-xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors mt-auto">
+                    <span>Explore Service</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>
@@ -237,20 +240,22 @@ export default function IndiaServicesPageClient() {
           {services.length > 3 && (
             <div className="mt-16 pt-16 border-t border-brand-divider">
               <h3 className="font-display text-2xl text-brand-primary mb-8">Other Specialized Services</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {services.slice(3).map((service) => (
                   <Link 
                     href={`/services/india/${service.slug}`} 
                     key={service.slug} 
-                    className="group flex items-center justify-between py-4 border-b border-brand-divider hover:border-brand-accent transition-all"
+                    className="group flex items-center p-4 bg-white border border-brand-border rounded-[20px] hover:border-brand-accent/30 hover:shadow-soft transition-all duration-300"
                   >
-                    <div className="flex items-center space-x-3">
-                      <div className="text-brand-primary group-hover:text-brand-accent transition-colors">
-                         {getServiceIcon(service.slug)}
-                      </div>
-                      <h4 className="font-sans font-semibold text-brand-primary group-hover:text-brand-accent transition-colors">{service.title.replace(" (India)", "")}</h4>
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 mr-4 text-brand-primary group-hover:bg-brand-accent/5 group-hover:text-brand-accent transition-colors border border-brand-border group-hover:border-brand-accent/20">
+                      {getServiceIcon(service.slug)}
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-accent group-hover:translate-x-1 transition-all shrink-0" />
+                    <div className="flex-1 flex items-center justify-between">
+                      <h4 className="font-sans text-sm font-semibold text-brand-primary group-hover:text-brand-accent transition-colors">
+                        {service.title.replace(" (India)", "")}
+                      </h4>
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-accent group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                    </div>
                   </Link>
                 ))}
               </div>

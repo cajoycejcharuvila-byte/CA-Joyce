@@ -510,7 +510,7 @@ export default function HomePageClient({
                     <div className="bg-brand-bg border border-brand-border rounded-[24px] p-6 md:p-8 shadow-soft hover:shadow-glass hover:border-brand-primary/20 transition-all duration-300 flex flex-col sm:flex-row gap-6 text-left">
                       <div className="relative w-full sm:w-32 h-28 shrink-0 rounded-[16px] overflow-hidden bg-slate-100">
                         <Image
-                          src={articleImages[idx % articleImages.length]}
+                          src={article.image || articleImages[idx % articleImages.length]}
                           alt={article.title}
                           fill
                           sizes="128px"
@@ -547,37 +547,38 @@ export default function HomePageClient({
       </section>
 
       {/* SECTION 05: COMMON FAQs ACCORDION */}
-      <section className="py-16 md:py-28 bg-slate-50 border-t border-brand-divider">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-left">
+      <section className="py-16 md:py-28 bg-brand-bg border-t border-brand-divider">
+        <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-left">
           
-          <div className="max-w-3xl mb-12">
+          <div className="mb-16">
             <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
               Got Questions?
             </span>
-            <h2 className="font-display text-4xl md:text-6xl font-normal text-brand-primary tracking-tight">
+            <h2 className="font-display text-4xl md:text-5xl font-normal text-brand-primary tracking-tight">
               Frequently Asked Questions
             </h2>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-4">
+          <div className="space-y-0">
             {slicedFaqs.map((faq, index) => {
               const isOpen = activeFaq === index;
               return (
                 <div 
                   key={index}
-                  className="bg-white border border-brand-border rounded-[24px] overflow-hidden transition-all duration-300 shadow-soft"
+                  className="border-b border-brand-divider transition-all duration-300 group"
                 >
                   <button
                     onClick={() => setActiveFaq(isOpen ? null : index)}
-                    className="w-full py-6 px-6 md:py-7 md:px-8 flex items-center justify-between text-left focus:outline-none"
+                    className="w-full py-6 flex items-center justify-between text-left focus:outline-none"
                   >
-                    <span className="font-display text-xl md:text-2xl font-normal text-brand-primary pr-4">
+                    <span className="font-display text-xl md:text-2xl font-normal text-brand-primary pr-8 group-hover:text-brand-accent transition-colors duration-300">
                       {faq.question}
                     </span>
                     <div 
-                      className={`w-8 h-8 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary transition-all duration-300 shrink-0 ${isOpen ? "rotate-180 bg-brand-primary border-brand-primary text-white" : ""}`}
+                      className={`relative w-6 h-6 flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}
                     >
-                      <ChevronDown className="w-4 h-4" />
+                      <span className="absolute w-full h-[1.5px] bg-brand-primary group-hover:bg-brand-accent transition-colors"></span>
+                      <span className="absolute h-full w-[1.5px] bg-brand-primary group-hover:bg-brand-accent transition-colors"></span>
                     </div>
                   </button>
 
@@ -588,8 +589,9 @@ export default function HomePageClient({
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
                       >
-                        <div className="px-6 pb-6 md:px-8 md:pb-8 pt-2 border-t border-[rgba(15,23,42,0.04)] font-sans text-sm text-brand-secondary leading-relaxed">
+                        <div className="pb-8 pr-12 font-sans text-sm md:text-base text-brand-secondary leading-relaxed">
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -600,13 +602,13 @@ export default function HomePageClient({
             })}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="mt-16">
             <Link 
               href="/faq"
-              className="inline-flex items-center space-x-2 bg-brand-primary hover:bg-brand-accent text-white px-8 py-4 rounded-[20px] font-sans font-medium transition-all duration-300 shadow-soft"
+              className="inline-flex items-center space-x-2 font-sans text-sm font-semibold text-brand-accent hover:text-brand-primary transition-colors group"
             >
-              <span>View All FAQs</span>
-              <ArrowRight className="w-4 h-4" />
+              <span className="border-b border-brand-accent/30 group-hover:border-brand-primary/30 pb-0.5">View All FAQs</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
