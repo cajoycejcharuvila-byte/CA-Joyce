@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageSquare, PhoneCall, ChevronDown } from "lucide-react";
+import { Menu, X, MessageSquare, PhoneCall, ChevronDown, ArrowRight } from "lucide-react";
 import { getCompanyInfo } from "@/lib/cms";
 import { CompanyInfo } from "@/types";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -36,7 +36,6 @@ export default function Navbar({ companyInfo }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile drawer and mega menu when pathname changes
   useEffect(() => {
     setTimeout(() => {
       setIsOpen(false);
@@ -44,7 +43,6 @@ export default function Navbar({ companyInfo }: NavbarProps) {
     }, 0);
   }, [pathname]);
 
-  // Handle Escape key to close menus
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -56,33 +54,50 @@ export default function Navbar({ companyInfo }: NavbarProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const menuVariants: any = {
+    hidden: { opacity: 0, y: 15, scale: 0.98 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 0.3, 
+        ease: "easeOut",
+        staggerChildren: 0.05
+      }
+    },
+    exit: { opacity: 0, y: 10, scale: 0.98, transition: { duration: 0.2 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } }
+  };
+
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 h-[90px] transition-all duration-500 flex items-center ${
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1300px] h-[72px] transition-all duration-500 rounded-full flex items-center px-6 md:px-8 ${
           scrolled
-            ? "bg-brand-glass backdrop-blur-[20px] border-b border-brand-divider shadow-soft"
-            : "bg-transparent border-b border-transparent"
+            ? "bg-white/80 backdrop-blur-xl border border-brand-border shadow-glass"
+            : "bg-transparent border border-transparent"
         }`}
       >
-        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="w-full flex items-center justify-between">
           {/* Logo / Name */}
-          <Link href="/" className="flex items-center space-x-3.5 group z-50">
-            <div className="relative w-10 h-10 shrink-0 transition-transform duration-300 group-hover:scale-[1.05]">
+          <Link href="/" className="flex items-center space-x-3 group z-50">
+            <div className="relative w-9 h-9 shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]">
               <Image
                 src="/logo.png"
                 alt="JOYCE J CHARUVILA & ASSOCIATES"
                 fill
-                className="object-contain animate-none"
+                className="object-contain"
                 priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-xl md:text-2xl font-bold leading-none tracking-tight text-brand-primary group-hover:text-brand-accent transition-colors duration-300">
+              <span className="font-display text-lg md:text-xl font-bold leading-none tracking-tight text-brand-primary group-hover:text-brand-accent transition-colors duration-300">
                 JOYCE J CHARUVILA & ASSOCIATES
-              </span>
-              <span className="font-sans text-[9px] uppercase tracking-[0.25em] text-brand-secondary font-medium mt-1">
-                Chartered Accountants
               </span>
             </div>
           </Link>
@@ -91,7 +106,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           <nav className="hidden lg:flex items-center space-x-8">
             <Link
               href="/about"
-              className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 relative py-1 ${
+              className={`font-sans text-sm font-medium tracking-wide transition-all duration-300 relative py-2 px-1 hover:-translate-y-0.5 ${
                 pathname === "/about" ? "text-brand-accent" : "text-brand-secondary hover:text-brand-primary"
               }`}
             >
@@ -109,183 +124,107 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                 aria-expanded={isServicesMenuOpen}
                 aria-controls="services-mega-menu"
                 onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
-                className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 flex items-center space-x-1 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md px-1 ${
+                className={`font-sans text-sm font-medium tracking-wide transition-all duration-300 flex items-center space-x-1 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md px-1 hover:-translate-y-0.5 ${
                   pathname.startsWith("/services") ? "text-brand-accent" : "text-brand-secondary hover:text-brand-primary"
                 }`}
               >
                 <span>Services</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isServicesMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isServicesMenuOpen ? 'rotate-180 text-brand-accent' : ''}`} />
               </button>
 
               <AnimatePresence>
-              {isServicesMenuOpen && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2 }}
-                id="services-mega-menu" 
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-white border border-brand-divider rounded-[24px] shadow-glass p-8 w-[760px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]"
-              >
-                <div className="grid grid-cols-2 gap-8 text-left">
-                  
-                  {/* India Practice Column */}
-                  <div className="bg-slate-50/70 border border-slate-200/80 rounded-[20px] p-5 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
-                        <Link
-                          href="/services/india"
-                          className="font-sans text-xs uppercase tracking-[0.2em] text-brand-primary font-bold hover:text-brand-accent transition-colors duration-200"
-                        >
-                          India Practice
-                        </Link>
-                        <span className="font-sans text-[10px] uppercase tracking-widest bg-amber-50 text-amber-800 border border-amber-200/70 px-2.5 py-0.5 rounded-full font-bold">
-                          India
-                        </span>
+                {isServicesMenuOpen && (
+                  <motion.div 
+                    variants={menuVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    id="services-mega-menu" 
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white/95 backdrop-blur-2xl border border-brand-border rounded-[32px] shadow-glass p-10 w-[850px] z-50 before:content-[''] before:absolute before:top-[-20px] before:left-0 before:right-0 before:h-[20px]"
+                  >
+                    <div className="grid grid-cols-2 gap-16 text-left">
+                      
+                      {/* India Practice */}
+                      <div>
+                        <div className="flex items-center space-x-3 mb-6">
+                          <span className="w-8 h-px bg-brand-accent"></span>
+                          <span className="font-sans text-xs uppercase tracking-[0.2em] text-brand-accent font-bold">
+                            India Practice
+                          </span>
+                        </div>
+                        <motion.ul className="space-y-5">
+                          {[
+                            { name: "Statutory Audit", sub: "Companies Act audit & financials", href: "/services/india/statutory-audit" },
+                            { name: "GST Registration & Filing", sub: "GSTR 1, 3B & annual reconciliation", href: "/services/india/gst-registration-filing" },
+                            { name: "Income Tax & Tax Audit", sub: "Form 3CD & annual tax return filing", href: "/services/india/income-tax-audit-return-filing" },
+                            { name: "Accounting & Bookkeeping", sub: "Monthly ledger & MIS statements", href: "/services/india/accounting-bookkeeping-india" },
+                            { name: "Bank Concurrent Audit", sub: "Branch audits & loan portfolio review", href: "/services/india/bank-concurrent-audit" },
+                          ].map((item, idx) => (
+                            <motion.li key={idx} variants={itemVariants}>
+                              <Link href={item.href} className="group block">
+                                <h4 className="font-display text-lg text-brand-primary group-hover:text-brand-accent transition-colors duration-300 flex items-center justify-between">
+                                  <span>{item.name}</span>
+                                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-brand-accent" />
+                                </h4>
+                                <p className="font-sans text-xs text-slate-500 mt-0.5">{item.sub}</p>
+                                <div className="h-[1px] w-0 bg-brand-accent/20 mt-3 group-hover:w-full transition-all duration-500"></div>
+                              </Link>
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                        <div className="mt-6">
+                          <Link href="/services/india" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 group/link">
+                            <span>Explore all India services</span>
+                            <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                          </Link>
+                        </div>
                       </div>
-                      <div className="space-y-1">
-                        <Link
-                          href="/services/india/statutory-audit"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Statutory Audit</p>
-                            <p className="font-sans text-[11px] text-slate-500">Companies Act audit & financials</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/india/gst-registration-filing"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">GST Registration & Filing</p>
-                            <p className="font-sans text-[11px] text-slate-500">GSTR 1, 3B & annual reconciliation</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/india/income-tax-audit-return-filing"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Income Tax & Tax Audit</p>
-                            <p className="font-sans text-[11px] text-slate-500">Form 3CD & annual tax return filing</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/india/accounting-bookkeeping-india"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Accounting & Bookkeeping</p>
-                            <p className="font-sans text-[11px] text-slate-500">Monthly ledger & MIS statements</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/india/bank-concurrent-audit"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Bank Concurrent Audit</p>
-                            <p className="font-sans text-[11px] text-slate-500">Branch audits & loan portfolio review</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="pt-3 border-t border-slate-200 mt-3 text-right">
-                      <Link href="/services/india" className="font-sans text-[11px] font-bold text-brand-accent hover:underline">
-                        View All 10 India Services →
-                      </Link>
-                    </div>
-                  </div>
 
-                  {/* UAE Practice Column */}
-                  <div className="bg-slate-50/70 border border-slate-200/80 rounded-[20px] p-5 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
-                        <Link
-                          href="/services/uae"
-                          className="font-sans text-xs uppercase tracking-[0.2em] text-brand-primary font-bold hover:text-brand-accent transition-colors duration-200"
-                        >
-                          UAE Practice
-                        </Link>
-                        <span className="font-sans text-[10px] uppercase tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-200/70 px-2.5 py-0.5 rounded-full font-bold">
-                          UAE
-                        </span>
+                      {/* UAE Practice */}
+                      <div>
+                        <div className="flex items-center space-x-3 mb-6">
+                          <span className="w-8 h-px bg-emerald-600"></span>
+                          <span className="font-sans text-xs uppercase tracking-[0.2em] text-emerald-700 font-bold">
+                            UAE Practice
+                          </span>
+                        </div>
+                        <motion.ul className="space-y-5">
+                          {[
+                            { name: "Corporate Tax Filing", sub: "Decree-Law No. 47 annual tax return", href: "/services/uae/corporate-tax-filing" },
+                            { name: "Corporate Tax Registration", sub: "FTA EmaraTax TRN registration", href: "/services/uae/corporate-tax-registration" },
+                            { name: "VAT Filing & Compliance", sub: "Quarterly VAT201 return submissions", href: "/services/uae/vat-filing" },
+                            { name: "Accounting & Bookkeeping", sub: "IFRS compliant financial accounts", href: "/services/uae/accounting-bookkeeping-uae" },
+                            { name: "Audit Support Services", sub: "Mainland & Free Zone audit assistance", href: "/services/uae/audit-support" },
+                          ].map((item, idx) => (
+                            <motion.li key={idx} variants={itemVariants}>
+                              <Link href={item.href} className="group block">
+                                <h4 className="font-display text-lg text-brand-primary group-hover:text-emerald-700 transition-colors duration-300 flex items-center justify-between">
+                                  <span>{item.name}</span>
+                                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-emerald-700" />
+                                </h4>
+                                <p className="font-sans text-xs text-slate-500 mt-0.5">{item.sub}</p>
+                                <div className="h-[1px] w-0 bg-emerald-700/20 mt-3 group-hover:w-full transition-all duration-500"></div>
+                              </Link>
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                        <div className="mt-6">
+                          <Link href="/services/uae" className="font-sans text-xs font-semibold text-brand-primary hover:text-emerald-700 flex items-center space-x-1 group/link">
+                            <span>Explore all UAE services</span>
+                            <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                          </Link>
+                        </div>
                       </div>
-                      <div className="space-y-1">
-                        <Link
-                          href="/services/uae/corporate-tax-filing"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Corporate Tax Filing</p>
-                            <p className="font-sans text-[11px] text-slate-500">Decree-Law No. 47 annual tax return</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/uae/corporate-tax-registration"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Corporate Tax Registration</p>
-                            <p className="font-sans text-[11px] text-slate-500">FTA EmaraTax TRN registration</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/uae/vat-filing"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">VAT Filing & Compliance</p>
-                            <p className="font-sans text-[11px] text-slate-500">Quarterly VAT201 return submissions</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/uae/accounting-bookkeeping-uae"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Accounting & Bookkeeping</p>
-                            <p className="font-sans text-[11px] text-slate-500">IFRS compliant financial accounts</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                        <Link
-                          href="/services/uae/audit-support"
-                          className="group/item flex items-center justify-between p-2 rounded-[10px] hover:bg-white transition-all duration-200"
-                        >
-                          <div>
-                            <p className="font-sans text-xs font-semibold text-brand-primary group-hover/item:text-brand-accent">Audit Support Services</p>
-                            <p className="font-sans text-[11px] text-slate-500">Mainland & Free Zone audit assistance</p>
-                          </div>
-                          <span className="text-slate-400 group-hover/item:text-brand-accent text-xs">→</span>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="pt-3 border-t border-slate-200 mt-3 text-right">
-                      <Link href="/services/uae" className="font-sans text-[11px] font-bold text-brand-accent hover:underline">
-                        View All UAE Services →
-                      </Link>
-                    </div>
-                  </div>
 
-                </div>
-              </motion.div>
-              )}
+                    </div>
+                  </motion.div>
+                )}
               </AnimatePresence>
             </div>
 
             <Link
               href="/insights"
-              className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 relative py-1 ${
+              className={`font-sans text-sm font-medium tracking-wide transition-all duration-300 relative py-2 px-1 hover:-translate-y-0.5 ${
                 pathname.startsWith("/insights") ? "text-brand-accent" : "text-brand-secondary hover:text-brand-primary"
               }`}
             >
@@ -294,7 +233,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
 
             <Link
               href="/contact"
-              className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 relative py-1 ${
+              className={`font-sans text-sm font-medium tracking-wide transition-all duration-300 relative py-2 px-1 hover:-translate-y-0.5 ${
                 pathname === "/contact" ? "text-brand-accent" : "text-brand-secondary hover:text-brand-primary"
               }`}
             >
@@ -303,21 +242,21 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           </nav>
 
           {/* Desktop CTAs */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-3">
             <a
               href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 border border-brand-border text-brand-primary hover:border-brand-primary px-5 py-2.5 rounded-[20px] font-sans text-sm font-medium transition-all duration-300 bg-white dark:bg-[#121826] focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
+              className="group flex items-center justify-center w-10 h-10 rounded-full border border-brand-border bg-white hover:border-brand-accent hover:bg-brand-accent transition-all duration-300 focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none shadow-sm hover:shadow-soft"
+              aria-label="WhatsApp Consultation"
             >
-              <MessageSquare className="w-4 h-4 text-brand-accent" />
-              <span>WhatsApp</span>
+              <MessageSquare className="w-4 h-4 text-brand-accent group-hover:text-white transition-colors" />
             </a>
             <Link
               href="/contact"
-              className="inline-flex items-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white px-5 py-2.5 rounded-[20px] font-sans text-sm font-medium shadow-soft hover:shadow-glass hover:translate-y-[-2px] transition-all duration-300"
+              className="inline-flex items-center space-x-2 bg-brand-primary hover:bg-brand-accent text-white px-5 py-2.5 rounded-full font-sans text-sm font-medium shadow-soft hover:shadow-glass hover:scale-105 transition-all duration-300"
             >
-              <span>Schedule Consultation</span>
+              <span>Consult Now</span>
             </Link>
           </div>
 
@@ -341,15 +280,16 @@ export default function Navbar({ companyInfo }: NavbarProps) {
         {isOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 bg-brand-bg flex flex-col justify-between pt-[120px] pb-12 px-8 lg:hidden"
+            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl flex flex-col justify-between pt-[100px] pb-12 px-8 lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
           >
+            {/* Same mobile menu structure as before */}
             <div className="flex-1 overflow-y-auto pr-2 my-6 space-y-6 no-scrollbar">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
                 <Link
@@ -378,72 +318,11 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden pl-4 pr-2 mt-3 space-y-2.5 border-l border-brand-divider"
                     >
-                      <Link
-                        href="/services/india"
-                        className="block font-sans text-sm font-bold text-brand-accent hover:text-brand-primary py-1"
-                      >
-                        All India Services →
-                      </Link>
-                      <Link
-                        href="/services/india/accounting-bookkeeping-india"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Accounting & Bookkeeping
-                      </Link>
-                      <Link
-                        href="/services/india/statutory-audit"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Statutory Audit
-                      </Link>
-                      <Link
-                        href="/services/india/bank-concurrent-audit"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Bank Concurrent Audit
-                      </Link>
-                      <Link
-                        href="/services/india/gst-registration-filing"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        GST Registration & Filing
-                      </Link>
-                      <Link
-                        href="/services/india/income-tax-audit-return-filing"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Income Tax Audit & Return Filing
-                      </Link>
-                      <Link
-                        href="/services/india/tds-filing"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        TDS Filing
-                      </Link>
-                      <Link
-                        href="/services/india/project-finance-loan-assistance"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Project Finance & Loan Assistance
-                      </Link>
-                      <Link
-                        href="/services/india/internal-audit-business-advisory"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Internal Audit & Advisory
-                      </Link>
-                      <Link
-                        href="/services/india/certification-services"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Certification Services
-                      </Link>
-                      <Link
-                        href="/services/india/valuation-services"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Valuation Services
-                      </Link>
+                      <Link href="/services/india" className="block font-sans text-sm font-bold text-brand-accent hover:text-brand-primary py-1">All India Services →</Link>
+                      <Link href="/services/india/accounting-bookkeeping-india" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">Accounting & Bookkeeping</Link>
+                      <Link href="/services/india/statutory-audit" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">Statutory Audit</Link>
+                      <Link href="/services/india/bank-concurrent-audit" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">Bank Concurrent Audit</Link>
+                      <Link href="/services/india/gst-registration-filing" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">GST Registration & Filing</Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -467,68 +346,20 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden pl-4 pr-2 mt-3 space-y-2.5 border-l border-brand-divider"
                     >
-                      <Link
-                        href="/services/uae"
-                        className="block font-sans text-sm font-bold text-brand-accent hover:text-brand-primary py-1"
-                      >
-                        All UAE Services →
-                      </Link>
-                      <Link
-                        href="/services/uae/accounting-bookkeeping-uae"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Accounting & Bookkeeping
-                      </Link>
-                      <Link
-                        href="/services/uae/audit-support"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Audit Support Services
-                      </Link>
-                      <Link
-                        href="/services/uae/vat-registration-deregistration"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        VAT Registration & De-registration
-                      </Link>
-                      <Link
-                        href="/services/uae/vat-filing"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        VAT Filing & Compliance
-                      </Link>
-                      <Link
-                        href="/services/uae/corporate-tax-registration"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Corporate Tax Registration
-                      </Link>
-                      <Link
-                        href="/services/uae/corporate-tax-filing"
-                        className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1"
-                      >
-                        Corporate Tax Filing
-                      </Link>
+                      <Link href="/services/uae" className="block font-sans text-sm font-bold text-brand-accent hover:text-brand-primary py-1">All UAE Services →</Link>
+                      <Link href="/services/uae/accounting-bookkeeping-uae" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">Accounting & Bookkeeping</Link>
+                      <Link href="/services/uae/corporate-tax-filing" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">Corporate Tax Filing</Link>
+                      <Link href="/services/uae/vat-filing" className="block font-sans text-base text-brand-secondary hover:text-brand-primary py-1">VAT Filing & Compliance</Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-                <Link
-                  href="/insights"
-                  className="font-display text-4xl font-bold text-brand-primary hover:text-brand-accent transition-colors duration-300"
-                >
-                  Insights
-                </Link>
+                <Link href="/insights" className="font-display text-4xl font-bold text-brand-primary hover:text-brand-accent transition-colors duration-300">Insights</Link>
               </motion.div>
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}>
-                <Link
-                  href="/contact"
-                  className="font-display text-4xl font-bold text-brand-primary hover:text-brand-accent transition-colors duration-300"
-                >
-                  Contact
-                </Link>
+                <Link href="/contact" className="font-display text-4xl font-bold text-brand-primary hover:text-brand-accent transition-colors duration-300">Contact</Link>
               </motion.div>
             </div>
 
@@ -536,20 +367,20 @@ export default function Navbar({ companyInfo }: NavbarProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-col space-y-4 pt-6 border-t border-[rgba(15,23,42,0.08)] dark:border-[rgba(255,255,255,0.15)]"
+              className="flex flex-col space-y-4 pt-6 border-t border-[rgba(15,23,42,0.08)]"
             >
               <a
                 href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-3 bg-white dark:bg-[#121826] border border-brand-border py-4 rounded-[20px] font-sans font-medium text-brand-primary focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
+                className="flex items-center justify-center space-x-3 bg-white border border-brand-border py-4 rounded-full font-sans font-medium text-brand-primary focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
               >
                 <MessageSquare className="w-5 h-5 text-brand-accent" />
                 <span>WhatsApp Consultation</span>
               </a>
               <Link
                 href="/contact"
-                className="flex items-center justify-center space-x-3 bg-brand-accent py-4 rounded-[20px] font-sans font-medium text-white shadow-soft"
+                className="flex items-center justify-center space-x-3 bg-brand-primary py-4 rounded-full font-sans font-medium text-white shadow-soft"
               >
                 <PhoneCall className="w-5 h-5" />
                 <span>Request Consultation</span>

@@ -275,28 +275,38 @@ export default async function UAEServiceDetailPage({ params }: PageProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8 border-t border-brand-divider mb-12">
           <Link
             href={`/services/uae/${prevService.slug}`}
-            className="group flex flex-col items-start p-8 bg-white border border-brand-border rounded-[24px] hover:border-brand-primary transition-all duration-300"
+            className="group flex flex-col justify-between items-start p-8 bg-white border border-brand-border rounded-[24px] hover:shadow-soft hover:-translate-y-1 hover:border-brand-accent transition-all duration-300"
           >
-            <span className="font-sans text-xs text-slate-400 font-medium flex items-center space-x-1 mb-2">
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Previous Service</span>
-            </span>
-            <span className="font-display text-xl text-brand-primary font-normal group-hover:text-brand-accent transition-colors duration-300">
-              {prevService.title.replace(" (UAE)", "")}
-            </span>
+            <div>
+              <span className="font-sans text-xs text-slate-400 font-bold tracking-widest uppercase mb-3 block">
+                Previous Service
+              </span>
+              <span className="font-display text-2xl text-brand-primary font-normal group-hover:text-brand-accent transition-colors duration-300 block mb-6">
+                {prevService.title.replace(" (UAE)", "")}
+              </span>
+            </div>
+            <div className="inline-flex items-center justify-center space-x-2 bg-slate-50 border border-slate-200 group-hover:bg-brand-accent group-hover:border-brand-accent group-hover:text-white text-brand-primary px-5 py-2.5 rounded-full font-sans text-sm font-medium transition-all duration-300">
+              <ArrowLeft className="w-4 h-4" />
+              <span>View Service</span>
+            </div>
           </Link>
 
           <Link
             href={`/services/uae/${nextService.slug}`}
-            className="group flex flex-col items-end p-8 bg-white border border-brand-border rounded-[24px] hover:border-brand-primary transition-all duration-300 text-right"
+            className="group flex flex-col justify-between items-end p-8 bg-white border border-brand-border rounded-[24px] hover:shadow-soft hover:-translate-y-1 hover:border-brand-accent transition-all duration-300 text-right"
           >
-            <span className="font-sans text-xs text-slate-400 font-medium flex items-center space-x-1 mb-2">
-              <span>Next Service</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </span>
-            <span className="font-display text-xl text-brand-primary font-normal group-hover:text-brand-accent transition-colors duration-300">
-              {nextService.title.replace(" (UAE)", "")}
-            </span>
+            <div>
+              <span className="font-sans text-xs text-slate-400 font-bold tracking-widest uppercase mb-3 block">
+                Next Service
+              </span>
+              <span className="font-display text-2xl text-brand-primary font-normal group-hover:text-brand-accent transition-colors duration-300 block mb-6">
+                {nextService.title.replace(" (UAE)", "")}
+              </span>
+            </div>
+            <div className="inline-flex items-center justify-center space-x-2 bg-brand-primary text-white group-hover:bg-brand-accent group-hover:-translate-y-0.5 px-5 py-2.5 rounded-full font-sans text-sm font-medium shadow-sm transition-all duration-300">
+              <span>View Service</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
           </Link>
         </div>
 

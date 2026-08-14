@@ -190,124 +190,144 @@ export default function HomePageClient({
       </section>
 
       {/* SECTION 01.5: CLIENT PREPARATION & REQUIRED DOCUMENTS CHECKLIST */}
-      <section className="py-16 md:py-24 bg-white border-y border-brand-divider">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 text-left">
-            <div>
-              <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-3 block">
-                Filing Preparation
-              </span>
-              <h2 className="font-display text-3xl md:text-5xl font-normal text-brand-primary tracking-tight">
-                Client Documents Checklist
-              </h2>
-            </div>
-            <p className="font-sans text-sm text-brand-secondary max-w-md">
-              Prepare these core records in advance to streamline your annual audit, tax filing, or compliance consultation.
+      <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+        {/* Abstract background shapes for premium feel */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+        
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center max-w-3xl mx-auto mb-16 md:mb-24"
+          >
+            <span className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/20 font-sans text-xs uppercase tracking-[0.2em] text-brand-accent font-bold mb-6">
+              Preparation
+            </span>
+            <h2 className="font-display text-4xl md:text-6xl font-normal text-brand-primary tracking-tight mb-6">
+              Client Documents Checklist
+            </h2>
+            <p className="font-sans text-base md:text-lg text-brand-secondary">
+              Prepare these core records in advance to streamline your annual audit, tax filing, or compliance consultation. Organized documentation ensures rapid processing and complete statutory compliance.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col border-t border-brand-divider text-left">
-            {/* Row 1: Income Tax & GST India */}
-            <div className="flex flex-col md:flex-row md:items-start justify-between py-10 border-b border-brand-divider">
-              <div className="md:w-1/3 pr-8 mb-6 md:mb-0">
-                <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
-                  India • Tax & GST Filings
-                </span>
-                <h3 className="font-display text-2xl text-brand-primary font-normal mb-6">
-                  Tax Returns & GST
-                </h3>
-                <Link href="/services/india/gst-registration-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 w-fit">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Column 1: India Tax */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-white rounded-[32px] border border-brand-border p-8 md:p-10 shadow-soft hover:shadow-glass hover:-translate-y-2 transition-all duration-500 group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-brand-accent/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                <FileText className="w-6 h-6 text-brand-accent" />
+              </div>
+              <h3 className="font-display text-2xl text-brand-primary mb-2">India Tax & GST</h3>
+              <p className="font-sans text-sm text-brand-secondary mb-8 h-10">Essential documents for corporate income tax and GST filings.</p>
+              
+              <ul className="space-y-4">
+                {[
+                  "PAN Card & Aadhaar of Signatory",
+                  "Bank Statements (Full FY)",
+                  "Form 26AS, AIS & TIS Summaries",
+                  "Monthly Sales & Purchase Invoices"
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start space-x-3 bg-slate-50 rounded-xl p-3 border border-slate-100 group-hover:border-brand-accent/20 transition-colors duration-300">
+                    <div className="w-5 h-5 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 mt-0.5 text-brand-accent">
+                      <span className="text-[10px] font-bold">✓</span>
+                    </div>
+                    <span className="font-sans text-sm text-brand-primary font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 pt-6 border-t border-brand-divider">
+                <Link href="/services/india/gst-registration-filing" className="font-sans text-xs font-bold text-brand-accent hover:text-brand-primary flex items-center space-x-1 group/link">
                   <span>Explore India Tax Services</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
-              <ul className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 font-sans text-sm text-brand-secondary">
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>PAN Card & Aadhaar of Primary Signatory</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Bank Account Statements (Full Financial Year)</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Form 26AS, AIS & TIS Tax Information Summaries</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Monthly Sales & Purchase Invoices for GST</span>
-                </li>
-              </ul>
-            </div>
+            </motion.div>
 
-            {/* Row 2: Statutory & Bank Audit */}
-            <div className="flex flex-col md:flex-row md:items-start justify-between py-10 border-b border-brand-divider">
-              <div className="md:w-1/3 pr-8 mb-6 md:mb-0">
-                <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
-                  India • Statutory Audit
-                </span>
-                <h3 className="font-display text-2xl text-brand-primary font-normal mb-6">
-                  Financial Audits
-                </h3>
-                <Link href="/services/india/statutory-audit" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 w-fit">
-                  <span>Explore Audit Services</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+            {/* Column 2: India Audit */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-brand-primary rounded-[32px] p-8 md:p-10 shadow-glass hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                  <ShieldCheck className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-display text-2xl text-white mb-2">Statutory Audit</h3>
+                <p className="font-sans text-sm text-slate-400 mb-8 h-10">Records required for financial audits and statutory certifications.</p>
+                
+                <ul className="space-y-4">
+                  {[
+                    "Final Trial Balance & Ledger",
+                    "Certificate of Incorporation",
+                    "Prior Year Audit Reports",
+                    "Fixed Asset & Loan Registers"
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start space-x-3 bg-white/5 rounded-xl p-3 border border-white/10 group-hover:border-white/20 transition-colors duration-300">
+                      <div className="w-5 h-5 rounded-full bg-brand-accent shadow-sm flex items-center justify-center shrink-0 mt-0.5 text-white">
+                        <span className="text-[10px] font-bold">✓</span>
+                      </div>
+                      <span className="font-sans text-sm text-slate-200 font-medium">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <Link href="/services/india/statutory-audit" className="font-sans text-xs font-bold text-white hover:text-slate-300 flex items-center space-x-1 group/link">
+                    <span>Explore Audit Services</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
-              <ul className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 font-sans text-sm text-brand-secondary">
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Final Trial Balance, Ledger & Balance Sheet Drafts</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Certificate of Incorporation & MOA / AOA</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Prior Year Financial Audit Reports & Schedules</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Fixed Asset Register & Loan Sanction Letters</span>
-                </li>
-              </ul>
-            </div>
+            </motion.div>
 
-            {/* Row 3: UAE Corporate Tax & VAT */}
-            <div className="flex flex-col md:flex-row md:items-start justify-between py-10 border-b border-brand-divider">
-              <div className="md:w-1/3 pr-8 mb-6 md:mb-0">
-                <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
-                  UAE • Corporate Tax & VAT
-                </span>
-                <h3 className="font-display text-2xl text-brand-primary font-normal mb-6">
-                  UAE Compliance
-                </h3>
-                <Link href="/services/uae/corporate-tax-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 w-fit">
-                  <span>Explore UAE Tax Services</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+            {/* Column 3: UAE Compliance */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-white rounded-[32px] border border-brand-border p-8 md:p-10 shadow-soft hover:shadow-glass hover:-translate-y-2 transition-all duration-500 group"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                <Globe className="w-6 h-6 text-emerald-600" />
+              </div>
+              <h3 className="font-display text-2xl text-brand-primary mb-2">UAE Compliance</h3>
+              <p className="font-sans text-sm text-brand-secondary mb-8 h-10">Mandatory documentation for UAE Corporate Tax and VAT.</p>
+              
+              <ul className="space-y-4">
+                {[
+                  "Valid UAE Trade License",
+                  "Partner Emirates IDs & Passports",
+                  "Secure EmaraTax Integration",
+                  "Audited Accounts & Statements"
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start space-x-3 bg-slate-50 rounded-xl p-3 border border-slate-100 group-hover:border-emerald-500/20 transition-colors duration-300">
+                    <div className="w-5 h-5 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
+                      <span className="text-[10px] font-bold">✓</span>
+                    </div>
+                    <span className="font-sans text-sm text-brand-primary font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 pt-6 border-t border-brand-divider">
+                <Link href="/services/uae/corporate-tax-filing" className="font-sans text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center space-x-1 group/link">
+                  <span>Explore UAE Compliance</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
-              <ul className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 font-sans text-sm text-brand-secondary">
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Valid UAE Trade License & Commercial Registry</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Emirates ID & Passport Copies of Partners</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Do not share EmaraTax credentials here (secure method provided)</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
-                  <span>Audited / Management Accounts & Bank Statements</span>
-                </li>
-              </ul>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
