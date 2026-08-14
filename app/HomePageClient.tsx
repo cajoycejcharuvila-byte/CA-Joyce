@@ -9,7 +9,7 @@ import {
   ArrowRight, MessageSquare, ShieldCheck, 
   ClipboardCheck, Calculator, FileText, Briefcase, Globe
 } from "lucide-react";
-import ParallaxImage from "@/components/sections/ParallaxImage";
+import TaxComplianceCalendar from "@/components/sections/TaxComplianceCalendar";
 import { InsightItem } from "@/lib/cms";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -431,6 +431,13 @@ export default function HomePageClient({
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* SECTION 03.5: TAX COMPLIANCE CALENDAR */}
+      <section className="py-16 md:py-28 bg-brand-bg border-t border-brand-divider">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+          <TaxComplianceCalendar />
         </div>
       </section>
 
