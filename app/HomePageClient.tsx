@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  ArrowRight, MessageSquare, ShieldCheck, ChevronDown, 
+  ArrowRight, MessageSquare, ShieldCheck, 
   ClipboardCheck, Calculator, FileText, Briefcase, Globe
 } from "lucide-react";
 import ParallaxImage from "@/components/sections/ParallaxImage";

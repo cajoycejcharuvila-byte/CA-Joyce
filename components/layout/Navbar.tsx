@@ -54,7 +54,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const menuVariants: any = {
+  const menuVariants: import("framer-motion").Variants = {
     hidden: { opacity: 0, y: 15, scale: 0.98 },
     visible: { 
       opacity: 1, 

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { 
   ArrowUpRight, Calculator, ClipboardCheck, Percent, FileCheck, 
   Building2, FileSpreadsheet, ArrowRight,
@@ -10,8 +9,6 @@ import {
 import GlassCard from "@/components/cards/GlassCard";
 import { getUAEServices, getIndustries, getFAQs, getCompanyInfo } from "@/lib/cms";
 import { getProfessionalServiceSchema, getBreadcrumbSchema } from "@/lib/seo";
-import { ServiceItem } from "@/types";
-import { SEO_GRAPH } from "@/lib/seoGraph";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 // Helper to get service icon
@@ -37,26 +34,7 @@ function getServiceIcon(slug: string) {
   return <FileSpreadsheet {...iconProps} />;
 }
 
-// Helper to get category tag
-function getCategoryTag(slug: string) {
-  if (slug.includes("accounting") || slug.includes("bookkeeping")) return "Accounting";
-  if (slug.includes("audit")) return "Audit";
-  if (slug.includes("vat-registration") || slug.includes("corporate-tax-registration")) return "Compliance";
-  if (slug.includes("vat-filing") || slug.includes("corporate-tax-filing")) return "Tax";
-  return "Compliance";
-}
 
-// Helper to map slug to local image path
-function getServiceImagePath(slug: string, serviceImage?: string) {
-  if (serviceImage) return serviceImage;
-  if (slug.includes("accounting")) return "/images/services/uae/accounting-new.jpg";
-  if (slug.includes("audit")) return "/images/services/uae/audit-new.jpg";
-  if (slug.includes("vat-registration")) return "/images/services/uae/vat-reg-new.jpg";
-  if (slug.includes("vat-filing")) return "/images/services/uae/vat-filing-new.jpg";
-  if (slug.includes("corporate-tax-registration")) return "/images/services/uae/ct-reg-new.jpg";
-  if (slug.includes("corporate-tax-filing")) return "/images/services/uae/ct-filing-new.jpg";
-  return "/images/services/uae-tax-documents.webp"; // fallback
-}
 
 export default function UAEServicesPageClient() {
   const services = getUAEServices();

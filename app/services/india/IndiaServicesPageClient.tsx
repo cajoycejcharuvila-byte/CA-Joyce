@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { 
   ArrowUpRight, Calculator, ClipboardCheck, Landmark, Percent, Receipt, 
   ShieldAlert, Coins, ShieldCheck, Award, Scale, FileSpreadsheet, ArrowRight,
@@ -10,8 +9,6 @@ import {
 import GlassCard from "@/components/cards/GlassCard";
 import { getIndiaServices, getIndustries, getFAQs, getCompanyInfo } from "@/lib/cms";
 import { getProfessionalServiceSchema, getBreadcrumbSchema } from "@/lib/seo";
-import { ServiceItem } from "@/types";
-import { SEO_GRAPH } from "@/lib/seoGraph";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 // Helper to get service icon
@@ -52,31 +49,7 @@ function getServiceIcon(slug: string) {
   return <FileSpreadsheet {...iconProps} />;
 }
 
-// Helper to get category tag
-function getCategoryTag(slug: string) {
-  if (slug.includes("accounting") || slug.includes("bookkeeping")) return "Accounting";
-  if (slug.includes("audit")) return "Audit";
-  if (slug.includes("gst") || slug.includes("certification")) return "Compliance";
-  if (slug.includes("tax") || slug.includes("tds")) return "Tax";
-  if (slug.includes("finance") || slug.includes("valuation")) return "Advisory";
-  return "Compliance";
-}
 
-// Helper to map slug to local image path
-function getServiceImagePath(slug: string, serviceImage?: string) {
-  if (serviceImage) return serviceImage;
-  if (slug.includes("accounting-bookkeeping")) return "/images/services/india/accounting-bookkeeping-india.jpg";
-  if (slug.includes("statutory-audit")) return "/images/services/india/statutory-audit.jpg";
-  if (slug.includes("bank-concurrent")) return "/images/services/india/bank-concurrent-audit.jpg";
-  if (slug.includes("gst-registration")) return "/images/services/india/gst-registration-filing.jpg";
-  if (slug.includes("income-tax")) return "/images/services/india/income-tax-audit-return-filing.jpg";
-  if (slug.includes("tds")) return "/images/services/india/tds-filing.jpg";
-  if (slug.includes("project-finance")) return "/images/services/india/project-finance-loan-assistance.jpg";
-  if (slug.includes("internal-audit")) return "/images/services/india/internal-audit-business-advisory.jpg";
-  if (slug.includes("certification")) return "/images/services/india/certification-services.jpg";
-  if (slug.includes("valuation")) return "/images/services/india/valuation-services.jpg";
-  return "/images/services/audit-documents.webp"; // fallback
-}
 
 export default function IndiaServicesPageClient() {
   const services = getIndiaServices();
