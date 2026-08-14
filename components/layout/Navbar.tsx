@@ -5,10 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageSquare, PhoneCall, ChevronDown, ArrowRight } from "lucide-react";
+import { Menu, X, MessageSquare, PhoneCall, ChevronDown, ArrowRight, Search } from "lucide-react";
 import { getCompanyInfo } from "@/lib/cms";
 import { CompanyInfo } from "@/types";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import SearchModal from "@/components/ui/SearchModal";
 
 interface NavbarProps {
   companyInfo?: CompanyInfo;
@@ -20,6 +21,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
   const [indiaExpanded, setIndiaExpanded] = useState(false);
   const [uaeExpanded, setUaeExpanded] = useState(false);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const pathname = usePathname();
   const company = companyInfo || getCompanyInfo();
@@ -49,6 +51,10 @@ export default function Navbar({ companyInfo }: NavbarProps) {
         setIsOpen(false);
         setIsServicesMenuOpen(false);
       }
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -76,6 +82,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
 
   return (
     <>
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       <header
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1300px] h-[72px] transition-all duration-500 rounded-full flex items-center px-6 md:px-8 ${
           scrolled
@@ -243,6 +250,13 @@ export default function Navbar({ companyInfo }: NavbarProps) {
 
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center space-x-3">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="group flex items-center justify-center w-10 h-10 rounded-full border border-brand-border bg-white hover:border-brand-accent hover:bg-brand-accent transition-all duration-300 focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none shadow-sm hover:shadow-soft"
+              aria-label="Search Services"
+            >
+              <Search className="w-4 h-4 text-brand-primary group-hover:text-white transition-colors" />
+            </button>
             <a
               href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
               target="_blank"
@@ -260,8 +274,15 @@ export default function Navbar({ companyInfo }: NavbarProps) {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <div className="lg:hidden flex items-center z-50">
+          {/* Mobile hamburger & Search */}
+          <div className="lg:hidden flex items-center z-50 space-x-2">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md"
+              aria-label="Search Services"
+            >
+              <Search className="w-6 h-6" />
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
