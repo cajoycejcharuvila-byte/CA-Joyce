@@ -9,6 +9,7 @@ interface ParallaxImageProps {
   alt: string;
   className?: string;
   aspectClass?: string;
+  objectPosition?: string;
 }
 
 // Explicit Declarative Flags for Motion System
@@ -21,6 +22,7 @@ export default function ParallaxImage({
   alt,
   className = "",
   aspectClass = "aspect-[16/9]",
+  objectPosition = "center",
 }: ParallaxImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -58,6 +60,7 @@ export default function ParallaxImage({
             alt={alt}
             fill
             className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+            style={{ objectPosition }}
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </motion.div>
@@ -68,6 +71,7 @@ export default function ParallaxImage({
             alt={alt}
             fill
             className="object-cover"
+            style={{ objectPosition }}
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>

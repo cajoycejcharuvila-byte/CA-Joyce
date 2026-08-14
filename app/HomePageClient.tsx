@@ -364,6 +364,7 @@ export default function HomePageClient({
                 src={founderImageSrc}
                 alt="CA Joyce J Charuvila"
                 aspectClass="aspect-[4/5]"
+                objectPosition="top"
               />
             </div>
           </div>
