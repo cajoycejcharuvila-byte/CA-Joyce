@@ -1,490 +1,214 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Calendar as CalendarIcon, 
-  ChevronLeft, 
-  ChevronRight,
-  AlertCircle,
-  Info,
-  ChevronRight as ChevronRightIcon
-} from "lucide-react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar as CalendarIcon, Info } from "lucide-react";
 
-type TaxCategory = "GST" | "Income Tax" | "TDS" | "Advance Tax" | "Tax Audit";
+// --- DATA STRUCTURES ---
 
-interface TaxEventTemplate {
+type TaxCategory = "GST" | "TDS" | "Advance Tax" | "Income Tax" | "Audit";
+
+interface ComplianceEvent {
   id: string;
   category: TaxCategory;
   name: string;
   description: string;
-  taxpayers: string;
-  frequency: "Monthly" | "Quarterly" | "Annual" | "Specific";
-  dueDay?: number; // For monthly
-  specificDates?: { month: number; day: number }[]; // 0-indexed month
+  // If month is undefined, it occurs every month on the 'day'
+  // If month is defined (0-11), it occurs annually on that month/day
+  day: number; 
+  month?: number; 
 }
 
-// Master list of compliance events as requested
-const TAX_EVENTS: TaxEventTemplate[] = [
-  {
-    id: "gst-1",
-    category: "GST",
-    name: "GSTR-1",
-    description: "Details of outward supplies of goods or services.",
-    taxpayers: "Registered regular taxpayers",
-    frequency: "Monthly",
-    dueDay: 11,
-  },
-  {
-    id: "gst-3b",
-    category: "GST",
-    name: "GSTR-3B & Payment",
-    description: "Summary return of outward supplies and input tax credit declared, along with tax payment.",
-    taxpayers: "Registered regular taxpayers",
-    frequency: "Monthly",
-    dueDay: 20,
-  },
-  {
-    id: "gst-9",
-    category: "GST",
-    name: "GSTR-9 & GSTR-9C",
-    description: "Annual return and reconciliation statement.",
-    taxpayers: "Registered taxpayers (subject to turnover limits)",
-    frequency: "Annual",
-    specificDates: [{ month: 11, day: 31 }], // December 31
-  },
-  {
-    id: "tds-dep",
-    category: "TDS",
-    name: "TDS Deposit",
-    description: "Deposit of tax deducted at source for the previous month.",
-    taxpayers: "All deductors",
-    frequency: "Monthly",
-    dueDay: 7,
-  },
-  {
-    id: "tds-ret",
-    category: "TDS",
-    name: "TDS Return",
-    description: "Quarterly TDS statement.",
-    taxpayers: "All deductors",
-    frequency: "Quarterly",
-    specificDates: [
-      { month: 4, day: 31 }, // May 31 (Q4)
-      { month: 6, day: 31 }, // July 31 (Q1)
-      { month: 9, day: 31 }, // Oct 31 (Q2)
-      { month: 0, day: 31 }, // Jan 31 (Q3)
-    ],
-  },
-  {
-    id: "adv-tax",
-    category: "Advance Tax",
-    name: "Advance Tax Installment",
-    description: "Payment of advance income tax.",
-    taxpayers: "Taxpayers with estimated tax liability ≥ ₹10,000",
-    frequency: "Quarterly",
-    specificDates: [
-      { month: 5, day: 15 }, // June 15
-      { month: 8, day: 15 }, // Sept 15
-      { month: 11, day: 15 }, // Dec 15
-      { month: 2, day: 15 }, // Mar 15
-    ],
-  },
-  {
-    id: "it-indiv",
-    category: "Income Tax",
-    name: "ITR (Individual)",
-    description: "Income Tax Return filing for individuals not subject to audit.",
-    taxpayers: "Individuals, HUF",
-    frequency: "Annual",
-    specificDates: [{ month: 6, day: 31 }], // July 31
-  },
-  {
-    id: "it-non-audit",
-    category: "Income Tax",
-    name: "ITR (Non-audit cases)",
-    description: "Income Tax Return filing for non-audit cases.",
-    taxpayers: "Non-corporate taxpayers not subject to audit",
-    frequency: "Annual",
-    specificDates: [{ month: 7, day: 31 }], // August 31
-  },
-  {
-    id: "it-audit",
-    category: "Income Tax",
-    name: "ITR (Audit cases)",
-    description: "Income Tax Return filing for cases requiring tax audit.",
-    taxpayers: "Companies, taxpayers subject to tax audit",
-    frequency: "Annual",
-    specificDates: [{ month: 9, day: 31 }], // October 31
-  },
-  {
-    id: "tax-audit",
-    category: "Tax Audit",
-    name: "Tax Audit Report",
-    description: "Filing of Tax Audit Report.",
-    taxpayers: "Businesses crossing turnover thresholds",
-    frequency: "Annual",
-    specificDates: [{ month: 9, day: 31 }], // October 31
-  },
+const COMPLIANCE_EVENTS: ComplianceEvent[] = [
+  // GST
+  { id: "gst-1", category: "GST", name: "GSTR-1", description: "Monthly Return", day: 11 },
+  { id: "gst-3b", category: "GST", name: "GSTR-3B & Payment", description: "Monthly Return", day: 20 },
+  { id: "gst-9", category: "GST", name: "GSTR-9", description: "Annual Return", day: 31, month: 11 }, // Dec 31
+  { id: "gst-9c", category: "GST", name: "GSTR-9C", description: "Reconciliation Statement", day: 31, month: 11 },
+  
+  // TDS
+  { id: "tds-1", category: "TDS", name: "TDS Deposit", description: "Monthly Deposit", day: 7 },
+  
+  // Advance Tax
+  { id: "adv-1", category: "Advance Tax", name: "Advance Tax", description: "1st Installment", day: 15, month: 5 }, // Jun 15
+  { id: "adv-2", category: "Advance Tax", name: "Advance Tax", description: "2nd Installment", day: 15, month: 8 }, // Sep 15
+  { id: "adv-3", category: "Advance Tax", name: "Advance Tax", description: "3rd Installment", day: 15, month: 11 }, // Dec 15
+  { id: "adv-4", category: "Advance Tax", name: "Advance Tax", description: "4th Installment", day: 15, month: 2 }, // Mar 15
+
+  // Income Tax
+  { id: "it-1", category: "Income Tax", name: "Income Tax Return", description: "Individual Filing", day: 31, month: 6 }, // Jul 31
+  { id: "it-2", category: "Income Tax", name: "Income Tax Return", description: "Non-audit Cases", day: 31, month: 7 }, // Aug 31
+  { id: "it-3", category: "Income Tax", name: "Income Tax Return", description: "Audit Cases", day: 31, month: 9 }, // Oct 31
+
+  // Audit
+  { id: "audit-1", category: "Audit", name: "Tax Audit Report", description: "Filing Deadline", day: 31, month: 9 }, // Oct 31
+];
+
+// Month names mapping
+const MONTH_NAMES = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
 const CATEGORY_COLORS: Record<TaxCategory, string> = {
-  "GST": "bg-emerald-500",
-  "Income Tax": "bg-blue-500",
-  "TDS": "bg-indigo-500",
-  "Advance Tax": "bg-amber-500",
-  "Tax Audit": "bg-rose-500",
+  GST: "bg-blue-50 text-blue-700 border-blue-100",
+  TDS: "bg-purple-50 text-purple-700 border-purple-100",
+  "Advance Tax": "bg-emerald-50 text-emerald-700 border-emerald-100",
+  "Income Tax": "bg-amber-50 text-amber-700 border-amber-100",
+  Audit: "bg-rose-50 text-rose-700 border-rose-100",
 };
 
-interface GeneratedEvent extends TaxEventTemplate {
-  date: Date;
-}
-
 export default function TaxComplianceCalendar() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [activeFilter, setActiveFilter] = useState<TaxCategory | "All">("All");
-  
-  // To handle hydration mismatch, use a state that tells us if we're on client
   const [isClient, setIsClient] = useState(false);
-  React.useEffect(() => { 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsClient(true); 
+    setIsClient(true);
   }, []);
 
-  // Generate events for the currently viewed month
-  const currentMonthEvents = useMemo(() => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    
-    let generated: GeneratedEvent[] = [];
-    
-    TAX_EVENTS.forEach(template => {
-      if (template.frequency === "Monthly" && template.dueDay) {
-        generated.push({
-          ...template,
-          date: new Date(year, month, template.dueDay)
-        });
-      } else if (template.specificDates) {
-        template.specificDates.forEach(sd => {
-          if (sd.month === month) {
-            generated.push({
-              ...template,
-              date: new Date(year, month, sd.day)
-            });
-          }
-        });
-      }
-    });
-    
-    // Filter by active category
-    if (activeFilter !== "All") {
-      generated = generated.filter(e => e.category === activeFilter);
-    }
-    
-    return generated.sort((a, b) => a.date.getDate() - b.date.getDate());
-  }, [currentDate, activeFilter]);
-
-  // Identify upcoming deadlines (next 7 days) globally, not just in current view
-  const upcomingDeadlines = useMemo(() => {
+  // Compute "Due This Month"
+  const thisMonthEvents = useMemo(() => {
     if (!isClient) return [];
-    
     const today = new Date();
-    today.setHours(0,0,0,0);
-    const nextWeek = new Date(today);
-    nextWeek.setDate(today.getDate() + 7);
+    const currentMonth = today.getMonth();
     
-    let upcoming: GeneratedEvent[] = [];
+    // Filter events that happen this month (either recurring or matching month)
+    const events = COMPLIANCE_EVENTS.filter(
+      (e) => e.month === undefined || e.month === currentMonth
+    );
     
-    TAX_EVENTS.forEach(template => {
-      if (template.frequency === "Monthly" && template.dueDay) {
-        // Check this month and next month
-        for (let mOffset = 0; mOffset <= 1; mOffset++) {
-          const checkDate = new Date(today.getFullYear(), today.getMonth() + mOffset, template.dueDay);
-          if (checkDate >= today && checkDate <= nextWeek) {
-            upcoming.push({ ...template, date: checkDate });
-          }
-        }
-      } else if (template.specificDates) {
-        template.specificDates.forEach(sd => {
-          const checkDate = new Date(today.getFullYear(), sd.month, sd.day);
-          // If the date has passed this year, check next year
-          if (checkDate < today && today.getMonth() === 11) {
-             checkDate.setFullYear(today.getFullYear() + 1);
-          }
-          if (checkDate >= today && checkDate <= nextWeek) {
-            upcoming.push({ ...template, date: checkDate });
-          }
-        });
-      }
+    // Sort by day
+    return events.sort((a, b) => a.day - b.day);
+  }, [isClient]);
+
+  // Compute "Annual Roadmap" (Only events with specific months)
+  const annualEvents = useMemo(() => {
+    const events = COMPLIANCE_EVENTS.filter((e) => e.month !== undefined);
+    // Sort chronologically by month then day
+    return events.sort((a, b) => {
+      if (a.month! !== b.month!) return a.month! - b.month!;
+      return a.day - b.day;
     });
-    
-    if (activeFilter !== "All") {
-      upcoming = upcoming.filter(e => e.category === activeFilter);
-    }
-    
-    return upcoming.sort((a, b) => a.date.getTime() - b.date.getTime());
-  }, [isClient, activeFilter]);
+  }, []);
 
-  const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay(); // 0 = Sun, 1 = Mon
-  
-  const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
-  };
-  
-  const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
-
-  const handleToday = () => {
-    setCurrentDate(new Date());
-  };
-
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  // Helper to render grid days
-  const renderCalendarGrid = () => {
-    const grid = [];
-    let currentDay = 1;
-    
-    // Total cells in grid (usually 35 or 42)
-    const totalCells = Math.ceil((daysInMonth + firstDayOfMonth) / 7) * 7;
-
-    for (let i = 0; i < totalCells; i++) {
-      if (i < firstDayOfMonth || currentDay > daysInMonth) {
-        // Empty cell
-        grid.push(<div key={`empty-${i}`} className="bg-slate-50/50 border border-slate-100 p-2 min-h-[100px] opacity-50" />);
-      } else {
-        const dateNum = currentDay;
-        const dayEvents = currentMonthEvents.filter(e => e.date.getDate() === dateNum);
-        const isToday = isClient && 
-          new Date().getDate() === dateNum && 
-          new Date().getMonth() === currentDate.getMonth() && 
-          new Date().getFullYear() === currentDate.getFullYear();
-        
-        grid.push(
-          <div 
-            key={`day-${dateNum}`} 
-            className={`relative bg-white border border-slate-100 p-3 min-h-[120px] transition-all hover:shadow-md group ${isToday ? 'ring-1 ring-brand-primary' : ''}`}
-          >
-            <span className={`font-mono text-sm font-semibold mb-2 block ${isToday ? 'text-brand-primary' : 'text-slate-500'}`}>
-              {dateNum}
-            </span>
-            
-            <div className="space-y-1.5 mt-2">
-              {dayEvents.map((evt, idx) => (
-                <div key={`${evt.id}-${idx}`} className="relative group/tooltip">
-                  <div className={`px-2 py-1.5 rounded text-[10px] font-sans font-medium text-white shadow-sm cursor-pointer truncate ${CATEGORY_COLORS[evt.category]}`}>
-                    {evt.category}: {evt.name}
-                  </div>
-                  
-                  {/* Custom Tooltip */}
-                  <div className="absolute z-50 left-1/2 -translate-x-1/2 bottom-full mb-2 w-64 bg-brand-dark text-white p-4 rounded-xl shadow-glass opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 pointer-events-none">
-                    <span className="text-[10px] uppercase tracking-widest text-brand-accent font-bold mb-1 block">
-                      {evt.category}
-                    </span>
-                    <p className="font-display text-sm font-medium mb-2">{evt.name}</p>
-                    <p className="font-sans text-xs text-slate-300 mb-2 leading-relaxed">{evt.description}</p>
-                    <div className="pt-2 border-t border-slate-700">
-                      <span className="text-[10px] text-slate-400 block mb-0.5">Applicable to:</span>
-                      <span className="text-xs font-medium text-slate-200">{evt.taxpayers}</span>
-                    </div>
-                    {/* Tooltip Arrow */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-brand-dark"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-        currentDay++;
-      }
-    }
-    return grid;
-  };
-
-  const categories: (TaxCategory | "All")[] = ["All", "GST", "Income Tax", "TDS", "Advance Tax", "Tax Audit"];
+  if (!isClient) {
+    return <div className="min-h-[400px] w-full bg-brand-bg rounded-2xl animate-pulse" />;
+  }
 
   return (
     <div className="w-full">
-      {/* Filters and Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
-        <div>
-          <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
-            Compliance Tracker
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-normal text-brand-primary tracking-tight">
-            Tax Calendar
-          </h2>
-        </div>
-        
-        {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActiveFilter(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-bold font-sans transition-all duration-300 ${
-                activeFilter === cat 
-                  ? "bg-brand-primary text-white shadow-md" 
-                  : "bg-white text-slate-500 border border-slate-200 hover:border-brand-primary hover:text-brand-primary"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      {/* Header Section */}
+      <div className="mb-12 md:mb-16 text-center max-w-3xl mx-auto">
+        <h2 className="text-3xl md:text-5xl font-display font-medium text-brand-dark mb-4">
+          Stay Ahead of Every Tax Deadline
+        </h2>
+        <p className="text-brand-dark/70 text-lg">
+          Track GST, TDS, Income Tax, and Audit due dates in one place.
+        </p>
       </div>
 
-      {/* Upcoming Highlight Panel */}
-      {upcomingDeadlines.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-[24px] p-6 mb-8 flex flex-col md:flex-row items-start md:items-center gap-6">
-          <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center shrink-0">
-            <AlertCircle className="w-6 h-6 text-amber-600" />
-          </div>
-          <div className="flex-1">
-            <h4 className="font-display text-lg text-amber-900 mb-2">Upcoming Deadlines (Next 7 Days)</h4>
-            <div className="flex flex-wrap gap-3">
-              {upcomingDeadlines.map((evt, idx) => (
-                <div key={idx} className="bg-white px-3 py-1.5 rounded-lg border border-amber-100 shadow-sm flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full ${CATEGORY_COLORS[evt.category]}`}></span>
-                  <span className="font-sans text-xs font-semibold text-slate-700">{evt.name}</span>
-                  <span className="font-mono text-xs text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">
-                    {evt.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* COMPACT ROW: Due This Month */}
+      <div className="mb-16">
+        <div className="flex items-center gap-3 mb-6">
+          <CalendarIcon className="w-5 h-5 text-brand-primary" />
+          <h3 className="text-xl font-medium text-brand-dark">Due This Month</h3>
         </div>
-      )}
-
-      {/* Calendar Dashboard Frame */}
-      <div className="bg-white rounded-[32px] border border-brand-border shadow-soft overflow-hidden">
         
-        {/* Dashboard Toolbar */}
-        <div className="px-6 py-5 border-b border-brand-border flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center space-x-4">
-            <CalendarIcon className="w-5 h-5 text-brand-accent" />
-            <span className="font-display text-xl font-medium text-brand-primary">
-              {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-2 bg-white rounded-lg border border-slate-200 p-1 shadow-sm">
-            <button 
-              onClick={handlePrevMonth}
-              className="p-1.5 rounded hover:bg-slate-100 text-slate-500 transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={handleToday}
-              className="px-3 py-1 rounded hover:bg-slate-100 text-xs font-bold font-sans text-brand-primary transition-colors"
-            >
-              Today
-            </button>
-            <button 
-              onClick={handleNextMonth}
-              className="p-1.5 rounded hover:bg-slate-100 text-slate-500 transition-colors"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* DESKTOP GRID VIEW (hidden on mobile) */}
-        <div className="hidden md:block">
-          <div className="grid grid-cols-7 border-b border-brand-border bg-slate-50">
-            {dayNames.map(day => (
-              <div key={day} className="py-3 px-4 text-center font-sans text-xs font-bold text-slate-400 uppercase tracking-wider border-r border-brand-border last:border-r-0">
-                {day}
+        <div className="bg-white border border-brand-divider rounded-2xl p-4 shadow-sm overflow-hidden">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 overflow-x-auto hide-scrollbar">
+            {thisMonthEvents.map((event, i) => (
+              <div 
+                key={`${event.id}-this-month`}
+                className="flex items-center gap-3 shrink-0 whitespace-nowrap"
+              >
+                <div className="text-xl font-display font-semibold text-brand-primary">
+                  {event.day.toString().padStart(2, '0')}
+                </div>
+                <ArrowRight className="w-4 h-4 text-brand-dark/30" />
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-brand-dark">{event.name}</span>
+                  <span className="text-xs text-brand-dark/50">{event.category}</span>
+                </div>
+                
+                {i < thisMonthEvents.length - 1 && (
+                  <div className="hidden md:block w-px h-8 bg-brand-divider ml-4" />
+                )}
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-7 bg-slate-100/50 gap-[1px]">
-            {renderCalendarGrid()}
-          </div>
-        </div>
-
-        {/* MOBILE TIMELINE VIEW (hidden on desktop) */}
-        <div className="md:hidden divide-y divide-slate-100 max-h-[600px] overflow-y-auto">
-          {currentMonthEvents.length === 0 ? (
-            <div className="p-10 text-center text-slate-400 font-sans text-sm">
-              No compliance deadlines for this filter in {monthNames[currentDate.getMonth()]}.
-            </div>
-          ) : (
-            currentMonthEvents.map((evt, idx) => (
-              <MobileEventCard key={`${evt.id}-${idx}`} evt={evt} />
-            ))
-          )}
         </div>
       </div>
 
-      <div className="mt-6 flex items-start gap-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-        <Info className="w-5 h-5 text-slate-400 shrink-0 mt-0.5" />
-        <p className="font-sans text-xs text-slate-500 leading-relaxed">
-          Due dates are subject to change based on notifications issued by the relevant tax authorities. This calendar serves as a general guide. Please consult a tax professional for the latest compliance requirements tailored to your business.
+      {/* HORIZONTAL ROADMAP: Annual Compliance */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-medium text-brand-dark">Annual Tax Compliance Roadmap</h3>
+          <span className="text-xs text-brand-dark/50 hidden md:block">Scroll to view all →</span>
+        </div>
+
+        {/* Scrollable Container */}
+        <div 
+          ref={scrollRef}
+          className="flex overflow-x-auto hide-scrollbar gap-6 pb-8 -mx-6 px-6 md:mx-0 md:px-0 snap-x snap-mandatory"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {annualEvents.map((event, i) => (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
+              key={`${event.id}-annual`}
+              className="group relative flex-shrink-0 w-[280px] md:w-[320px] bg-white border border-brand-divider rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 snap-start hover:-translate-y-1"
+            >
+              {/* Category Badge */}
+              <div className="mb-8">
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${CATEGORY_COLORS[event.category]}`}>
+                  {event.category}
+                </span>
+              </div>
+              
+              {/* Large Date */}
+              <div className="mb-4">
+                <div className="text-4xl md:text-5xl font-display font-medium text-brand-dark tracking-tight">
+                  {event.day} {MONTH_NAMES[event.month!]}
+                </div>
+              </div>
+              
+              {/* Details */}
+              <div>
+                <h4 className="text-lg font-medium text-brand-dark mb-1 group-hover:text-brand-primary transition-colors">
+                  {event.name}
+                </h4>
+                <p className="text-sm text-brand-dark/60">
+                  {event.description}
+                </p>
+              </div>
+              
+              {/* Decorative line */}
+              <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-brand-divider to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Disclaimer */}
+      <div className="mt-8 flex items-start gap-2 text-brand-dark/50 bg-brand-dark/5 p-4 rounded-xl">
+        <Info className="w-4 h-4 shrink-0 mt-0.5" />
+        <p className="text-xs leading-relaxed">
+          These dates are for general reference and apply to standard tax scenarios in India. Deadlines may be extended or changed by the government. Always consult with your tax advisor to ensure your compliance obligations are met on time.
         </p>
       </div>
-    </div>
-  );
-}
 
-// Sub-component for Mobile Expandable Card
-function MobileEventCard({ evt }: { evt: GeneratedEvent }) {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <div className="bg-white transition-colors">
-      <button 
-        onClick={() => setExpanded(!expanded)}
-        className="w-full px-5 py-4 flex items-center justify-between text-left focus:outline-none"
-      >
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center justify-center shrink-0">
-            <span className="font-mono text-sm font-bold text-brand-primary leading-none">{evt.date.getDate()}</span>
-            <span className="font-sans text-[10px] text-slate-400 uppercase tracking-widest mt-1">
-              {evt.date.toLocaleDateString('en-IN', { weekday: 'short' })}
-            </span>
-          </div>
-          <div>
-            <span className={`text-[10px] font-bold uppercase tracking-widest ${
-               evt.category === 'GST' ? 'text-emerald-600' :
-               evt.category === 'Income Tax' ? 'text-blue-600' :
-               evt.category === 'TDS' ? 'text-indigo-600' :
-               evt.category === 'Advance Tax' ? 'text-amber-600' :
-               'text-rose-600'
-            }`}>
-              {evt.category}
-            </span>
-            <h4 className="font-display text-lg text-brand-primary">{evt.name}</h4>
-          </div>
-        </div>
-        <ChevronRightIcon className={`w-5 h-5 text-slate-300 transition-transform duration-300 ${expanded ? 'rotate-90' : ''}`} />
-      </button>
-      
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="px-5 pb-5 pt-0 ml-16">
-              <p className="font-sans text-sm text-slate-500 mb-3 leading-relaxed">
-                {evt.description}
-              </p>
-              <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold block mb-1">Applicable to</span>
-                <span className="font-sans text-xs text-brand-primary font-medium">{evt.taxpayers}</span>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <style jsx global>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }
