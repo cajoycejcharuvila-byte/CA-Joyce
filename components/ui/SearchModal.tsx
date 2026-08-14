@@ -130,10 +130,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               )}
             </div>
             
-            <div className="bg-slate-50 border-t border-slate-100 px-6 py-3 flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-400">
-                Search powered by <span className="text-slate-500">Local CMS</span>
-              </span>
+            <div className="bg-slate-50 border-t border-slate-100 px-6 py-3 flex items-center justify-end">
               <div className="flex items-center space-x-4 text-xs text-slate-400">
                 <span className="flex items-center space-x-1">
                   <kbd className="px-1.5 py-0.5 bg-white border border-slate-200 rounded-md text-[10px] font-sans shadow-sm">esc</kbd>

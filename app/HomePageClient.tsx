@@ -358,14 +358,17 @@ export default function HomePageClient({
               </div>
             </div>
 
-            {/* Parallax Founder Portrait */}
+            {/* Founder Portrait (Static to prevent head crop) */}
             <div className="lg:col-span-4 max-w-[360px] lg:max-w-none mx-auto w-full">
-              <ParallaxImage 
-                src={founderImageSrc}
-                alt="CA Joyce J Charuvila"
-                aspectClass="aspect-[4/5]"
-                objectPosition="top"
-              />
+              <div className="relative overflow-hidden rounded-[32px] aspect-[4/5] border border-brand-border">
+                <Image 
+                  src={founderImageSrc}
+                  alt="CA Joyce J Charuvila"
+                  fill
+                  className="object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
+                  sizes="(max-width: 1024px) 100vw, 360px"
+                />
+              </div>
             </div>
           </div>
         </div>
