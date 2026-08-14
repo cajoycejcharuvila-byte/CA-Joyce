@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { Resend } from "resend";
 import { Submission } from "@/types";
-import { insertDbEnquiry } from "@/lib/db";
+import { insertDbEnquiry, getDbCompanyInfo } from "@/lib/db";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 // Required env var: RESEND_API_KEY (get a free key from resend.com)
 const getResendInstance = () => {
@@ -35,6 +36,18 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
+import { z } from "zod";
+
+const contactSchema = z.object({
+  fullName: z.string().min(2, "Name must be at least 2 characters").max(100),
+  emailAddress: z.string().email("Invalid email address").max(255),
+  phoneNumber: z.string().min(7, "Invalid phone number").max(30),
+  companyName: z.string().max(255).optional(),
+  serviceRequired: z.string().min(1, "Service selection is required"),
+  message: z.string().min(10, "Message must be at least 10 characters").max(2000),
+  botField: z.string().optional(),
+});
+
 export async function POST(request: Request) {
   try {
     // 1. IP-Based Rate Limiting
@@ -47,34 +60,20 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { fullName, emailAddress, phoneNumber, companyName, serviceRequired, message, botField } = body;
 
-    // 2. Honeypot Check: Reject spam if hidden 'botField' is filled
+    // 2. Server-side Validation with Zod
+    const parsed = contactSchema.safeParse(body);
+    if (!parsed.success) {
+      const errorMessage = parsed.error.issues.map(err => err.message).join(", ");
+      return NextResponse.json({ error: errorMessage }, { status: 400 });
+    }
+
+    const { fullName, emailAddress, phoneNumber, companyName, serviceRequired, message, botField } = parsed.data;
+
+    // 3. Honeypot Check: Reject spam if hidden 'botField' is filled
     if (botField) {
       // Silently return success to make the spam bot believe it succeeded
       return NextResponse.json({ success: true });
-    }
-
-    // 3. Server-side Validation
-    if (!fullName || typeof fullName !== "string" || fullName.trim().length < 2) {
-      return NextResponse.json({ error: "A valid name is required." }, { status: 400 });
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailAddress || typeof emailAddress !== "string" || !emailRegex.test(emailAddress)) {
-      return NextResponse.json({ error: "A valid email address is required." }, { status: 400 });
-    }
-
-    if (!phoneNumber || typeof phoneNumber !== "string" || phoneNumber.trim().length < 7) {
-      return NextResponse.json({ error: "A valid phone number is required." }, { status: 400 });
-    }
-
-    if (!serviceRequired || typeof serviceRequired !== "string") {
-      return NextResponse.json({ error: "Service selection is required." }, { status: 400 });
-    }
-
-    if (!message || typeof message !== "string" || message.trim().length < 10) {
-      return NextResponse.json({ error: "Message must be at least 10 characters." }, { status: 400 });
     }
 
     // 4. Input Sanitization (protects against XSS)
@@ -115,6 +114,7 @@ export async function POST(request: Request) {
     // Send email notifications (non-blocking — failures do not affect form success)
     try {
       const resend = getResendInstance();
+      const company = await getDbCompanyInfo();
       if (resend) {
         const submittedAt = new Date(newSubmission.submittedAt).toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
@@ -125,7 +125,7 @@ export async function POST(request: Request) {
         // 1. Admin notification email
         await resend.emails.send({
         from: "Joyce CA Website <no-reply@joyceca.in>",
-        to: ["cajoycejcharuvilauae@gmail.com"],
+        to: [company.contact.email],
         subject: `New Enquiry — ${sanitizedData.serviceRequired} from ${sanitizedData.fullName}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a2e;">
@@ -193,8 +193,8 @@ export async function POST(request: Request) {
               </p>
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; margin-bottom: 24px;">
                 <p style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 14px;">Direct Contact</p>
-                <p style="font-size: 14px; color: #0f172a; margin: 0 0 8px;">📱 WhatsApp: <a href="https://wa.me/919061680043" style="color: #1B5283; text-decoration: none; font-weight: 600;">+91 90616 80043</a></p>
-                <p style="font-size: 14px; color: #0f172a; margin: 0;">✉️ Email: <a href="mailto:cajoycejcharuvilauae@gmail.com" style="color: #1B5283; text-decoration: none; font-weight: 600;">cajoycejcharuvilauae@gmail.com</a></p>
+                <p style="font-size: 14px; color: #0f172a; margin: 0 0 8px;">📱 WhatsApp: <a href="${buildWhatsAppUrl(company.contact.whatsapp, "Hi, I recently submitted a contact form on your website and wanted to follow up.")}" style="color: #1B5283; text-decoration: none; font-weight: 600;">${company.contact.phoneDisplay}</a></p>
+                <p style="font-size: 14px; color: #0f172a; margin: 0;">✉️ Email: <a href="mailto:${company.contact.email}" style="color: #1B5283; text-decoration: none; font-weight: 600;">${company.contact.email}</a></p>
               </div>
               <p style="font-size: 13px; color: #64748b; line-height: 1.6; margin: 0 0 24px;">
                 We look forward to assisting you with your compliance and accounting requirements.

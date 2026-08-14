@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, MessageSquare, PhoneCall, ChevronDown } from "lucide-react";
 import { getCompanyInfo } from "@/lib/cms";
 import { CompanyInfo } from "@/types";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 interface NavbarProps {
   companyInfo?: CompanyInfo;
@@ -40,6 +41,17 @@ export default function Navbar({ companyInfo }: NavbarProps) {
       setIsOpen(false);
     }, 0);
   }, [pathname]);
+
+  // Handle Escape key to close menus
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -86,7 +98,10 @@ export default function Navbar({ companyInfo }: NavbarProps) {
             {/* Services Dropdown */}
             <div className="relative group py-4">
               <button
-                className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 flex items-center space-x-1 cursor-pointer outline-none ${
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="services-mega-menu"
+                className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 flex items-center space-x-1 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md px-1 ${
                   pathname.startsWith("/services") ? "text-brand-accent" : "text-brand-secondary hover:text-brand-primary"
                 }`}
               >
@@ -94,7 +109,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                 <ChevronDown className="w-3.5 h-3.5" />
               </button>
 
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block bg-white border border-slate-200 rounded-[28px] shadow-glass p-8 w-[760px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]">
+              <div id="services-mega-menu" className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block focus-within:block bg-white border border-slate-200 rounded-[28px] shadow-glass p-8 w-[760px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]">
                 <div className="grid grid-cols-2 gap-8 text-left">
                   
                   {/* India Practice Column */}
@@ -271,10 +286,10 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center space-x-4">
             <a
-              href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}`}
+              href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 border border-brand-border text-brand-primary hover:border-brand-primary px-5 py-2.5 rounded-[20px] font-sans text-sm font-medium transition-all duration-300 bg-white dark:bg-[#121826]"
+              className="inline-flex items-center space-x-2 border border-brand-border text-brand-primary hover:border-brand-primary px-5 py-2.5 rounded-[20px] font-sans text-sm font-medium transition-all duration-300 bg-white dark:bg-[#121826] focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
             >
               <MessageSquare className="w-4 h-4 text-brand-accent" />
               <span>WhatsApp</span>
@@ -291,7 +306,9 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           <div className="lg:hidden flex items-center z-50">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-brand-primary focus:outline-none"
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+              className="p-2 text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -304,11 +321,15 @@ export default function Navbar({ companyInfo }: NavbarProps) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-40 bg-brand-bg flex flex-col justify-between pt-[120px] pb-12 px-8 lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation"
           >
             <div className="flex-1 overflow-y-auto pr-2 my-6 space-y-6 no-scrollbar">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
@@ -499,10 +520,10 @@ export default function Navbar({ companyInfo }: NavbarProps) {
               className="flex flex-col space-y-4 pt-6 border-t border-[rgba(15,23,42,0.08)] dark:border-[rgba(255,255,255,0.15)]"
             >
               <a
-                href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-3 bg-white dark:bg-[#121826] border border-brand-border py-4 rounded-[20px] font-sans font-medium text-brand-primary"
+                className="flex items-center justify-center space-x-3 bg-white dark:bg-[#121826] border border-brand-border py-4 rounded-[20px] font-sans font-medium text-brand-primary focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
               >
                 <MessageSquare className="w-5 h-5 text-brand-accent" />
                 <span>WhatsApp Consultation</span>

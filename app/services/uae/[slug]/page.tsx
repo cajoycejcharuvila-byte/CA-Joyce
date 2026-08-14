@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, MessageSquare, PhoneCall, HelpCircle, CheckCircle2 } from "lucide-react";
 import { getServiceBySlug, getUAEServices, getCompanyInfo } from "@/lib/cms";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { generateMetadata as seoGenerateMetadata, getProfessionalServiceSchema, getBreadcrumbSchema } from "@/lib/seo";
 import SEOAuthorityLinks from "@/components/layout/SEOAuthorityLinks";
 
@@ -229,20 +230,20 @@ export default async function UAEServiceDetailPage({ params }: PageProps) {
               
               <div className="space-y-3">
                 <a
-                  href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hi,%20I%20would%20like%20to%20consult%20about%20your%20UAE%20service:%20${encodeURIComponent(service.title)}`}
+                  href={buildWhatsAppUrl(company.contact.whatsapp, service.whatsapp_context || `Hi, I would like to consult about your UAE service: ${service.title}`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300"
                 >
-                  <MessageSquare className="w-4.5 h-4.5" />
-                  <span>WhatsApp Chat</span>
+                  <MessageSquare className="w-4 h-4" />
+                  <span>WhatsApp Consultation</span>
                 </a>
                 <Link
                   href="/contact"
                   className="w-full inline-flex items-center justify-center space-x-2 border border-brand-border hover:border-brand-primary text-brand-primary py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300 bg-slate-50"
                 >
                   <PhoneCall className="w-4.5 h-4.5 text-brand-accent" />
-                  <span>Request Callback</span>
+                  <span>Discuss Your Requirements</span>
                 </Link>
               </div>
             </div>
@@ -304,13 +305,13 @@ export default async function UAEServiceDetailPage({ params }: PageProps) {
       {/* Sticky Mobile Enquiry Button */}
       <div className="fixed bottom-6 left-6 right-6 z-40 lg:hidden">
         <a
-          href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hi,%20I%20would%20like%20to%20consult%20about%20${encodeURIComponent(service.title)}`}
+          href={buildWhatsAppUrl(company.contact.whatsapp, service.whatsapp_context || `Hi, I would like to consult about ${service.title}`)}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white py-4 rounded-[18px] font-sans font-medium shadow-glass transition-transform duration-300"
         >
           <MessageSquare className="w-5 h-5" />
-          <span>Enquire About {service.title.split(" (")[0]}</span>
+          <span>Discuss {service.title.split(" (")[0]}</span>
         </a>
       </div>
 

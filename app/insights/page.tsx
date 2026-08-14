@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, BookOpen, ChevronRight, ChevronLeft } from "lucide-react";
-import GlassCard from "@/components/cards/GlassCard";
 import { getDbInsights } from "@/lib/db";
 import InsightsFilter from "@/components/insights/InsightsFilter";
 import { Metadata } from "next";
@@ -216,38 +215,35 @@ export default async function InsightsPage({ searchParams }: PageProps) {
 
         {/* Regular Articles Grid */}
         {regularArticles.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="flex flex-col mb-16 border-t border-brand-divider pt-12">
             {regularArticles.map((insight) => (
-              <Link key={insight.slug} href={`/insights/${insight.slug}`} className="block group">
-                <GlassCard className="flex flex-col justify-between p-8 md:p-10 bg-white min-h-[340px]" hoverLift={true}>
-                  <div>
-                    <div className="flex items-center justify-between mb-6 pb-2 border-b border-brand-divider">
-                      <span className="font-sans text-3xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full uppercase tracking-wider">
-                        {insight.category}
-                      </span>
-                      <span className="font-mono text-3xs text-slate-400">
-                        {insight.date}
-                      </span>
-                    </div>
-                    <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary leading-tight group-hover:text-brand-accent transition-colors duration-300 mb-4">
-                      {insight.title}
-                    </h3>
-                    <p className="font-sans text-sm text-brand-secondary leading-relaxed mb-6 line-clamp-3">
-                      {insight.excerpt}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-6 border-t border-brand-divider">
-                    <div className="flex items-center space-x-2 font-sans text-2xs text-slate-400">
+              <Link key={insight.slug} href={`/insights/${insight.slug}`} className="group flex flex-col md:flex-row md:items-start gap-6 md:gap-12 py-10 border-b border-brand-divider last:border-b-0">
+                <div className="md:w-48 shrink-0 flex flex-col md:items-start space-y-2">
+                  <span className="font-mono text-xs text-slate-400">
+                    {insight.date}
+                  </span>
+                  <span className="font-sans text-3xs font-semibold px-2.5 py-1 bg-brand-accent/5 text-brand-accent border border-brand-accent/10 rounded-full uppercase tracking-wider inline-flex w-fit">
+                    {insight.category}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary leading-tight group-hover:text-brand-accent transition-colors duration-300 mb-4">
+                    {insight.title}
+                  </h3>
+                  <p className="font-sans text-sm md:text-base text-brand-secondary leading-relaxed mb-6 max-w-3xl">
+                    {insight.excerpt}
+                  </p>
+                  <div className="flex items-center space-x-6 mt-4">
+                    <div className="flex items-center space-x-2 font-sans text-xs text-slate-400">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{insight.readTime}</span>
                     </div>
                     <span className="font-sans text-xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors duration-300 flex items-center space-x-1">
-                      <span>Read Article</span>
+                      <span>Read Analysis</span>
                       <ChevronRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                     </span>
                   </div>
-                </GlassCard>
+                </div>
               </Link>
             ))}
           </div>

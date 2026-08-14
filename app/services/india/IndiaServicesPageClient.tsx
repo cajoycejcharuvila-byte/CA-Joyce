@@ -14,6 +14,7 @@ import { getIndiaServices, getIndustries, getFAQs, getCompanyInfo } from "@/lib/
 import { getProfessionalServiceSchema, getBreadcrumbSchema } from "@/lib/seo";
 import { ServiceItem } from "@/types";
 import { SEO_GRAPH } from "@/lib/seoGraph";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 // Helper to get service icon
 function getServiceIcon(slug: string) {
@@ -319,52 +320,107 @@ export default function IndiaServicesPageClient() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <InteractiveServiceCard key={service.slug} service={service} />
+          <div className="flex flex-col">
+            {services.slice(0, 3).map((service, index) => (
+              <Link 
+                href={`/services/india/${service.slug}`} 
+                key={service.slug}
+                className="group flex flex-col md:flex-row md:items-start gap-4 md:gap-8 py-8 border-b border-brand-divider last:border-b-0"
+              >
+                <div className="flex items-center gap-4 shrink-0">
+                  <span className="font-mono text-sm text-brand-accent font-bold uppercase tracking-widest bg-brand-accent/5 px-3 py-1.5 rounded-full border border-brand-accent/10">
+                    0{index + 1}
+                  </span>
+                  <div className="bg-white p-2.5 rounded-xl border border-brand-border text-brand-primary group-hover:text-brand-accent transition-colors shadow-soft">
+                    {getServiceIcon(service.slug)}
+                  </div>
+                </div>
+                <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-2 font-normal group-hover:text-brand-accent transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="font-sans text-sm md:text-base text-brand-secondary leading-relaxed max-w-2xl">
+                      {service.overview}
+                    </p>
+                  </div>
+                  <div className="w-10 h-10 shrink-0 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary group-hover:text-white group-hover:bg-brand-accent group-hover:border-brand-accent transition-all duration-300 self-start sm:self-center mt-2 sm:mt-0">
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
+
+          {services.length > 3 && (
+            <div className="mt-16 pt-16 border-t border-brand-divider">
+              <h3 className="font-display text-2xl text-brand-primary mb-8">Other Specialized Services</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+                {services.slice(3).map((service) => (
+                  <Link 
+                    href={`/services/india/${service.slug}`} 
+                    key={service.slug} 
+                    className="group flex items-center justify-between py-4 border-b border-brand-divider hover:border-brand-accent transition-all"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="text-brand-primary group-hover:text-brand-accent transition-colors">
+                         {getServiceIcon(service.slug)}
+                      </div>
+                      <h4 className="font-sans font-semibold text-brand-primary group-hover:text-brand-accent transition-colors">{service.title.replace(" (India)", "")}</h4>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-brand-accent group-hover:translate-x-1 transition-all shrink-0" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* SECTION 3: INDUSTRIES SERVED */}
-        <div className="mb-24 md:mb-36">
-          <div className="text-center mb-16">
-            <span className="font-sans text-xs uppercase tracking-[0.25em] text-slate-400 font-bold mb-2 block">
-              Industry Experience
-            </span>
-            <h2 className="font-display text-4xl md:text-5xl font-normal text-brand-primary">
-              Sectors We Serve
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {industries.map((ind, idx) => {
-              // Map icons based on industry name
-              let Icon = ArrowRight;
-              if (ind.name === "Trading") Icon = ArrowUpRight;
-              if (ind.name === "Retail") Icon = ShoppingCart;
-              if (ind.name === "Construction") Icon = Building;
-              if (ind.name === "Manufacturing") Icon = Factory;
-              if (ind.name === "Healthcare") Icon = HeartPulse;
-              if (ind.name === "Hospitality") Icon = Utensils;
-              if (ind.name === "Small Businesses") Icon = Briefcase;
-              if (ind.name === "Startups") Icon = Rocket;
+        <div className="mb-24 md:mb-36 border-t border-brand-divider pt-16 md:pt-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-4 lg:sticky lg:top-32 self-start">
+              <span className="font-sans text-xs uppercase tracking-[0.25em] text-slate-400 font-bold mb-4 block">
+                Industry Experience
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl font-normal text-brand-primary mb-6">
+                Sectors We Serve
+              </h2>
+              <p className="font-sans text-sm md:text-base text-brand-secondary leading-relaxed">
+                Applying cross-industry financial knowledge to optimize your regulatory and tax structures.
+              </p>
+            </div>
+            <div className="lg:col-span-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-0 border-t border-brand-divider sm:border-t-0">
+                {industries.map((ind, idx) => {
+                  let Icon = ArrowRight;
+                  if (ind.name === "Trading") Icon = ArrowUpRight;
+                  if (ind.name === "Retail") Icon = ShoppingCart;
+                  if (ind.name === "Construction") Icon = Building;
+                  if (ind.name === "Manufacturing") Icon = Factory;
+                  if (ind.name === "Healthcare") Icon = HeartPulse;
+                  if (ind.name === "Hospitality") Icon = Utensils;
+                  if (ind.name === "Small Businesses") Icon = Briefcase;
+                  if (ind.name === "Startups") Icon = Rocket;
 
-              return (
-                <GlassCard key={idx} className="p-8 bg-white flex flex-col relative overflow-hidden group min-h-[220px] border border-brand-border hover:border-brand-primary/20 transition-all duration-300" hoverLift={true}>
-                  <div className="mb-6 w-12 h-12 rounded-2xl bg-brand-bg flex items-center justify-center border border-brand-divider group-hover:bg-brand-accent group-hover:border-brand-accent group-hover:scale-110 transition-all duration-500">
-                    <Icon className="w-6 h-6 text-brand-primary group-hover:text-white transition-colors duration-500" />
-                  </div>
-                  <div>
-                    <h3 className="font-display text-xl font-semibold text-brand-primary mb-3">
-                      {ind.name}
-                    </h3>
-                    <p className="font-sans text-xs text-brand-secondary leading-relaxed font-medium">
-                      {ind.description}
-                    </p>
-                  </div>
-                </GlassCard>
-              );
-            })}
+                  return (
+                    <div key={idx} className="group border-b border-brand-divider py-8 flex items-start space-x-5">
+                      <div className="w-10 h-10 shrink-0 rounded-full border border-brand-divider flex items-center justify-center bg-white group-hover:border-brand-accent transition-colors duration-300 mt-0.5">
+                        <Icon className="w-4 h-4 text-brand-secondary group-hover:text-brand-accent transition-colors" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-xl text-brand-primary mb-2 group-hover:text-brand-accent transition-colors">
+                          {ind.name}
+                        </h3>
+                        <p className="font-sans text-sm text-brand-secondary leading-relaxed">
+                          {ind.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -440,10 +496,10 @@ export default function IndiaServicesPageClient() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hi,%20I%20have%20an%20enquiry%20regarding%20Indian%20compliance%20services.`}
+              href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I have an enquiry regarding Indian compliance services.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white px-8 py-4 rounded-[20px] font-sans text-sm font-medium transition-colors duration-300 shadow-soft"
+              className="inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white px-8 py-4 rounded-[20px] font-sans text-sm font-medium transition-colors duration-300 shadow-soft focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
             >
               <span>WhatsApp Consultation</span>
             </a>

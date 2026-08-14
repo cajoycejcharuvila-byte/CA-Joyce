@@ -4,7 +4,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2, ArrowRight, ShieldCheck, Award } from "lucide-react";
-import GlassCard from "@/components/cards/GlassCard";
 import { getBreadcrumbSchema } from "@/lib/seo";
 
 interface AboutPageClientProps {
@@ -76,7 +75,7 @@ export default function AboutPageClient({ aboutSettings, founderInfo, company }:
           </div>
 
           <div className="lg:col-span-5">
-            <GlassCard className="p-8 md:p-10 hover:shadow-glass bg-white text-left" hoverLift={false}>
+            <div className="pl-0 lg:pl-12 border-t lg:border-t-0 lg:border-l border-brand-divider pt-8 lg:pt-0">
               <h3 className="font-sans text-xs uppercase tracking-[0.2em] text-brand-accent font-bold mb-6">
                 Our Values
               </h3>
@@ -103,7 +102,7 @@ export default function AboutPageClient({ aboutSettings, founderInfo, company }:
                   </div>
                 </li>
               </ul>
-            </GlassCard>
+            </div>
           </div>
         </div>
 

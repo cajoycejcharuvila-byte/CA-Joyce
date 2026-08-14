@@ -2,6 +2,7 @@
 import { Award, GraduationCap, Mail, MessageSquare } from "lucide-react";
 import { getDbCompanyInfo, getDbPageSettings } from "@/lib/db";
 import { getPersonSchema, getBreadcrumbSchema } from "@/lib/seo";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 import { Metadata } from "next";
 
@@ -69,10 +70,10 @@ export default async function FounderPage() {
               </div>
               <div className="pt-2">
                 <a
-                  href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                  href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white py-3 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300"
+                  className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white py-3 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
                 >
                   <span>Connect Directly</span>
                 </a>

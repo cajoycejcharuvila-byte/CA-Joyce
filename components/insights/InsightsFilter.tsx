@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useEffect, useCallback } from "react";
 
 interface InsightsFilterProps {
   categories: string[];
@@ -16,16 +16,7 @@ export default function InsightsFilter({ categories, activeCategory }: InsightsF
   
   const [query, setQuery] = useState(searchParams.get("q") || "");
 
-  // Sync state with URL parameter changes (e.g. back navigation or clear)
-  useEffect(() => {
-    const q = searchParams.get("q") || "";
-    const timer = setTimeout(() => {
-      setQuery(q);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [searchParams]);
-
-  const handleUpdate = (newQuery: string, newCategory: string) => {
+  const handleUpdate = useCallback((newQuery: string, newCategory: string) => {
     const params = new URLSearchParams(searchParams.toString());
     
     if (newQuery.trim()) {
@@ -45,7 +36,18 @@ export default function InsightsFilter({ categories, activeCategory }: InsightsF
     startTransition(() => {
       router.push(`/insights?${params.toString()}`, { scroll: false });
     });
-  };
+  }, [searchParams, router]);
+
+  // Sync state with URL parameter changes (e.g. back navigation or clear)
+  useEffect(() => {
+    const q = searchParams.get("q") || "";
+    if (query !== q) {
+      const timer = setTimeout(() => {
+        handleUpdate(query, activeCategory);
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [query, activeCategory, searchParams, handleUpdate]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();

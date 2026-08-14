@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   keywords: homeMeta.keywords.join(", "),
   authors: [{ name: "CA Joyce J Charuvila" }],
   creator: "Joyce J Charuvila & Associates",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://joyce-ca.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ca-joyce-lu8v.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_IN",

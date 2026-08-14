@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://joyce-ca.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ca-joyce-lu8v.vercel.app";
 
 interface MetadataInput {
   title: string;

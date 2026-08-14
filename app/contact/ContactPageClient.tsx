@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { MessageSquare, Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 interface ContactPageClientProps {
   company: any;
@@ -102,13 +103,13 @@ export default function ContactPageClient({ company, services }: ContactPageClie
       formData.companyName ? ` I represent ${formData.companyName}.` : ""
     } I require assistance with "${formData.serviceRequired}".\n\nEnquiry Details:\n${formData.message}\n\nEmail: ${formData.emailAddress}\nPhone: ${formattedPhone}`;
     
-    return `https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(text)}`;
+    return buildWhatsAppUrl(company.contact.whatsapp, text);
   };
 
   return (
     <div className="w-full bg-brand-bg py-16 md:py-24">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* LEFT SIDE: Contact Information */}
           <div className="lg:col-span-5 flex flex-col justify-between lg:h-full lg:sticky lg:top-[130px] text-left">
@@ -146,7 +147,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                       <p>
                         <span className="text-slate-400 text-xs mr-2">WhatsApp:</span>
                         <a
-                          href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                          href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:text-brand-accent transition-colors duration-200 font-semibold text-brand-primary"
@@ -192,7 +193,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
           </div>
 
           {/* RIGHT SIDE: Interactive Form */}
-          <div className="lg:col-span-7 bg-white border border-brand-border rounded-[32px] p-8 md:p-12 shadow-soft">
+          <div className="lg:col-span-7 bg-white border border-brand-border rounded-[32px] p-8 md:p-10 shadow-soft">
             <AnimatePresence mode="wait">
               {!isSuccess ? (
                 <motion.div
@@ -236,8 +237,10 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                             errors.fullName ? "border-red-500 focus:border-red-500" : "border-brand-border focus:border-brand-primary"
                           }`}
                           placeholder="John Doe"
+                          aria-invalid={!!errors.fullName}
+                          aria-describedby={errors.fullName ? "fullName-error" : undefined}
                         />
-                        {errors.fullName && <p className="text-xs text-red-500 font-sans mt-1">{errors.fullName}</p>}
+                        {errors.fullName && <p id="fullName-error" className="text-xs text-red-500 font-sans mt-1" role="alert">{errors.fullName}</p>}
                       </div>
 
                       {/* Email Address */}
@@ -255,8 +258,10 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                             errors.emailAddress ? "border-red-500 focus:border-red-500" : "border-brand-border focus:border-brand-primary"
                           }`}
                           placeholder="john@company.com"
+                          aria-invalid={!!errors.emailAddress}
+                          aria-describedby={errors.emailAddress ? "emailAddress-error" : undefined}
                         />
-                        {errors.emailAddress && <p className="text-xs text-red-500 font-sans mt-1">{errors.emailAddress}</p>}
+                        {errors.emailAddress && <p id="emailAddress-error" className="text-xs text-red-500 font-sans mt-1" role="alert">{errors.emailAddress}</p>}
                       </div>
                     </div>
 
@@ -304,9 +309,11 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                               errors.phoneNumber ? "border-red-500 focus:border-red-500" : "border-brand-border focus:border-brand-primary"
                             }`}
                             placeholder="9876543210"
+                            aria-invalid={!!errors.phoneNumber}
+                            aria-describedby={errors.phoneNumber ? "phoneNumber-error" : undefined}
                           />
                         </div>
-                        {errors.phoneNumber && <p className="text-xs text-red-500 font-sans mt-1">{errors.phoneNumber}</p>}
+                        {errors.phoneNumber && <p id="phoneNumber-error" className="text-xs text-red-500 font-sans mt-1" role="alert">{errors.phoneNumber}</p>}
                       </div>
                     </div>
 
@@ -341,6 +348,8 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                             className={`w-full bg-slate-50 border outline-none py-3.5 px-4 rounded-[18px] font-sans text-sm text-brand-primary transition-all duration-300 appearance-none ${
                               errors.serviceRequired ? "border-red-500 focus:border-red-500" : "border-brand-border focus:border-brand-primary"
                             }`}
+                            aria-invalid={!!errors.serviceRequired}
+                            aria-describedby={errors.serviceRequired ? "serviceRequired-error" : undefined}
                           >
                             <option value="">Select a compliance service...</option>
                             <optgroup label="UAE Compliance">
@@ -368,7 +377,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                             </svg>
                           </div>
                         </div>
-                        {errors.serviceRequired && <p className="text-xs text-red-500 font-sans mt-1">{errors.serviceRequired}</p>}
+                        {errors.serviceRequired && <p id="serviceRequired-error" className="text-xs text-red-500 font-sans mt-1" role="alert">{errors.serviceRequired}</p>}
                       </div>
                     </div>
 
@@ -387,12 +396,14 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                           errors.message ? "border-red-500 focus:border-red-500" : "border-brand-border focus:border-brand-primary"
                         }`}
                         placeholder="Please outline your entity structure and filing requirement..."
+                        aria-invalid={!!errors.message}
+                        aria-describedby={errors.message ? "message-error" : undefined}
                       />
-                      {errors.message && <p className="text-xs text-red-500 font-sans mt-1">{errors.message}</p>}
+                      {errors.message && <p id="message-error" className="text-xs text-red-500 font-sans mt-1" role="alert">{errors.message}</p>}
                     </div>
 
                     {apiError && (
-                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3.5 rounded-[18px] font-sans text-xs">
+                      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3.5 rounded-[18px] font-sans text-xs" role="alert" aria-live="assertive">
                         {apiError}
                       </div>
                     )}
@@ -415,6 +426,11 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                         </>
                       )}
                     </button>
+                    <p className="font-sans text-[11px] text-brand-secondary text-center leading-relaxed">
+                      By submitting this form, you consent to your data being stored and processed 
+                      strictly for the purpose of communicating with you regarding your inquiry, 
+                      in compliance with local data protection regulations. We never share your data with third parties.
+                    </p>
                   </form>
                 </motion.div>
               ) : (
@@ -425,6 +441,8 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className="text-center py-12 space-y-6"
+                  role="status"
+                  aria-live="polite"
                 >
                   <div className="w-16 h-16 bg-emerald-50 border border-emerald-200 text-brand-accent rounded-full flex items-center justify-center mx-auto shadow-soft">
                     <CheckCircle className="w-8 h-8" />

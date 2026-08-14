@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Search, ChevronDown, HelpCircle, MessageSquare, PhoneCall } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import GlassCard from "@/components/cards/GlassCard";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const CATEGORIES = [
   { id: "all", label: "All Questions" },
@@ -206,10 +207,10 @@ export default function FAQPageClient({ allFaqs, company }: FAQPageClientProps) 
               
               <div className="space-y-3">
                 <a
-                  href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hi,%20I%20have%20an%20enquiry%20regarding%20tax%20compliance%20services.`}
+                  href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I have an enquiry regarding tax compliance services.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white px-4 py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300"
+                  className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white px-4 py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>WhatsApp Chat</span>

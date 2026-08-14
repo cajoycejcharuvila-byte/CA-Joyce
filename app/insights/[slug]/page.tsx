@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, Clock, User, MessageSquare, Share2 } from "lucide-react";
 import { getDbInsightBySlug, getDbInsights, getDbCompanyInfo } from "@/lib/db";
 import { generateMetadata as seoGenerateMetadata, getArticleSchema, getBreadcrumbSchema, getFAQPageSchema } from "@/lib/seo";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -86,7 +87,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
 
   const faqSchema = insight.faqs && insight.faqs.length > 0 ? getFAQPageSchema(insight.faqs) : null;
 
-  const articleUrl = `https://joyceca.in/insights/${slug}`;
+  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://joyceca.in"}/insights/${slug}`;
 
   return (
     <div className="w-full bg-brand-bg py-12 md:py-20 text-left">
@@ -257,10 +258,10 @@ export default async function InsightDetailPage({ params }: PageProps) {
               
               <div className="space-y-3">
                 <a
-                  href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}?text=Hi,%20I%20read%20your%20article%20on%20"${encodeURIComponent(insight.title)}"%20and%20require%20assistance.`}
+                  href={buildWhatsAppUrl(company.contact.whatsapp, `Hi, I read your article on "${insight.title}" and require assistance.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300"
+                  className="w-full inline-flex items-center justify-center space-x-2 bg-brand-accent hover:bg-brand-primary text-white py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>WhatsApp Chat</span>

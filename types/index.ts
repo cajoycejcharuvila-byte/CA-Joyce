@@ -65,6 +65,7 @@ export interface ServiceItem {
   meta_title: string;
   meta_description: string;
   image?: string;
+  whatsapp_context?: string;
 }
 
 export interface IndustryItem {

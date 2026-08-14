@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -10,8 +10,8 @@ import {
   ClipboardCheck, Calculator, FileText, Briefcase, Globe
 } from "lucide-react";
 import ParallaxImage from "@/components/sections/ParallaxImage";
-import GlassCard from "@/components/cards/GlassCard";
 import { InsightItem } from "@/lib/cms";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 interface HomePageClientProps {
   company: any;
@@ -46,15 +46,6 @@ export default function HomePageClient({
     <Briefcase className="w-7 h-7 text-brand-accent shrink-0" key="advisory" />,
     <Globe className="w-7 h-7 text-brand-accent shrink-0" key="crossborder" />,
     <ShieldCheck className="w-7 h-7 text-brand-accent shrink-0" key="internal" />
-  ];
-
-  const images = [
-    "/images/capabilities/audit-assurance.webp",
-    "/images/capabilities/tax-compliance.webp",
-    "/images/capabilities/financial-reporting.webp",
-    "/images/capabilities/business-advisory.webp",
-    "/images/capabilities/crossborder-tax.webp",
-    "/images/capabilities/internal-controls.webp"
   ];
 
   const practiceLinks = [
@@ -215,113 +206,107 @@ export default function HomePageClient({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            {/* Box 1: Income Tax & GST India */}
-            <div className="bg-slate-50 border border-brand-border p-8 rounded-[28px] flex flex-col justify-between">
-              <div>
+          <div className="flex flex-col border-t border-brand-divider text-left">
+            {/* Row 1: Income Tax & GST India */}
+            <div className="flex flex-col md:flex-row md:items-start justify-between py-10 border-b border-brand-divider">
+              <div className="md:w-1/3 pr-8 mb-6 md:mb-0">
                 <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
                   India • Tax & GST Filings
                 </span>
-                <h3 className="font-display text-2xl text-brand-primary font-normal mb-4">
+                <h3 className="font-display text-2xl text-brand-primary font-normal mb-6">
                   Tax Returns & GST
                 </h3>
-                <ul className="space-y-3 font-sans text-xs text-brand-secondary">
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>PAN Card & Aadhaar of Primary Signatory</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Bank Account Statements (Full Financial Year)</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Form 26AS, AIS & TIS Tax Information Summaries</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Monthly Sales & Purchase Invoices for GST</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="pt-6 border-t border-brand-divider mt-6">
-                <Link href="/services/india/gst-registration-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1">
+                <Link href="/services/india/gst-registration-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 w-fit">
                   <span>Explore India Tax Services</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+              <ul className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 font-sans text-sm text-brand-secondary">
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>PAN Card & Aadhaar of Primary Signatory</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Bank Account Statements (Full Financial Year)</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Form 26AS, AIS & TIS Tax Information Summaries</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Monthly Sales & Purchase Invoices for GST</span>
+                </li>
+              </ul>
             </div>
 
-            {/* Box 2: Statutory & Bank Audit */}
-            <div className="bg-slate-50 border border-brand-border p-8 rounded-[28px] flex flex-col justify-between">
-              <div>
+            {/* Row 2: Statutory & Bank Audit */}
+            <div className="flex flex-col md:flex-row md:items-start justify-between py-10 border-b border-brand-divider">
+              <div className="md:w-1/3 pr-8 mb-6 md:mb-0">
                 <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
                   India • Statutory Audit
                 </span>
-                <h3 className="font-display text-2xl text-brand-primary font-normal mb-4">
+                <h3 className="font-display text-2xl text-brand-primary font-normal mb-6">
                   Financial Audits
                 </h3>
-                <ul className="space-y-3 font-sans text-xs text-brand-secondary">
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Final Trial Balance, Ledger & Balance Sheet Drafts</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Certificate of Incorporation & MOA / AOA</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Prior Year Financial Audit Reports & Schedules</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Fixed Asset Register & Loan Sanction Letters</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="pt-6 border-t border-brand-divider mt-6">
-                <Link href="/services/india/statutory-audit" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1">
+                <Link href="/services/india/statutory-audit" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 w-fit">
                   <span>Explore Audit Services</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+              <ul className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 font-sans text-sm text-brand-secondary">
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Final Trial Balance, Ledger & Balance Sheet Drafts</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Certificate of Incorporation & MOA / AOA</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Prior Year Financial Audit Reports & Schedules</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Fixed Asset Register & Loan Sanction Letters</span>
+                </li>
+              </ul>
             </div>
 
-            {/* Box 3: UAE Corporate Tax & VAT */}
-            <div className="bg-slate-50 border border-brand-border p-8 rounded-[28px] flex flex-col justify-between">
-              <div>
+            {/* Row 3: UAE Corporate Tax & VAT */}
+            <div className="flex flex-col md:flex-row md:items-start justify-between py-10 border-b border-brand-divider">
+              <div className="md:w-1/3 pr-8 mb-6 md:mb-0">
                 <span className="font-sans text-xs uppercase tracking-widest text-brand-accent font-bold mb-3 block">
                   UAE • Corporate Tax & VAT
                 </span>
-                <h3 className="font-display text-2xl text-brand-primary font-normal mb-4">
+                <h3 className="font-display text-2xl text-brand-primary font-normal mb-6">
                   UAE Compliance
                 </h3>
-                <ul className="space-y-3 font-sans text-xs text-brand-secondary">
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Valid UAE Trade License & Commercial Registry</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Emirates ID & Passport Copies of Partners</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>FTA EmaraTax Account Credentials (if registered)</span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <span className="text-brand-accent font-bold">✓</span>
-                    <span>Audited / Management Accounts & Bank Statements</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="pt-6 border-t border-brand-divider mt-6">
-                <Link href="/services/uae/corporate-tax-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1">
+                <Link href="/services/uae/corporate-tax-filing" className="font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent flex items-center space-x-1 w-fit">
                   <span>Explore UAE Tax Services</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+              <ul className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 font-sans text-sm text-brand-secondary">
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Valid UAE Trade License & Commercial Registry</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Emirates ID & Passport Copies of Partners</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Do not share EmaraTax credentials here (secure method provided)</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-brand-accent font-bold mt-0.5">✓</span>
+                  <span>Audited / Management Accounts & Bank Statements</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -366,70 +351,62 @@ export default function HomePageClient({
       </section>
 
       {/* SECTION 03: AREAS OF PRACTICE */}
-      <section className="py-16 md:py-28 bg-brand-bg" id="practice-areas">
+      <section className="py-16 md:py-28 bg-brand-bg border-t border-brand-divider" id="practice-areas">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="text-center mb-16">
-            <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
-              Capabilities
-            </span>
-            <h2 className="font-display text-4xl md:text-6xl font-normal text-brand-primary tracking-tight">
-              Areas of Practice
-            </h2>
-            <p className="font-sans text-slate-500 max-w-lg mx-auto mt-4 text-sm md:text-base">
-              Providing technical precision across audit, assurance, tax compliance, and business advisory assignments in India and the UAE.
-            </p>
-          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Left: Large Statement */}
+            <div className="lg:col-span-5 lg:sticky lg:top-32 self-start">
+              <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
+                Capabilities
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-brand-primary tracking-tight leading-tight">
+                Areas of Practice
+              </h2>
+              <p className="font-sans text-brand-secondary mt-6 text-base md:text-lg max-w-md leading-relaxed">
+                Providing technical precision across audit, assurance, tax compliance, and business advisory assignments in India and the United Arab Emirates.
+              </p>
+            </div>
 
-          {/* 3-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {capabilities.map((cap, index) => (
-              <GlassCard key={index} className="flex flex-col justify-between min-h-[320px] p-8 md:p-10 hover:shadow-glass group">
-                <div className="flex flex-col h-full">
-                  <div className="relative h-48 mb-6 -mx-8 -mt-8 overflow-hidden md:-mx-10 md:-mt-10 rounded-t-2xl">
-                    <Image
-                      src={images[index % images.length]}
-                      alt={cap.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                    <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
-                      <div className="bg-white/20 backdrop-blur-md p-2 rounded-lg border border-white/10 text-white">
-                        {practiceIcons[index % practiceIcons.length]}
-                      </div>
-                      <span className="font-mono text-xs text-white/80 font-bold uppercase tracking-widest bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+            {/* Right: List of capabilities */}
+            <div className="lg:col-span-7 flex flex-col">
+              {capabilities.map((cap, index) => (
+                <Link
+                  key={index}
+                  href={practiceLinks[index % practiceLinks.length]}
+                  className="group block border-b border-brand-divider last:border-b-0 py-8 first:pt-0"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+                    {/* Number & Icon */}
+                    <div className="flex items-center gap-4 shrink-0">
+                      <span className="font-mono text-sm text-brand-accent font-bold uppercase tracking-widest bg-brand-accent/5 px-3 py-1.5 rounded-full border border-brand-accent/10">
                         0{index + 1}
                       </span>
+                      <div className="bg-white p-2.5 rounded-xl border border-brand-border text-brand-primary group-hover:text-brand-accent transition-colors shadow-soft">
+                        {practiceIcons[index % practiceIcons.length]}
+                      </div>
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div>
+                        <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-2 font-normal group-hover:text-brand-accent transition-colors duration-300">
+                          {cap.title}
+                        </h3>
+                        <p className="font-sans text-sm md:text-base text-brand-secondary leading-relaxed max-w-md">
+                          {cap.description}
+                        </p>
+                      </div>
+                      <div className="w-10 h-10 shrink-0 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary group-hover:text-white group-hover:bg-brand-accent group-hover:border-brand-accent transition-all duration-300 self-start sm:self-center mt-2 sm:mt-0">
+                        <ArrowRight className="w-5 h-5" />
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="flex-grow">
-                    <h3 className="font-display text-2xl md:text-3xl text-brand-primary mb-4 font-normal group-hover:text-brand-accent transition-colors duration-300">
-                      {cap.title}
-                    </h3>
-                    <p className="font-sans text-sm text-brand-secondary leading-relaxed">
-                      {cap.description}
-                    </p>
-                  </div>
-                </div>
-                
-                <Link
-                  href={practiceLinks[index % practiceLinks.length]}
-                  className="pt-6 flex items-center justify-between border-t border-brand-divider mt-6 w-full group/btn"
-                >
-                  <span className="font-sans text-xs uppercase tracking-widest font-semibold text-brand-secondary group-hover:text-brand-primary transition-colors duration-300">
-                    Learn More
-                  </span>
-                  <div 
-                    className="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary group-hover/btn:text-white group-hover/btn:bg-brand-accent group-hover/btn:border-brand-accent transition-all duration-300"
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
                 </Link>
-              </GlassCard>
-            ))}
+              ))}
+            </div>
           </div>
+
         </div>
       </section>
 
@@ -631,19 +608,19 @@ export default function HomePageClient({
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-white hover:bg-slate-100 border border-brand-border px-8 py-4 rounded-[20px] font-sans font-medium text-brand-primary transition-all duration-300 shadow-soft"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-white hover:bg-slate-100 border border-brand-border px-8 py-4 rounded-[20px] font-sans font-medium text-brand-primary transition-all duration-300 shadow-soft focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
               >
                 <MessageSquare className="w-5 h-5 text-brand-accent" />
-                <span>WhatsApp CA Joyce</span>
+                <span>WhatsApp Consultation</span>
               </a>
               <Link
                 href="/contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center bg-brand-accent hover:bg-brand-primary text-white px-8 py-4 rounded-[20px] font-sans font-medium transition-all duration-300 shadow-soft hover:shadow-glass hover:translate-y-[-2px]"
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-brand-accent hover:bg-brand-primary text-white px-8 py-4 rounded-[20px] font-sans font-medium transition-all duration-300 shadow-soft hover:shadow-glass hover:translate-y-[-2px] focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
               >
-                <span>Request Detailed Audit Call</span>
+                <span>Request Callback</span>
               </Link>
             </div>
           </div>

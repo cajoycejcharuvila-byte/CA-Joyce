@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 interface ScrollCapabilitiesProps {
-  capabilities: any[];
+  capabilities: { title: string; description: string }[];
 }
 
 export default function ScrollCapabilities({ capabilities }: ScrollCapabilitiesProps) {

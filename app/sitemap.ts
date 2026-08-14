@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
-import { getAllServices, getInsights } from "@/lib/cms";
+import { getIndiaServices, getUAEServices, getInsights } from "@/lib/cms";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://joyce-ca.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ca-joyce-lu8v.vercel.app";
 
   // Static routes
   const staticRoutes = ["", "/about", "/founder", "/services", "/insights", "/contact"].map(
@@ -15,8 +15,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   // Dynamic services
-  const services = getAllServices().map((service) => ({
-    url: `${siteUrl}/services/${service.slug}`,
+  const uaeServices = getUAEServices().map((service) => ({
+    url: `${siteUrl}/services/uae/${service.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const indiaServices = getIndiaServices().map((service) => ({
+    url: `${siteUrl}/services/india/${service.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -30,5 +37,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...services, ...insights];
+  return [...staticRoutes, ...uaeServices, ...indiaServices, ...insights];
 }

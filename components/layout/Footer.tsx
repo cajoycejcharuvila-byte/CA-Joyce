@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { MessageSquare, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { getCompanyInfo } from "@/lib/cms";
 import { CompanyInfo } from "@/types";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 interface FooterProps {
   companyInfo?: CompanyInfo;
@@ -29,10 +30,10 @@ export default function Footer({ companyInfo }: FooterProps) {
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:justify-end">
             <a
-              href={`https://wa.me/${company.contact.whatsapp.replace(/[^0-9]/g, "")}`}
+              href={buildWhatsAppUrl(company.contact.whatsapp, "Hi, I would like to schedule a consultation with Joyce J Charuvila & Associates.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-3 bg-white hover:bg-slate-200 text-brand-dark px-8 py-4 rounded-[20px] font-sans font-medium transition-all duration-300 shadow-soft"
+              className="inline-flex items-center space-x-3 bg-white hover:bg-slate-200 text-brand-dark px-8 py-4 rounded-[20px] font-sans font-medium transition-all duration-300 shadow-soft focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none"
             >
               <MessageSquare className="w-5 h-5 text-brand-accent" />
               <span>WhatsApp Consultation</span>
