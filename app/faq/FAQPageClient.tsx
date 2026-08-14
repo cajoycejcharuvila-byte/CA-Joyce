@@ -5,7 +5,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, ChevronDown, HelpCircle, MessageSquare, PhoneCall } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import GlassCard from "@/components/cards/GlassCard";
+
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 const CATEGORIES = [
@@ -194,7 +194,7 @@ export default function FAQPageClient({ allFaqs, company }: FAQPageClientProps) 
 
           {/* Sidebar (4 Cols) */}
           <aside className="lg:col-span-4 space-y-8 lg:sticky lg:top-[130px]">
-            <GlassCard className="p-8 bg-white border border-brand-border rounded-[32px] shadow-soft text-left">
+            <div className="p-8 bg-slate-50 border border-brand-divider rounded-[24px] text-left">
               <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-brand-accent font-bold mb-2 block">
                 Still have questions?
               </span>
@@ -217,13 +217,13 @@ export default function FAQPageClient({ allFaqs, company }: FAQPageClientProps) 
                 </a>
                 <Link
                   href="/contact"
-                  className="w-full inline-flex items-center justify-center space-x-2 border border-brand-border hover:border-brand-primary text-brand-primary py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300 bg-slate-50"
+                  className="w-full inline-flex items-center justify-center space-x-2 border border-brand-border hover:border-brand-primary text-brand-primary py-3.5 rounded-[16px] font-sans text-sm font-medium transition-colors duration-300 bg-white"
                 >
                   <PhoneCall className="w-4 h-4 text-brand-accent" />
                   <span>Request Callback</span>
                 </Link>
               </div>
-            </GlassCard>
+            </div>
           </aside>
         </div>
       </div>

@@ -19,6 +19,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [indiaExpanded, setIndiaExpanded] = useState(false);
   const [uaeExpanded, setUaeExpanded] = useState(false);
+  const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
 
   const pathname = usePathname();
   const company = companyInfo || getCompanyInfo();
@@ -35,10 +36,11 @@ export default function Navbar({ companyInfo }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile drawer when pathname changes
+  // Close mobile drawer and mega menu when pathname changes
   useEffect(() => {
     setTimeout(() => {
       setIsOpen(false);
+      setIsServicesMenuOpen(false);
     }, 0);
   }, [pathname]);
 
@@ -47,6 +49,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setIsOpen(false);
+        setIsServicesMenuOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -96,20 +99,34 @@ export default function Navbar({ companyInfo }: NavbarProps) {
             </Link>
 
             {/* Services Dropdown */}
-            <div className="relative group py-4">
+            <div 
+              className="relative py-4"
+              onMouseEnter={() => setIsServicesMenuOpen(true)}
+              onMouseLeave={() => setIsServicesMenuOpen(false)}
+            >
               <button
                 aria-haspopup="true"
-                aria-expanded="false"
+                aria-expanded={isServicesMenuOpen}
                 aria-controls="services-mega-menu"
+                onClick={() => setIsServicesMenuOpen(!isServicesMenuOpen)}
                 className={`font-sans text-sm font-medium tracking-wide transition-colors duration-300 flex items-center space-x-1 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md px-1 ${
                   pathname.startsWith("/services") ? "text-brand-accent" : "text-brand-secondary hover:text-brand-primary"
                 }`}
               >
                 <span>Services</span>
-                <ChevronDown className="w-3.5 h-3.5" />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isServicesMenuOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              <div id="services-mega-menu" className="absolute top-full left-1/2 -translate-x-1/2 mt-1 hidden group-hover:block focus-within:block bg-white border border-slate-200 rounded-[28px] shadow-glass p-8 w-[760px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]">
+              <AnimatePresence>
+              {isServicesMenuOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.2 }}
+                id="services-mega-menu" 
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-white border border-brand-divider rounded-[24px] shadow-glass p-8 w-[760px] z-50 before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px]"
+              >
                 <div className="grid grid-cols-2 gap-8 text-left">
                   
                   {/* India Practice Column */}
@@ -261,7 +278,9 @@ export default function Navbar({ companyInfo }: NavbarProps) {
                   </div>
 
                 </div>
-              </div>
+              </motion.div>
+              )}
+              </AnimatePresence>
             </div>
 
             <Link

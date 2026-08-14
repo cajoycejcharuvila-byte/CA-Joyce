@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, Calculator, ClipboardCheck, Percent, FileCheck, 
   Building2, FileSpreadsheet, ArrowRight,
@@ -58,122 +56,6 @@ function getServiceImagePath(slug: string, serviceImage?: string) {
   if (slug.includes("corporate-tax-registration")) return "/images/services/uae/ct-reg-new.jpg";
   if (slug.includes("corporate-tax-filing")) return "/images/services/uae/ct-filing-new.jpg";
   return "/images/services/uae-tax-documents.webp"; // fallback
-}
-
-// Sub-component for interactive services preview
-function InteractiveServiceCard({ service }: { service: ServiceItem }) {
-  const [expanded, setExpanded] = useState(false);
-  const icon = getServiceIcon(service.slug);
-  const category = getCategoryTag(service.slug);
-  const imageSrc = getServiceImagePath(service.slug, service.image);
-  const seoNode = SEO_GRAPH[service.slug];
-
-  return (
-    <div 
-      className={`bg-[#F8FAFC] border border-[#CBD5E1] rounded-[32px] overflow-hidden shadow-soft hover:shadow-glass hover:border-brand-primary/20 transition-all duration-500 flex flex-col justify-between p-0 cursor-pointer h-full min-h-[380px] select-none ${
-        expanded ? "ring-1 ring-brand-accent/20 -translate-y-2 scale-[1.01]" : ""
-      }`}
-      onClick={() => setExpanded(!expanded)}
-      onMouseEnter={() => setExpanded(true)}
-      onMouseLeave={() => setExpanded(false)}
-    >
-      <div>
-        {/* Header Image */}
-        <div className="relative w-full h-[200px] bg-slate-100 overflow-hidden">
-          <Image
-            src={imageSrc}
-            alt={service.title}
-            fill
-            sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 grayscale-[20%]"
-            loading="lazy"
-          />
-          <div className="absolute top-4 left-4">
-            <span className="font-sans text-[10px] uppercase tracking-widest bg-brand-primary text-white px-3 py-1.5 rounded-full font-bold shadow-sm">
-              {category}
-            </span>
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className="p-10 pb-6">
-          {/* Icon & Title */}
-          <div className="flex items-start space-x-3.5 mb-4">
-            <div className="p-2.5 bg-white rounded-[14px] border border-brand-border">
-              {icon}
-            </div>
-            <h3 className="font-display text-[26px] md:text-[28px] font-normal leading-tight text-brand-primary group-hover:text-brand-accent transition-colors duration-300">
-              {service.title.replace(" (UAE)", "")}
-            </h3>
-          </div>
-
-          {/* Short Description */}
-          <p className="font-sans text-[16px] text-brand-secondary leading-relaxed mb-4">
-            {service.overview.split(". ")[0]}.
-          </p>
-        </div>
-      </div>
-
-      {/* Expandable Preview Details */}
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="px-10 pb-8 border-t border-brand-divider pt-4 bg-slate-50/50 space-y-4"
-          >
-            {seoNode ? (
-              <>
-                <div>
-                  <p className="font-sans text-[10px] uppercase tracking-wider font-semibold text-brand-accent mb-0.5">What It Is</p>
-                  <p className="font-sans text-xs text-brand-secondary leading-relaxed">{seoNode.definition}</p>
-                </div>
-                <div>
-                  <p className="font-sans text-[10px] uppercase tracking-wider font-semibold text-brand-accent mb-0.5">Who It Is For</p>
-                  <p className="font-sans text-xs text-brand-secondary leading-relaxed">{seoNode.targetUser}</p>
-                </div>
-                <div>
-                  <p className="font-sans text-[10px] uppercase tracking-wider font-semibold text-brand-accent mb-0.5">When Needed</p>
-                  <p className="font-sans text-xs text-brand-secondary leading-relaxed">{seoNode.whenNeeded}</p>
-                </div>
-                <div className="bg-red-50/60 border border-red-100/80 rounded-xl p-3">
-                  <p className="font-sans text-[10px] uppercase tracking-wider font-semibold text-red-600 mb-0.5">Statutory Urgency</p>
-                  <p className="font-sans text-xs text-red-700 leading-relaxed font-medium">{seoNode.urgencyTrigger}</p>
-                </div>
-              </>
-            ) : (
-              <div>
-                <p className="font-sans text-[10px] uppercase tracking-wider font-semibold text-brand-accent mb-1">Who Needs This</p>
-                <p className="font-sans text-xs text-brand-secondary leading-relaxed">{service.who_needs_this}</p>
-              </div>
-            )}
-            <div className="pt-2">
-              <Link 
-                href={`/services/uae/${service.slug}`}
-                onClick={(e) => e.stopPropagation()} // Prevent double clicks
-                className="inline-flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent transition-colors"
-              >
-                <span>Full Scope & Details</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Static CTA Bar when not expanded */}
-      {!expanded && (
-        <div className="px-10 pb-8 pt-2">
-          <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary border-t border-brand-divider pt-4">
-            <span>Click to Expand</span>
-            <ArrowRight className="w-4 h-4" />
-          </div>
-        </div>
-      )}
-    </div>
-  );
 }
 
 export default function UAEServicesPageClient() {
