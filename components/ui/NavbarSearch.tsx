@@ -46,11 +46,11 @@ export default function NavbarSearch({ isOpen, onClose }: NavbarSearchProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, transformOrigin: "right center" }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-          className="absolute right-0 top-0 bottom-0 w-full sm:w-[400px] md:w-[450px] flex items-center bg-white/95 backdrop-blur-xl rounded-full px-4 md:px-6 z-50 shadow-glass border border-brand-divider"
+          initial={{ opacity: 0, maxWidth: "48px" }}
+          animate={{ opacity: 1, maxWidth: "100%" }}
+          exit={{ opacity: 0, maxWidth: "48px" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="absolute right-2 top-2 bottom-2 w-[calc(100%-16px)] md:w-[450px] flex items-center bg-white shadow-soft border border-brand-divider rounded-full px-4 z-50 overflow-hidden origin-right"
         >
           <Search className="w-5 h-5 text-brand-primary shrink-0 mr-3" />
           <input

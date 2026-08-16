@@ -89,7 +89,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
             : "bg-transparent border border-transparent"
         }`}
       >
-        <div className={`w-full flex items-center justify-between transition-all duration-300 ${isSearchOpen ? 'opacity-0 blur-md pointer-events-none' : 'opacity-100 blur-0'}`}>
+        <div className="w-full flex items-center justify-between">
           {/* Logo / Name */}
           <Link href="/" className="flex items-center space-x-3 group z-50">
             <div className="relative w-9 h-9 shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]">
@@ -109,7 +109,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className={`hidden lg:flex items-center space-x-8 transition-all duration-300 ${isSearchOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100 blur-0'}`}>
             <Link
               href="/about"
               className={`font-sans text-sm font-medium tracking-wide transition-all duration-300 relative py-2 px-1 hover:-translate-y-0.5 ${
@@ -248,7 +248,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           </nav>
 
           {/* Desktop CTAs */}
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className={`hidden lg:flex items-center space-x-3 transition-all duration-300 ${isSearchOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100 blur-0'}`}>
             <button
               onClick={() => setIsSearchOpen(true)}
               className="group flex items-center justify-center w-10 h-10 rounded-full border border-brand-border bg-white hover:border-brand-accent hover:bg-brand-accent transition-all duration-300 focus-visible:ring-2 focus-visible:ring-brand-accent focus:outline-none shadow-sm hover:shadow-soft"
@@ -274,7 +274,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
           </div>
 
           {/* Mobile hamburger & Search */}
-          <div className="lg:hidden flex items-center z-50 space-x-2">
+          <div className={`lg:hidden flex items-center z-50 space-x-2 transition-all duration-300 ${isSearchOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100 blur-0'}`}>
             <button
               onClick={() => setIsSearchOpen(true)}
               className="p-2 text-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-md"
