@@ -9,7 +9,7 @@ import { Menu, X, MessageSquare, PhoneCall, ChevronDown, ArrowRight, Search } fr
 import { getCompanyInfo } from "@/lib/cms";
 import { CompanyInfo } from "@/types";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import SearchModal from "@/components/ui/SearchModal";
+import NavbarSearch from "@/components/ui/NavbarSearch";
 
 interface NavbarProps {
   companyInfo?: CompanyInfo;
@@ -82,7 +82,6 @@ export default function Navbar({ companyInfo }: NavbarProps) {
 
   return (
     <>
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       <header
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1300px] h-[72px] transition-all duration-500 rounded-full flex items-center px-6 md:px-8 ${
           scrolled
@@ -90,7 +89,7 @@ export default function Navbar({ companyInfo }: NavbarProps) {
             : "bg-transparent border border-transparent"
         }`}
       >
-        <div className="w-full flex items-center justify-between">
+        <div className={`w-full flex items-center justify-between transition-all duration-300 ${isSearchOpen ? 'opacity-0 blur-md pointer-events-none' : 'opacity-100 blur-0'}`}>
           {/* Logo / Name */}
           <Link href="/" className="flex items-center space-x-3 group z-50">
             <div className="relative w-9 h-9 shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]">
@@ -294,6 +293,8 @@ export default function Navbar({ companyInfo }: NavbarProps) {
             </button>
           </div>
         </div>
+        
+        <NavbarSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       </header>
 
       {/* Full-Screen Drawer Menu */}
