@@ -124,7 +124,7 @@ export async function POST(request: Request) {
 
         // 1. Admin notification email
         await resend.emails.send({
-        from: "Joyce CA Website <no-reply@joyceca.in>",
+        from: "Joyce CA Website <no-reply@cajoyce.com>",
         to: [company.contact.email],
         subject: `New Enquiry — ${sanitizedData.serviceRequired} from ${sanitizedData.fullName}`,
         html: `
@@ -174,7 +174,7 @@ export async function POST(request: Request) {
 
       // 2. Client auto-reply email
       await resend.emails.send({
-        from: "Joyce J Charuvila & Associates <no-reply@joyceca.in>",
+        from: "Joyce J Charuvila & Associates <no-reply@cajoyce.com>",
         to: [sanitizedData.emailAddress],
         subject: "We received your enquiry — Joyce J Charuvila & Associates",
         html: `
