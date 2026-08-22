@@ -1,21 +1,21 @@
-// Google Analytics 4 — only injected in production builds
-// Set NEXT_PUBLIC_GA_ID in your .env.local and Vercel env vars
-// e.g. NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+import Script from "next/script";
 
 export default function Analytics() {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
-  if (!gaId || process.env.NODE_ENV !== "production") {
+  if (!gaId) {
     return null;
   }
 
   return (
     <>
-      <script
-        async
+      <Script
+        strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
       />
-      <script
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
