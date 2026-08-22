@@ -1,14 +1,17 @@
 {
   "home": {
-    "title": "Joyce J Charuvila & Associates | Chartered Accountants | Pathanamthitta",
-    "description": "Professional audit, accounting, taxation and advisory services in India and the UAE.",
+    "title": "Joyce J Charuvila & Associates | Chartered Accountants | Pathanamthitta & UAE",
+    "description": "Professional audit, accounting, taxation and advisory services in India and the UAE. Specialized in UAE Corporate Tax and VAT.",
     "keywords": [
       "Chartered Accountant Pathanamthitta",
       "GST Filing Services Kerala",
       "Income Tax Consultant Kerala",
       "Accounting Services Kerala",
+      "Chartered Accountant UAE",
+      "Indian CA for UAE businesses",
       "UAE VAT Consultant",
       "Corporate Tax Services UAE",
+      "Outsourced Accounting Services Dubai",
       "Internal Audit Services",
       "Business Advisory Services"
     ]
@@ -19,7 +22,9 @@
     "keywords": [
       "CA Firm Pathanamthitta",
       "Chartered Accountant Kerala",
-      "Audit and Compliance Services"
+      "Audit and Compliance Services",
+      "Accounting Firm for UAE clients",
+      "Kerala CA for Gulf NRIs"
     ]
   },
   "founder": {
@@ -29,7 +34,9 @@
       "CA Joyce J Charuvila",
       "Chartered Accountant Pathanamthitta",
       "ACA India",
-      "UAE Audit Consultant"
+      "UAE Audit Consultant",
+      "Indian Chartered Accountant in UAE",
+      "Experienced CA UAE Corporate Tax"
     ]
   },
   "services": {
@@ -38,7 +45,8 @@
     "keywords": [
       "Accounting Services India UAE",
       "Statutory Audit Services",
-      "Corporate Tax Filing"
+      "Corporate Tax Filing",
+      "Cross border tax consultant India UAE"
     ]
   },
   "services-uae": {
@@ -48,7 +56,11 @@
       "UAE VAT Registration",
       "Corporate Tax UAE",
       "Dubai Bookkeeping Services",
-      "FTA Portal Registration"
+      "FTA Portal Registration",
+      "UAE Tax Return Filing",
+      "Mainland and Freezone Accounting UAE",
+      "Outsource UAE Accounting to India",
+      "Corporate Tax Assessment UAE"
     ]
   },
   "services-india": {
@@ -58,7 +70,8 @@
       "Income Tax Filing Kerala",
       "GST Filing Pathanamthitta",
       "Bank Concurrent Audit",
-      "Statutory Auditor Kerala"
+      "Statutory Auditor Kerala",
+      "NRI Tax Consultant Kerala"
     ]
   },
   "insights": {
@@ -67,16 +80,18 @@
     "keywords": [
       "Indian Tax Updates",
       "UAE Corporate Tax News",
-      "GST Compliance Updates"
+      "GST Compliance Updates",
+      "UAE FTA guidelines"
     ]
   },
   "contact": {
     "title": "Contact Joyce J Charuvila & Associates | Chartered Accountants",
-    "description": "Get in touch with our office in Pathanamthitta, Kerala, for professional audit, taxation, and accounting consultations.",
+    "description": "Get in touch with our office in Pathanamthitta, Kerala, for professional audit, taxation, and accounting consultations for India and UAE.",
     "keywords": [
       "Contact Chartered Accountant Pathanamthitta",
       "CA Joyce J Charuvila Contact",
-      "Hire Auditor Kerala"
+      "Hire Auditor Kerala",
+      "Contact UAE Tax Consultant"
     ]
   }
 }
