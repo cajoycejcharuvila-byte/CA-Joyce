@@ -138,6 +138,8 @@ export default function AdminDashboard({ initialSubmissions, company }: AdminDas
           </div>
 
           <div className="lg:col-span-9">
+            
+            {/* HOME PAGE EDITOR */}
             {activeTab === "home" && (
               <div className="bg-white dark:bg-[#121826] border border-brand-border rounded-[32px] p-8 md:p-12 shadow-sm text-left">
                 <h2 className="text-2xl font-display text-brand-primary mb-6">Edit Home Page</h2>
@@ -186,7 +188,58 @@ export default function AdminDashboard({ initialSubmissions, company }: AdminDas
               </div>
             )}
 
-            {activeTab !== "home" && (
+            {/* ABOUT PAGE EDITOR */}
+            {activeTab === "about" && (
+              <div className="bg-white dark:bg-[#121826] border border-brand-border rounded-[32px] p-8 md:p-12 shadow-sm text-left">
+                <h2 className="text-2xl font-display text-brand-primary mb-6">Edit About Page</h2>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">Heading</label>
+                    <input 
+                      type="text" 
+                      value={pageSettings.about.heading || ""} 
+                      onChange={e => setPageSettings((prev: any) => ({...prev, about: {...prev.about, heading: e.target.value}}))}
+                      className="w-full border rounded-xl p-3" 
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">Biography (Paragraphs)</label>
+                    <textarea 
+                      value={pageSettings.about.bioParagraphs ? pageSettings.about.bioParagraphs.join("\n\n") : ""} 
+                      onChange={e => setPageSettings((prev: any) => ({...prev, about: {...prev.about, bioParagraphs: e.target.value.split("\n\n")}}))}
+                      className="w-full border rounded-xl p-3 h-48" 
+                      placeholder="Separate paragraphs with a double blank line"
+                    />
+                  </div>
+
+                  <div className="border border-brand-border p-6 rounded-xl bg-slate-50">
+                    <label className="block text-sm font-semibold mb-4">Portrait Image</label>
+                    {pageSettings.about.portraitImage && (
+                      <img src={pageSettings.about.portraitImage} alt="Portrait" className="w-32 h-32 object-cover rounded-xl mb-4 border" />
+                    )}
+                    <label className="bg-brand-primary text-white px-4 py-2 rounded-lg cursor-pointer">
+                      Upload New Image
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        className="hidden"
+                        onChange={e => handleImageUpload(e, "about", "portraitImage")} 
+                      />
+                    </label>
+                    {uploadingImage && <span className="text-brand-accent ml-4 font-semibold">Uploading...</span>}
+                  </div>
+                  
+                  <button onClick={() => handleSavePageSettings("about")} className="bg-brand-accent hover:bg-emerald-600 transition-colors text-white px-6 py-3 rounded-xl font-bold mt-4">
+                    {isSaving ? "Saving..." : "Save About Page"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* OTHERS UNFINISHED */}
+            {activeTab !== "home" && activeTab !== "about" && (
               <div className="bg-white dark:bg-[#121826] border border-brand-border rounded-[32px] p-8 md:p-12 shadow-sm text-center">
                  <h2 className="text-xl font-semibold mb-2 text-brand-primary">Module Updating...</h2>
                  <p className="text-brand-secondary">I am finishing the programming for the {activeTab} editor right now. It will appear here shortly.</p>
