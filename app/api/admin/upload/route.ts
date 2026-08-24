@@ -11,7 +11,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export async function POST(request: Request) {
   try {
     // 1. Verify Admin Session
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const sessionId = cookieStore.get("admin_session")?.value;
     if (!sessionId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

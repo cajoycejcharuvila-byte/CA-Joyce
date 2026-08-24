@@ -3,7 +3,8 @@ import { cookies } from "next/headers";
 import { getDbSession, runQuery } from "@/lib/db";
 
 async function checkAuth() {
-  const sessionId = cookies().get("admin_session")?.value;
+  const cookieStore = await cookies();
+  const sessionId = cookieStore.get("admin_session")?.value;
   if (!sessionId) return false;
   const session = await getDbSession(sessionId);
   return session && session.expiresAt > new Date();
