@@ -1,5 +1,41 @@
 [
   {
+    "slug": "indian-businesses-uae-corporate-tax-guide",
+    "title": "How Indian Businesses Can Navigate UAE Corporate Tax in 2026",
+    "category": "Corporate Tax",
+    "readTime": "8 min read",
+    "date": "August 24, 2026",
+    "author": "CA Joyce J Charuvila, ACA",
+    "excerpt": "A complete strategic guide for Indian entrepreneurs, NRIs, and expanding businesses to navigate the UAE's 9% Corporate Tax regime and minimize compliance risks.",
+    "toc": [
+      "1. The Shift from Tax-Free to 9% Corporate Tax",
+      "2. Free Zone vs Mainland Tax Implications",
+      "3. Transfer Pricing Between Indian Parent and UAE Subsidiary",
+      "4. Mandatory Audit and Compliance Steps"
+    ],
+    "content": [
+      "The UAE has long been the preferred international expansion hub for Indian businesses. With the introduction of the Federal Decree-Law No. 47 of 2022, the UAE officially transitioned into a regulated corporate tax environment. For Indian entrepreneurs and non-resident Indians (NRIs) operating out of Dubai, Abu Dhabi, or Sharjah, understanding this 9% Corporate Tax is now mandatory for survival.",
+      "One of the biggest misconceptions among Indian business owners is that setting up in a UAE Free Zone automatically grants them tax immunity. While Free Zones do offer a 0% tax rate on 'Qualifying Income,' they still require mandatory Corporate Tax Registration, the maintenance of audited financial statements, and strict adherence to substance requirements. If an Indian-owned Free Zone entity conducts business with the UAE mainland, that portion of income may be subject to the standard 9% rate.",
+      "Another critical area for Indian corporations with UAE subsidiaries is Transfer Pricing. The UAE tax authority (FTA) enforces the 'Arm’s Length Principle' on transactions between connected persons. This means that if an Indian parent company provides services, goods, or loans to its UAE branch, the pricing must reflect true market value. Indian CAs must carefully structure these cross-border transactions to avoid double taxation or hefty penalties from either the FTA or the Indian Income Tax Department.",
+      "Finally, proactive compliance is key. Indian business owners must ensure their UAE entities maintain immaculate accounting records (preferably under IFRS), obtain their Corporate Tax Registration Number (CTRN) on the EmaraTax portal before their specific deadline, and engage a qualified auditor. Outsourcing this accounting to a cross-border expert who understands both Indian Income Tax and UAE Corporate Tax is the safest strategy to maximize profitability."
+    ],
+    "faqs": [
+      {
+        "question": "Do I need to pay UAE Corporate Tax if my business makes less than AED 375,000?",
+        "answer": "No. Taxable income below AED 375,000 is subject to a 0% corporate tax rate, but you must still officially register and file a tax return."
+      },
+      {
+        "question": "Can I offset UAE Corporate Tax against my Indian Income Tax?",
+        "answer": "Under the Double Taxation Avoidance Agreement (DTAA) between India and the UAE, businesses can often claim foreign tax credits, but it requires precise structuring and documentation by a cross-border CA."
+      }
+    ],
+    "related": [
+      "corporate-tax-registration-uae",
+      "accounting-outsourcing-small-businesses",
+      "vat-filing-deadlines-uae"
+    ]
+  },
+  {
     "slug": "understanding-gst-registration-india",
     "title": "Understanding GST Registration for Small Businesses in India",
     "category": "GST",
