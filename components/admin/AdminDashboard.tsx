@@ -301,20 +301,42 @@ export default function AdminDashboard({ initialSubmissions, company }: AdminDas
                     </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {services.map(srv => (
-                      <div key={srv.id} className="border p-4 rounded-xl flex flex-col justify-between">
-                        <div>
-                          <span className="text-xs uppercase bg-slate-100 px-2 py-1 rounded font-bold text-brand-accent">{srv.region}</span>
-                          <h4 className="font-bold mt-2">{srv.title}</h4>
-                          <p className="text-sm line-clamp-2 mt-1 text-slate-500">{srv.description}</p>
-                        </div>
-                        <div className="flex justify-between mt-4 border-t pt-3">
-                          <button onClick={() => setServiceForm(srv)} className="text-brand-primary text-sm font-semibold">Edit</button>
-                          <button onClick={() => handleDeleteService(srv.id)} className="text-red-500 text-sm font-semibold">Delete</button>
-                        </div>
+                  <div className="space-y-8">
+                    <div>
+                      <h3 className="font-bold text-lg mb-4 text-brand-primary">UAE Services</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {services.filter(s => s.region === 'uae').map(srv => (
+                          <div key={srv.id} className="border p-4 rounded-xl flex flex-col justify-between">
+                            <div>
+                              <h4 className="font-bold mt-2">{srv.title}</h4>
+                              <p className="text-sm line-clamp-2 mt-1 text-slate-500">{srv.description}</p>
+                            </div>
+                            <div className="flex justify-between mt-4 border-t pt-3">
+                              <button onClick={() => setServiceForm(srv)} className="text-brand-primary text-sm font-semibold">Edit</button>
+                              <button onClick={() => handleDeleteService(srv.id)} className="text-red-500 text-sm font-semibold">Delete</button>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-bold text-lg mb-4 text-brand-primary">India Services</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {services.filter(s => s.region === 'india').map(srv => (
+                          <div key={srv.id} className="border p-4 rounded-xl flex flex-col justify-between">
+                            <div>
+                              <h4 className="font-bold mt-2">{srv.title}</h4>
+                              <p className="text-sm line-clamp-2 mt-1 text-slate-500">{srv.description}</p>
+                            </div>
+                            <div className="flex justify-between mt-4 border-t pt-3">
+                              <button onClick={() => setServiceForm(srv)} className="text-brand-primary text-sm font-semibold">Edit</button>
+                              <button onClick={() => handleDeleteService(srv.id)} className="text-red-500 text-sm font-semibold">Delete</button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
