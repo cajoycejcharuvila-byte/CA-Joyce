@@ -85,7 +85,7 @@ export default function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-slate-50 border border-brand-border outline-none py-3 pl-11 pr-4 rounded-[18px] w-full font-sans text-sm text-brand-primary focus:border-brand-primary transition-all duration-300"
-                  placeholder="admin@joyceca.in"
+                  placeholder="Enter your email"
                 />
               </div>
             </div>
