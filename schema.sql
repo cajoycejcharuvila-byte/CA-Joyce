@@ -62,3 +62,27 @@ CREATE TABLE IF NOT EXISTS admin_sessions (
   expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ==========================================================
+-- ROW LEVEL SECURITY (RLS) POLICIES (Supabase Security Best Practice)
+-- ==========================================================
+-- Enabling RLS prevents unauthorized read/write via Supabase's public PostgREST API.
+-- Server-side database queries via direct PostgreSQL connection (DATABASE_URL)
+-- connect as the database owner and bypass RLS automatically.
+
+ALTER TABLE enquiries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE insights ENABLE ROW LEVEL SECURITY;
+ALTER TABLE faq ENABLE ROW LEVEL SECURITY;
+ALTER TABLE company_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_sessions ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read-only access to published content via PostgREST API if needed
+CREATE POLICY "Allow public read access on services" ON services FOR SELECT USING (true);
+CREATE POLICY "Allow public read access on insights" ON insights FOR SELECT USING (true);
+CREATE POLICY "Allow public read access on faq" ON faq FOR SELECT USING (true);
+
+-- enquiries, company_settings, and admin_sessions have NO public policies,
+-- ensuring sensitive user submissions, credentials, and settings cannot be
+-- queried or tampered with through the public Supabase API.
+

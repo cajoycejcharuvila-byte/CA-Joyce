@@ -33,9 +33,30 @@ This application uses PostgreSQL for persisting contact form enquiries, dynamic 
 3. Copy the entire contents of the `schema.sql` file located at the project root.
 4. Paste the queries into the Supabase SQL editor window.
 5. Click the **Run** button at the bottom-right of the page to execute the queries.
-6. The terminal will display `Success. No rows returned.` and verify the tables (`enquiries`, `services`, `insights`, `faq`, `company_settings`, and `admin_sessions`) have been created.
+6. The terminal will display `Success. No rows returned.` and verify the tables (`enquiries`, `services`, `insights`, `faq`, `company_settings`, and `admin_sessions`) have been created with Row-Level Security (RLS) enabled.
 
 ---
+
+## 3.1 Resolving "Table publicly accessible (rls_disabled_in_public)" Warning
+If Supabase sends an alert about `rls_disabled_in_public`:
+1. Navigate to **SQL Editor** in your Supabase project dashboard.
+2. Run the RLS commands from `schema.sql` (or see below):
+```sql
+ALTER TABLE enquiries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE insights ENABLE ROW LEVEL SECURITY;
+ALTER TABLE faq ENABLE ROW LEVEL SECURITY;
+ALTER TABLE company_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_sessions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read access on services" ON services FOR SELECT USING (true);
+CREATE POLICY "Allow public read access on insights" ON insights FOR SELECT USING (true);
+CREATE POLICY "Allow public read access on faq" ON faq FOR SELECT USING (true);
+```
+3. Check the Supabase **Security Advisor** under **Project Settings** / **Advisors** — the warning will disappear immediately.
+
+---
+
 
 ## 4. Add Environment Variables
 Add the following keys to your local `.env.local` file for development and to your production deployment configurations:
