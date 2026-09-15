@@ -133,7 +133,7 @@ export default function OGImage() {
             letterSpacing: "0.06em",
           }}
         >
-          joyceca.in
+          cajoyce.com
         </div>
       </div>
     ),

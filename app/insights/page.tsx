@@ -89,13 +89,13 @@ export default async function InsightsPage({ searchParams }: PageProps) {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://joyceca.in"
+                    "item": "https://www.cajoyce.com"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Updates & Insights",
-                    "item": "https://joyceca.in/insights"
+                    "item": "https://www.cajoyce.com/insights"
                   }
                 ]
               },
@@ -108,7 +108,7 @@ export default async function InsightsPage({ searchParams }: PageProps) {
                   "name": "JOYCE J CHARUVILA & ASSOCIATES",
                   "logo": {
                     "@type": "ImageObject",
-                    "url": "https://joyceca.in/logo.png"
+                    "url": "https://www.cajoyce.com/logo.png"
                   }
                 },
                 "blogPost": paginatedInsights.map((post) => ({
@@ -117,7 +117,7 @@ export default async function InsightsPage({ searchParams }: PageProps) {
                   "alternativeHeadline": post.excerpt,
                   "genre": post.category,
                   "wordCount": "1200",
-                  "url": `https://joyceca.in/insights/${post.slug}`,
+                  "url": `https://www.cajoyce.com/insights/${post.slug}`,
                   "datePublished": new Date(post.date).toISOString().split('T')[0],
                   "author": {
                     "@type": "Person",

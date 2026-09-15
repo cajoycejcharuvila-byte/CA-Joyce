@@ -36,12 +36,11 @@ const COMPLIANCE_EVENTS: ComplianceEvent[] = [
   { id: "adv-4", category: "Advance Tax", name: "Advance Tax", description: "4th Installment", day: 15, month: 2 }, // Mar 15
 
   // Income Tax
-  { id: "it-1", category: "Income Tax", name: "Income Tax Return", description: "Individual Filing", day: 31, month: 6 }, // Jul 31
-  { id: "it-2", category: "Income Tax", name: "Income Tax Return", description: "Non-audit Cases", day: 31, month: 7 }, // Aug 31
-  { id: "it-3", category: "Income Tax", name: "Income Tax Return", description: "Audit Cases", day: 31, month: 9 }, // Oct 31
+  { id: "it-1", category: "Income Tax", name: "Income Tax Return", description: "Individual & Non-Audit Filing", day: 31, month: 6 }, // Jul 31
+  { id: "it-2", category: "Income Tax", name: "Income Tax Return", description: "Corporate & Audit Cases", day: 31, month: 9 }, // Oct 31
 
   // Audit
-  { id: "audit-1", category: "Audit", name: "Tax Audit Report", description: "Filing Deadline", day: 31, month: 9 }, // Oct 31
+  { id: "audit-1", category: "Audit", name: "Tax Audit Report (Form 3CA/3CD)", description: "Statutory Deadline", day: 30, month: 8 }, // Sep 30
 ];
 
 // Month names mapping

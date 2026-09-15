@@ -70,14 +70,14 @@ export default function HomePageClient({
             "@graph": [
               {
                 "@type": "LocalBusiness",
-                "@id": "https://joyceca.in/#firm",
+                "@id": "https://www.cajoyce.com/#firm",
                 "name": "JOYCE J CHARUVILA & ASSOCIATES",
                 "alternateName": "Joyce J Charuvila & Associates, Chartered Accountants",
-                "image": "https://joyceca.in" + heroImageSrc,
-                "logo": "https://joyceca.in/logo.png",
+                "image": "https://www.cajoyce.com" + heroImageSrc,
+                "logo": "https://www.cajoyce.com/logo.png",
                 "telephone": company.contact.phoneDisplay,
                 "email": company.contact.email,
-                "url": "https://joyceca.in",
+                "url": "https://www.cajoyce.com",
                 "address": {
                   "@type": "PostalAddress",
                   "streetAddress": company.contact.address,
@@ -103,10 +103,10 @@ export default function HomePageClient({
               },
               {
                 "@type": "WebSite",
-                "@id": "https://joyceca.in/#website",
-                "url": "https://joyceca.in",
+                "@id": "https://www.cajoyce.com/#website",
+                "url": "https://www.cajoyce.com",
                 "name": "JOYCE J CHARUVILA & ASSOCIATES",
-                "publisher": { "@id": "https://joyceca.in/#firm" }
+                "publisher": { "@id": "https://www.cajoyce.com/#firm" }
               }
             ]
           })
