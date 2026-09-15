@@ -330,7 +330,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                           value={formData.companyName}
                           onChange={handleChange}
                           className="bg-slate-50 border border-brand-border outline-none py-3.5 px-4 rounded-[18px] font-sans text-sm text-brand-primary focus:border-brand-primary transition-all duration-300"
-                          placeholder="Enter Enterprise Name"
+                          placeholder="e.g. Acme Trading LLC"
                         />
                       </div>
 
@@ -351,8 +351,8 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                             aria-invalid={!!errors.serviceRequired}
                             aria-describedby={errors.serviceRequired ? "serviceRequired-error" : undefined}
                           >
-                            <option value="">Select a compliance service...</option>
-                            <optgroup label="UAE Compliance">
+                            <option value="">Select a service...</option>
+                            <optgroup label="UAE Services">
                               {services
                                 .filter((s) => s.slug.endsWith("-uae") || s.title.includes("UAE"))
                                 .map((s) => (
@@ -361,7 +361,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                                   </option>
                                 ))}
                             </optgroup>
-                            <optgroup label="India Compliance">
+                            <optgroup label="India Services">
                               {services
                                 .filter((s) => !s.slug.endsWith("-uae") && !s.title.includes("UAE"))
                                 .map((s) => (
@@ -384,7 +384,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                     {/* Message */}
                     <div className="flex flex-col space-y-2">
                       <label htmlFor="message" className="font-sans text-xs font-semibold text-brand-primary">
-                        Message *
+                        How can we help you? *
                       </label>
                       <textarea
                         name="message"
@@ -395,7 +395,7 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                         className={`bg-slate-50 border outline-none py-3.5 px-4 rounded-[18px] font-sans text-sm text-brand-primary transition-all duration-300 resize-none ${
                           errors.message ? "border-red-500 focus:border-red-500" : "border-brand-border focus:border-brand-primary"
                         }`}
-                        placeholder="Please outline your entity structure and filing requirement..."
+                        placeholder="Please share details about your business and what compliance or tax assistance you need..."
                         aria-invalid={!!errors.message}
                         aria-describedby={errors.message ? "message-error" : undefined}
                       />
@@ -417,12 +417,12 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                       {isSubmitting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Transmitting Enquiry...</span>
+                          <span>Sending Message...</span>
                         </>
                       ) : (
                         <>
                           <Send className="w-4 h-4" />
-                          <span>Submit Engagement Inquiry</span>
+                          <span>Send Message</span>
                         </>
                       )}
                     </button>

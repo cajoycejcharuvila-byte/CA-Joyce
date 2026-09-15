@@ -6,10 +6,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact Us | Joyce J Charuvila & Associates",
-  description: "Get in touch with Joyce J Charuvila & Associates for your audit, tax, and advisory needs in India and the UAE.",
+  description: "Contact CA Joyce J Charuvila & Associates in Omalloor, Pathanamthitta, Kerala. Discuss statutory audits, Indian tax filings, or UAE Corporate Tax and VAT requirements.",
 };
 
-export const revalidate = 0; // Dynamic server rendering
+export const revalidate = 300; // 5-minute Incremental Static Regeneration
 
 export default async function ContactPage() {
   const company = await getDbCompanyInfo();

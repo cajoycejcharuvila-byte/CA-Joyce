@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from "next/image";
 import { Award, GraduationCap, Mail, MessageSquare } from "lucide-react";
 import { getDbCompanyInfo, getDbPageSettings } from "@/lib/db";
 import { getPersonSchema, getBreadcrumbSchema } from "@/lib/seo";
@@ -7,17 +8,19 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Our Founder | CA Joyce J Charuvila",
-  description: "Meet CA Joyce J Charuvila, the founder of Joyce J Charuvila & Associates, leading a team of experts in India and the UAE.",
+  title: "Founder Profile | CA Joyce J Charuvila",
+  description: "Profile of CA Joyce J Charuvila, MCom, ACA, CMA Final. Chartered Accountant with over 9 years of experience in statutory audit, taxation, and financial compliance across India and the UAE.",
 };
 
-export const revalidate = 0; // Dynamic server rendering
+export const revalidate = 300; // 5-minute Incremental Static Regeneration
 
 export default async function FounderPage() {
   const company = await getDbCompanyInfo();
   const founder = await getDbPageSettings("founder_settings");
 
-  const portraitSrc = founder.portraitImage || "/images/founder/portrait.webp";
+  const portraitSrc = founder.portraitImage && !founder.portraitImage.includes("Heroimage.jpeg") 
+    ? founder.portraitImage 
+    : "/images/founder/portrait.webp";
   const bioParagraphs = founder.biography || [];
   const timelineItems = founder.timeline || [];
 
@@ -47,11 +50,14 @@ export default async function FounderPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-20">
           {/* Portrait and Contact Quick Card */}
           <div className="lg:col-span-4 max-w-[360px] lg:max-w-none mx-auto w-full">
-            <div className="relative aspect-[4/5] w-full rounded-[32px] overflow-hidden shadow-soft mb-8 bg-slate-100 dark:bg-[#121826]">
-              <img
+            <div className="relative aspect-[4/5] w-full rounded-[32px] overflow-hidden shadow-soft mb-8 bg-slate-100">
+              <Image
                 src={portraitSrc}
-                alt="CA Joyce J Charuvila"
-                className="w-full h-full object-cover absolute inset-0"
+                alt="CA Joyce J Charuvila - Chartered Accountant"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
+                className="object-cover"
               />
             </div>
             

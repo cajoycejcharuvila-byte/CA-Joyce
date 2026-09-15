@@ -143,6 +143,9 @@ export default async function InsightsPage({ searchParams }: PageProps) {
           <p className="font-sans text-brand-secondary text-base md:text-lg mt-6 leading-relaxed">
             Direct, technical commentary on corporate tax mandates, GST laws, audit rules, and compliance deadlines across India and the UAE.
           </p>
+          <p className="font-sans text-slate-500 text-xs mt-3 italic">
+            Note: Articles and bulletins dated prior to 2026 reflect Joyce J Charuvila&apos;s professional research and publications prior to the formal establishment of the independent firm.
+          </p>
         </div>
 
         {/* Client filter controls */}

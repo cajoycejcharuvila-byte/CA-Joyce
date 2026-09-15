@@ -6,10 +6,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us | Joyce J Charuvila & Associates",
-  description: "Learn about Joyce J Charuvila & Associates, our mission, values, and our commitment to delivering financial excellence across India and the UAE.",
+  description: "About Joyce J Charuvila & Associates, Chartered Accountants based in Omalloor, Pathanamthitta. Independent practice handling statutory audits, taxation, and financial compliance in India and the UAE.",
 };
 
-export const revalidate = 0; // Dynamic server rendering
+export const revalidate = 300; // 5-minute Incremental Static Regeneration
 
 export default async function AboutPage() {
   const aboutSettings = await getDbPageSettings("about_settings");

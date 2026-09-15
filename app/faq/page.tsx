@@ -6,10 +6,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FAQs | Joyce J Charuvila & Associates",
-  description: "Find answers to frequently asked questions about our audit, tax, and advisory services in India and the UAE.",
+  description: "Frequently asked questions regarding Indian statutory audits, GST, Income Tax filing, and UAE Corporate Tax and VAT compliance.",
 };
 
-export const revalidate = 0; // Dynamic server rendering
+export const revalidate = 300; // 5-minute Incremental Static Regeneration
 
 export default async function FAQPage() {
   const allFaqs = getFAQs();

@@ -342,7 +342,7 @@ export default function HomePageClient({
                 Firm Objective
               </span>
               <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-normal leading-tight tracking-tight text-white mb-10">
-                {homeSettings.objectiveText || "Providing businesses and individuals with clear professional guidance in accounting, taxation, and regulatory matters..."}
+                {homeSettings.objectiveText || "Independent Chartered Accountant practice based in Omalloor, Pathanamthitta. Direct counsel and hands-on statutory audit, Indian taxation, and UAE Corporate Tax & VAT services."}
               </h2>
               
               <div className="border-t border-slate-800 pt-8 mt-12">
@@ -388,7 +388,7 @@ export default function HomePageClient({
                 Areas of Practice
               </h2>
               <p className="font-sans text-brand-secondary mt-6 text-base md:text-lg max-w-md leading-relaxed">
-                Providing technical precision across audit, assurance, tax compliance, and business advisory assignments in India and the United Arab Emirates.
+                We handle statutory audits, tax filings, bookkeeping, and business compliance for clients in India and the UAE.
               </p>
             </div>
 
@@ -634,10 +634,10 @@ export default function HomePageClient({
               Schedule Consultation
             </span>
             <h2 className="font-display text-4xl md:text-7xl font-normal text-brand-primary tracking-tight mb-8">
-              Enterprise-Grade Tax and Compliance Advisory
+              Discuss Your Audit or Tax Requirements
             </h2>
             <p className="font-sans text-base md:text-xl text-brand-secondary max-w-2xl mx-auto mb-12 leading-relaxed">
-              Contact our offices in Pathanamthitta to coordinate dual-jurisdiction tax filings, audits, or structural business advisory.
+              Connect directly with CA Joyce J Charuvila in Omalloor, Pathanamthitta to review your statutory filings, tax returns, or bookkeeping requirements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

@@ -27,14 +27,14 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       return;
     }
 
-    // Initialize Lenis
+    // Initialize Lenis with snappy, responsive timing
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.7,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1,
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;

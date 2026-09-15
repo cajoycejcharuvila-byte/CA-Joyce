@@ -23,15 +23,52 @@ function getDbClient(): Pool {
   return pool;
 }
 
-// Query helper
+// Query helper with aggressive timeout to prevent SSR stalling
 export async function runQuery<T>(text: string, params: any[] = []): Promise<T[]> {
-  const client = await getDbClient().connect();
-  try {
-    const res = await client.query(text, params);
-    return res.rows;
-  } finally {
-    client.release();
+  const timeoutPromise = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error("Database query timed out (800ms limit)")), 800)
+  );
+
+  const queryPromise = (async () => {
+    const client = await getDbClient().connect();
+    try {
+      const res = await client.query(text, params);
+      return res.rows;
+    } finally {
+      client.release();
+    }
+  })();
+
+  return Promise.race([queryPromise, timeoutPromise]);
+}
+
+// ==========================================
+// IN-MEMORY FAST CACHE (Sub-millisecond reads)
+// ==========================================
+
+interface CacheEntry<T> {
+  value: T;
+  expiresAt: number;
+}
+const memoryCache = new Map<string, CacheEntry<any>>();
+
+export function getMemoryCache<T>(key: string): T | null {
+  const entry = memoryCache.get(key);
+  if (entry && entry.expiresAt > Date.now()) {
+    return entry.value as T;
   }
+  return null;
+}
+
+export function setMemoryCache<T>(key: string, value: T, ttlSeconds: number = 300): void {
+  memoryCache.set(key, {
+    value,
+    expiresAt: Date.now() + ttlSeconds * 1000,
+  });
+}
+
+export function delMemoryCache(key: string): void {
+  memoryCache.delete(key);
 }
 
 // ==========================================
@@ -53,16 +90,14 @@ async function runKvCommand(command: any[]): Promise<any> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(command),
-      signal: AbortSignal.timeout(2000), // 2-second timeout
+      signal: AbortSignal.timeout(1000), // 1-second timeout
     });
     if (!res.ok) {
-      console.warn(`KV Command failed: ${res.statusText}`);
       return null;
     }
     const json = await res.json();
     return json.result;
-  } catch (err) {
-    console.warn("KV Cache error:", err);
+  } catch {
     return null;
   }
 }
@@ -152,37 +187,49 @@ export async function deleteDbEnquiry(id: string): Promise<boolean> {
 export async function getDbCompanyInfo(): Promise<CompanyInfo> {
   const cacheKey = "cache:company_settings";
   
+  const memoryCached = getMemoryCache<CompanyInfo>(cacheKey);
+  if (memoryCached) {
+    return memoryCached;
+  }
+
   try {
     const cached = await kvGet(cacheKey);
     if (cached) {
+      setMemoryCache(cacheKey, cached, 300);
       return cached as CompanyInfo;
     }
-  } catch (err) {
-    console.warn("KV Cache read error, trying DB:", err);
+  } catch {
+    // KV read fallback
   }
 
   try {
     const data = await runDeduplicatedQuery(cacheKey, async () => {
       const rows = await runQuery<any>("SELECT value FROM company_settings WHERE key = 'main_settings'");
       if (rows.length === 0) {
-        // If not in database, save default and return it
-        await saveDbCompanyInfo(companyJson as CompanyInfo);
+        setMemoryCache(cacheKey, companyJson as CompanyInfo, 300);
         return companyJson as CompanyInfo;
       }
-      return rows[0].value as CompanyInfo;
+      const val = rows[0].value as CompanyInfo;
+      setMemoryCache(cacheKey, val, 300);
+      return val;
     });
     return data;
-  } catch (err) {
-    console.warn("Database query failed for company settings, returning fallback JSON:", err);
+  } catch {
+    setMemoryCache(cacheKey, companyJson as CompanyInfo, 300);
     return companyJson as CompanyInfo;
   }
 }
 
 export async function saveDbCompanyInfo(data: CompanyInfo): Promise<boolean> {
-  await runQuery(
-    "INSERT INTO company_settings (key, value) VALUES ('main_settings', $1) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value",
-    [JSON.stringify(data)]
-  );
+  setMemoryCache("cache:company_settings", data, 300);
+  try {
+    await runQuery(
+      "INSERT INTO company_settings (key, value) VALUES ('main_settings', $1) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value",
+      [JSON.stringify(data)]
+    );
+  } catch (err) {
+    console.warn("Database write skipped/failed for company settings:", err);
+  }
   await kvDel("cache:company_settings");
   return true;
 }
@@ -194,13 +241,19 @@ export async function saveDbCompanyInfo(data: CompanyInfo): Promise<boolean> {
 export async function getDbInsights(): Promise<InsightItem[]> {
   const cacheKey = "cache:insights";
 
+  const memoryCached = getMemoryCache<InsightItem[]>(cacheKey);
+  if (memoryCached) {
+    return memoryCached;
+  }
+
   try {
     const cached = await kvGet(cacheKey);
     if (cached) {
+      setMemoryCache(cacheKey, cached, 300);
       return cached as InsightItem[];
     }
-  } catch (err) {
-    console.warn("KV Cache read error, trying DB:", err);
+  } catch {
+    // KV read fallback
   }
 
   try {
@@ -209,10 +262,7 @@ export async function getDbInsights(): Promise<InsightItem[]> {
         "SELECT slug, title, category, read_time as \"readTime\", date_published as \"date\", author, excerpt, toc, content, faqs, related, tags FROM insights"
       );
       if (rows.length === 0) {
-        // Populate static insights if database is empty
-        for (const insight of insightsJson) {
-          await saveDbInsight(insight as any);
-        }
+        setMemoryCache(cacheKey, insightsJson as InsightItem[], 300);
         return insightsJson as InsightItem[];
       }
       const parsedRows = rows.map(r => ({
@@ -223,12 +273,13 @@ export async function getDbInsights(): Promise<InsightItem[]> {
         related: typeof r.related === "string" ? JSON.parse(r.related) : r.related,
         tags: typeof r.tags === "string" ? JSON.parse(r.tags) : r.tags || [],
       }));
+      setMemoryCache(cacheKey, parsedRows, 300);
       await kvSet(cacheKey, parsedRows, 3600); // 1 hour TTL
       return parsedRows;
     });
     return data;
-  } catch (err) {
-    console.warn("Database query failed for insights, returning fallback JSON:", err);
+  } catch {
+    setMemoryCache(cacheKey, insightsJson as InsightItem[], 300);
     return insightsJson as InsightItem[];
   }
 }
@@ -346,93 +397,25 @@ export async function deleteDbSession(id: string): Promise<boolean> {
 export async function getDbPageSettings(pageKey: string): Promise<any> {
   const cacheKey = `cache:page_settings:${pageKey}`;
 
-  try {
-    const cached = await kvGet(cacheKey);
-    if (cached) {
-      return cached;
-    }
-  } catch (err) {
-    console.warn(`KV Cache read error for page settings ${pageKey}:`, err);
+  const memoryCached = getMemoryCache<any>(cacheKey);
+  if (memoryCached) {
+    return memoryCached;
   }
 
-  try {
-    const data = await runDeduplicatedQuery(cacheKey, async () => {
-      const rows = await runQuery<any>("SELECT value FROM company_settings WHERE key = $1", [pageKey]);
-      if (rows.length === 0) {
-        // Return default values based on pageKey
-        let defaultVal: any = {};
-        if (pageKey === "home_settings") {
-          defaultVal = {
-            heroTitle: "JOYCE J CHARUVILA & ASSOCIATES",
-            heroSubtitle: "Professional accounting, audit, taxation and advisory services for businesses and individuals in India and the United Arab Emirates.",
-            heroImage: "/images/hero/hero-office.webp",
-            objectiveText: "Providing businesses and individuals with clear professional guidance in accounting, taxation, and regulatory matters, with equal familiarity in both Indian and UAE compliance requirements. We prioritize technical precision, responsive service, and straightforward client communication."
-          };
-        } else if (pageKey === "about_settings") {
-          defaultVal = {
-            heading: "CA Joyce J Charuvila, MCom, ACA, CMA Final",
-            bioParagraphs: [
-              "CA Joyce J Charuvila, is an associate Chartered Accountant with over nine years of professional experience in auditing, accounting, taxation, and financial reporting. Experience gained through assignments in India and the UAE has provided extensive exposure across multiple industries and regulatory environments.",
-              "His professional background covers responsibilities in statutory audit reviews, internal control audits, tax filings, and management accounting across manufacturing, construction, logistics, and retail business sectors."
-            ],
-            portraitImage: "/images/founder/portrait.webp"
-          };
-        } else if (pageKey === "founder_settings") {
-          defaultVal = {
-            credentials: "MCom, ACA, CMA Final",
-            biography: [
-              "CA Joyce J Charuvila, MCom, ACA, CMA Final, is an associate Chartered Accountant with over nine years of professional experience in auditing, accounting, taxation, and financial reporting. Experience gained through assignments in India and the UAE has provided extensive exposure across multiple industries and regulatory environments.",
-              "Professional expertise was developed through leadership and advisory roles including Auditor and Financial Controller. This includes responsibilities in Audit, Financial Control, Tax Compliance, and Advisory assignments across both Indian and Middle Eastern markets.",
-              "Our practice is built on a foundation of precision, technical competence, and clear, practical communication. We assist clients in navigating their statutory compliance obligations while maintaining standard financial reporting systems."
-            ],
-            timeline: [
-              {
-                year: "2017",
-                title: "Entering The Profession",
-                description: "Engaged in statutory auditing and tax compliance assignments for corporate entities in India."
-              },
-              {
-                year: "2022",
-                title: "UAE Corporate Tax & VAT Specialization",
-                description: "Expanded operations to the UAE, managing corporate accounting, VAT filings, and advisory roles in Dubai and Abu Dhabi."
-              },
-              {
-                year: "2024",
-                title: "Senior Financial Controller Roles",
-                description: "Led audit reviews, internal controls audit, and financial control operations across trading, construction, and service sectors."
-              },
-              {
-                year: "2026",
-                title: "Established Independent Firm",
-                description: "Founded Joyce J Charuvila & Associates in Pathanamthitta, Kerala, to provide cross-border tax, audit, and advisory services."
-              }
-            ],
-            portraitImage: "/images/founder/portrait.webp",
-            philosophyText: "Providing businesses and individuals with clear professional guidance in accounting, taxation, and regulatory matters, with equal familiarity in both Indian and UAE compliance requirements. We prioritize technical precision, responsive service, and straightforward client communication."
-          };
-        }
-        await saveDbPageSettings(pageKey, defaultVal);
-        return defaultVal;
-      }
-      return rows[0].value;
-    });
-    return data;
-  } catch (err) {
-    console.warn(`Database query failed for page settings ${pageKey}, returning local defaults:`, err);
-    // Return hardcoded defaults as final fallback
+  const getFallback = () => {
     if (pageKey === "home_settings") {
       return {
         heroTitle: "JOYCE J CHARUVILA & ASSOCIATES",
-        heroSubtitle: "Professional accounting, audit, taxation and advisory services for businesses and individuals in India and the United Arab Emirates.",
+        heroSubtitle: "Chartered Accountants handling audits, tax filings, and bookkeeping for businesses and individuals in India and the United Arab Emirates.",
         heroImage: "/images/hero/hero-office.webp",
-        objectiveText: "Providing businesses and individuals with clear professional guidance in accounting, taxation, and regulatory matters, with equal familiarity in both Indian and UAE compliance requirements. We prioritize technical precision, responsive service, and straightforward client communication."
+        objectiveText: "Independent Chartered Accountant practice based in Omalloor, Pathanamthitta. We provide hands-on statutory audit, Indian income tax and GST compliance, alongside UAE Corporate Tax and VAT advisory."
       };
     } else if (pageKey === "about_settings") {
       return {
         heading: "CA Joyce J Charuvila, MCom, ACA, CMA Final",
         bioParagraphs: [
-          "CA Joyce J Charuvila, is an associate Chartered Accountant with over nine years of professional experience in auditing, accounting, taxation, and financial reporting. Experience gained through assignments in India and the UAE has provided extensive exposure across multiple industries and regulatory environments.",
-          "His professional background covers responsibilities in statutory audit reviews, internal control audits, tax filings, and management accounting across manufacturing, construction, logistics, and retail business sectors."
+          "CA Joyce J Charuvila is an associate Chartered Accountant with over nine years of practical experience in statutory audit, taxation, and financial management across India and the UAE.",
+          "His professional background covers statutory audits under the Indian Companies Act, tax audits under Section 44AB, GST compliance, and UAE Corporate Tax and VAT return filings across trading, construction, and service sectors."
         ],
         portraitImage: "/images/founder/portrait.webp"
       };
@@ -440,46 +423,79 @@ export async function getDbPageSettings(pageKey: string): Promise<any> {
       return {
         credentials: "MCom, ACA, CMA Final",
         biography: [
-          "CA Joyce J Charuvila, MCom, ACA, CMA Final, is an associate Chartered Accountant with over nine years of professional experience in auditing, accounting, taxation, and financial reporting. Experience gained through assignments in India and the UAE has provided extensive exposure across multiple industries and regulatory environments.",
-          "Professional expertise was developed through leadership and advisory roles including Auditor and Financial Controller. This includes responsibilities in Audit, Financial Control, Tax Compliance, and Advisory assignments across both Indian and Middle Eastern markets.",
-          "Our practice is built on a foundation of precision, technical competence, and clear, practical communication. We assist clients in navigating their statutory compliance obligations while maintaining standard financial reporting systems."
+          "CA Joyce J Charuvila, MCom, ACA, CMA Final, is an associate Chartered Accountant with over nine years of professional experience across Indian statutory audit, corporate taxation, and UAE tax systems.",
+          "Before establishing the independent practice, Joyce worked across Indian and Middle Eastern markets, serving in audit management and Financial Controller capacities across manufacturing, trading, and contracting businesses.",
+          "The practice was founded to provide direct, partner-led accounting and tax compliance. Clients communicate directly with CA Joyce J Charuvila rather than through layers of account managers."
         ],
         timeline: [
           {
             year: "2017",
-            title: "Entering The Profession",
-            description: "Engaged in statutory auditing and tax compliance assignments for corporate entities in India."
+            title: "Commenced Professional Practice",
+            description: "Conducted statutory audits, tax audits, and corporate tax compliance assignments for companies in India."
           },
           {
             year: "2022",
-            title: "UAE Corporate Tax & VAT Specialization",
-            description: "Expanded operations to the UAE, managing corporate accounting, VAT filings, and advisory roles in Dubai and Abu Dhabi."
+            title: "UAE Tax & VAT Practice",
+            description: "Managed corporate bookkeeping, VAT returns, and FTA compliance for businesses in Dubai and Abu Dhabi."
           },
           {
             year: "2024",
-            title: "Senior Financial Controller Roles",
-            description: "Led audit reviews, internal controls audit, and financial control operations across trading, construction, and service sectors."
+            title: "Financial Controller Engagements",
+            description: "Supervised financial reporting, internal controls, and management accounts across commercial trading and contracting companies."
           },
           {
             year: "2026",
-            title: "Established Independent Firm",
-            description: "Founded Joyce J Charuvila & Associates in Pathanamthitta, Kerala, to provide cross-border tax, audit, and advisory services."
+            title: "Independent Practice Founded",
+            description: "Established Joyce J Charuvila & Associates in Omalloor, Pathanamthitta, Kerala, focusing on Indian compliance and cross-border UAE tax advisory."
           }
         ],
         portraitImage: "/images/founder/portrait.webp",
-        philosophyText: "Providing businesses and individuals with clear professional guidance in accounting, taxation, and regulatory matters, with equal familiarity in both Indian and UAE compliance requirements. We prioritize technical precision, responsive service, and straightforward client communication."
+        philosophyText: "Direct, accessible CA guidance. Every filing, audit schedule, and tax return is personally reviewed to ensure accurate statutory compliance."
       };
     }
     return {};
+  };
+
+  try {
+    const cached = await kvGet(cacheKey);
+    if (cached) {
+      setMemoryCache(cacheKey, cached, 300);
+      return cached;
+    }
+  } catch {
+    // KV fallback
+  }
+
+  try {
+    const data = await runDeduplicatedQuery(cacheKey, async () => {
+      const rows = await runQuery<any>("SELECT value FROM company_settings WHERE key = $1", [pageKey]);
+      if (rows.length === 0) {
+        const defaultVal = getFallback();
+        setMemoryCache(cacheKey, defaultVal, 300);
+        return defaultVal;
+      }
+      const val = rows[0].value;
+      setMemoryCache(cacheKey, val, 300);
+      return val;
+    });
+    return data;
+  } catch {
+    const defaultVal = getFallback();
+    setMemoryCache(cacheKey, defaultVal, 300);
+    return defaultVal;
   }
 }
 
 export async function saveDbPageSettings(pageKey: string, value: any): Promise<boolean> {
-  await runQuery(
-    "INSERT INTO company_settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value",
-    [pageKey, JSON.stringify(value)]
-  );
+  setMemoryCache(`cache:page_settings:${pageKey}`, value, 300);
+  try {
+    await runQuery(
+      "INSERT INTO company_settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value",
+      [pageKey, JSON.stringify(value)]
+    );
+  } catch (err) {
+    console.warn(`Database write skipped/failed for page settings ${pageKey}:`, err);
+  }
   await kvDel(`cache:page_settings:${pageKey}`);
   return true;
 }
-// Force Vercel rebuild

@@ -39,20 +39,10 @@ export default function FloatingCard({
   }
 
   return (
-    <motion.div
-      initial={{ y: 0 }}
-      animate={{
-        y: [-8, 8, -8],
-      }}
-      transition={{
-        duration: 6,
-        ease: "easeInOut",
-        repeat: Infinity,
-        delay: delay,
-      }}
-      className={`${cardClass} floating-card-mobile-reset`}
+    <div
+      className={`${cardClass} transition-transform duration-300 hover:-translate-y-1`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
