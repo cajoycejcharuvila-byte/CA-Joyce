@@ -71,8 +71,20 @@ export function getLocalBusinessSchema() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#firm`,
-    "name": "JOYCE J CHARUVILA & ASSOCIATES",
-    "alternateName": "Joyce J Charuvila & Associates, Chartered Accountants",
+    "name": "CA JOYCE J CHARUVILA & ASSOCIATES",
+    "alternateName": [
+      "CA Joyce",
+      "CA Joyce J Charuvila",
+      "Joyce CA",
+      "CA Joyce Charuvila & Associates",
+      "Joyce J Charuvila & Associates, Chartered Accountants"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "CA Joyce J Charuvila",
+      "jobTitle": "Chartered Accountant & Founder",
+      "url": `${SITE_URL}/founder`
+    },
     "image": `${SITE_URL}/images/hero/hero-office.webp`,
     "logo": `${SITE_URL}/logo.png`,
     "url": SITE_URL,

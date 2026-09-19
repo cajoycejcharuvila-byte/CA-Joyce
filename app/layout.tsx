@@ -29,26 +29,31 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 const homeMeta = getPageMetadata("home");
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cajoyce.com";
+
 export const metadata: Metadata = {
   title: homeMeta.title,
   description: homeMeta.description,
   keywords: homeMeta.keywords.join(", "),
   authors: [{ name: "CA Joyce J Charuvila" }],
-  creator: "Joyce J Charuvila & Associates",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ca-joyce-lu8v.vercel.app"),
+  creator: "CA Joyce J Charuvila & Associates",
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: "/",
     title: homeMeta.title,
     description: homeMeta.description,
-    siteName: "Joyce J Charuvila & Associates",
+    siteName: "CA Joyce J Charuvila & Associates",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Joyce J Charuvila & Associates — Chartered Accountants",
+        alt: "CA Joyce J Charuvila & Associates — Chartered Accountants",
       },
     ],
   },

@@ -2,10 +2,10 @@ import { MetadataRoute } from "next";
 import { getIndiaServices, getUAEServices, getInsights } from "@/lib/cms";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ca-joyce-lu8v.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cajoyce.com";
 
   // Static routes
-  const staticRoutes = ["", "/about", "/founder", "/services", "/insights", "/contact"].map(
+  const staticRoutes = ["", "/about", "/founder", "/services", "/insights", "/contact", "/faq"].map(
     (route) => ({
       url: `${siteUrl}${route}`,
       lastModified: new Date(),

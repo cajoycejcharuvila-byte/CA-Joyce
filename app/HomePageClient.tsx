@@ -54,7 +54,7 @@ export default function HomePageClient({
     "/services/india/accounting-bookkeeping-india",
     "/services/uae/audit-support",
     "/services/uae/corporate-tax-filing",
-    "/services/india/statutory-audit"
+    "/services/india/internal-audit-business-advisory"
   ];
 
   const heroImageSrc = homeSettings.heroImage || "/images/hero/hero-office.webp";
@@ -71,8 +71,20 @@ export default function HomePageClient({
               {
                 "@type": "LocalBusiness",
                 "@id": "https://www.cajoyce.com/#firm",
-                "name": "JOYCE J CHARUVILA & ASSOCIATES",
-                "alternateName": "Joyce J Charuvila & Associates, Chartered Accountants",
+                "name": "CA JOYCE J CHARUVILA & ASSOCIATES",
+                "alternateName": [
+                  "CA Joyce",
+                  "CA Joyce J Charuvila",
+                  "Joyce CA",
+                  "CA Joyce Charuvila & Associates",
+                  "Joyce J Charuvila & Associates, Chartered Accountants"
+                ],
+                "founder": {
+                  "@type": "Person",
+                  "name": "CA Joyce J Charuvila",
+                  "jobTitle": "Chartered Accountant & Founder",
+                  "url": "https://www.cajoyce.com/founder"
+                },
                 "image": "https://www.cajoyce.com" + heroImageSrc,
                 "logo": "https://www.cajoyce.com/logo.png",
                 "telephone": company.contact.phoneDisplay,
@@ -105,7 +117,8 @@ export default function HomePageClient({
                 "@type": "WebSite",
                 "@id": "https://www.cajoyce.com/#website",
                 "url": "https://www.cajoyce.com",
-                "name": "JOYCE J CHARUVILA & ASSOCIATES",
+                "name": "CA Joyce J Charuvila & Associates",
+                "alternateName": "CA Joyce",
                 "publisher": { "@id": "https://www.cajoyce.com/#firm" }
               }
             ]
