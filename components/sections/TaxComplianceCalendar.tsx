@@ -283,21 +283,11 @@ export default function TaxComplianceCalendar() {
                 {/* Subtle illuminated top line on hover */}
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                {/* Translucent Quarter Watermark in Background */}
-                {event.quarter && (
-                  <div className="absolute right-3 -bottom-2 text-7xl font-display font-bold text-slate-900/[0.03] select-none pointer-events-none group-hover:text-brand-accent/[0.06] transition-colors duration-300">
-                    {event.quarter}
-                  </div>
-                )}
-
                 <div className="relative z-10">
-                  {/* Category Pill + Serial Tag */}
-                  <div className="flex items-center justify-between gap-2 mb-6">
+                  {/* Category Pill */}
+                  <div className="mb-6">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${CATEGORY_COLORS[event.category]}`}>
                       {event.category}
-                    </span>
-                    <span className="font-mono text-3xs text-brand-secondary/40 font-semibold tracking-wider">
-                      // 0{i + 1}
                     </span>
                   </div>
 
