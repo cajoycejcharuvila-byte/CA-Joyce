@@ -1,284 +1,299 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Calendar as CalendarIcon, 
-  Clock, 
+  ChevronDown, 
   ArrowRight, 
-  ChevronLeft, 
-  ChevronRight, 
-  Info, 
-  Sparkles, 
-  ShieldCheck, 
-  Building2, 
-  Globe, 
-  ExternalLink,
-  MessageSquare
+  Clock, 
+  FileText, 
+  AlertCircle, 
+  CheckCircle2,
+  CalendarDays
 } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 // --- DATA STRUCTURES ---
 
 type Jurisdiction = "india" | "uae";
-type IndiaCategory = "All" | "GST" | "TDS" | "Advance Tax" | "Income Tax" | "Audit";
-type UAECategory = "All" | "Corporate Tax" | "VAT" | "ESR & Audit";
 
-interface ComplianceEvent {
+interface ComplianceMilestone {
   id: string;
   jurisdiction: Jurisdiction;
-  category: string;
-  quarter?: string;
-  name: string;
-  subTitle: string;
-  description: string;
-  statutoryRef: string;
-  applicableTo: string;
+  category: "income-tax" | "gst" | "advance-tax" | "corporate-tax" | "vat" | "esr";
+  categoryLabel: string;
   day: number;
   month?: number; // 0-indexed: 0 = Jan, 11 = Dec. If undefined, recurring monthly
+  isMonthly?: boolean;
+  name: string;
+  statutorySection: string;
+  shortSummary: string;
+  applicability: string;
+  penaltyClause: string;
+  requiredDocuments: string[];
 }
 
-// Full Statutory Tax Milestones
-const COMPLIANCE_EVENTS: ComplianceEvent[] = [
-  // ── INDIA COMPLIANCE ──────────────────────────────────────────────
-  // Monthly recurring
+const MILESTONES: ComplianceMilestone[] = [
+  // ── INDIA JURISDICTION ─────────────────────────────────────────────
   {
     id: "in-tds-monthly",
     jurisdiction: "india",
-    category: "TDS",
-    name: "TDS / TCS Deposit",
-    subTitle: "Monthly Tax Deducted at Source",
-    description: "Deposit of tax deducted/collected for the previous month under Income Tax Act.",
-    statutoryRef: "Challan ITNS 281",
-    applicableTo: "All Deductors (Corporate & Non-Corporate)",
+    category: "advance-tax",
+    categoryLabel: "TDS / TCS",
     day: 7,
+    isMonthly: true,
+    name: "TDS & TCS Monthly Deposit",
+    statutorySection: "Section 200(3) • Challan ITNS 281",
+    shortSummary: "Deposit of tax deducted or collected at source for all payments made in the preceding month.",
+    applicability: "All corporate assesses, partnership firms, and individuals with tax deduction liabilities under Chapter XVII-B.",
+    penaltyClause: "Interest at 1.5% per month u/s 201(1A) from the date of deduction to the date of deposit.",
+    requiredDocuments: ["Monthly payroll deduction summary", "Vendor invoices with tax deduction", "Contractor payout schedules"],
   },
   {
-    id: "in-gst-r1",
+    id: "in-gst-1",
     jurisdiction: "india",
-    category: "GST",
-    name: "GSTR-1 Return",
-    subTitle: "Monthly Outward Supplies",
-    description: "Filing details of outward supplies of goods and services for monthly filers.",
-    statutoryRef: "Section 37, CGST Act",
-    applicableTo: "Regular Taxpayers (Turnover > ₹5 Cr or monthly opt-in)",
+    category: "gst",
+    categoryLabel: "GST",
     day: 11,
+    isMonthly: true,
+    name: "GSTR-1 Outward Supplies Return",
+    statutorySection: "Section 37, CGST Act",
+    shortSummary: "Statement detailing outward supplies of goods and professional services provided during the preceding month.",
+    applicability: "Regular registered taxpayers with aggregate annual turnover exceeding ₹5 Crore, or monthly filers.",
+    penaltyClause: "Late fee of ₹50 per day of delay (₹20/day for NIL returns) plus suspension of E-Way Bill generation.",
+    requiredDocuments: ["Sales register", "B2B tax invoices", "Credit and debit notes", "Export shipping bills"],
   },
   {
     id: "in-gst-3b",
     jurisdiction: "india",
-    category: "GST",
-    name: "GSTR-3B & Tax Payment",
-    subTitle: "Monthly Summary & Tax Settlement",
-    description: "Summary return of outward and inward supplies along with payment of net GST liability.",
-    statutoryRef: "Section 39, CGST Act",
-    applicableTo: "All Registered Regular Taxpayers",
+    category: "gst",
+    categoryLabel: "GST",
     day: 20,
+    isMonthly: true,
+    name: "GSTR-3B Summary Return & Tax Settlement",
+    statutorySection: "Section 39, CGST Act",
+    shortSummary: "Monthly self-assessed summary return covering outward supplies, eligible Input Tax Credit (ITC), and net tax payment.",
+    applicability: "Mandatory for every taxpayer registered under the standard GST regime in India.",
+    penaltyClause: "Interest at 18% per annum u/s 50 on net cash liability, plus late fee up to ₹5,000 per return.",
+    requiredDocuments: ["GSTR-2B Input Tax Credit reconciliation", "Cash and credit electronic ledger summary", "Reverse charge payment tally"],
   },
-
-  // Annual & Quarterly India Milestones
   {
     id: "in-adv-q1",
     jurisdiction: "india",
-    category: "Advance Tax",
-    quarter: "Q1 • FY 2026-27",
-    name: "Advance Tax — 1st Installment",
-    subTitle: "15% of Estimated Annual Tax Liability",
-    description: "First installment of advance income tax payable by corporate and non-salaried assesses.",
-    statutoryRef: "Section 208 / 211",
-    applicableTo: "Corporate Assesses & Individuals with tax > ₹10,000",
+    category: "advance-tax",
+    categoryLabel: "Advance Tax",
     day: 15,
-    month: 5, // June 15
+    month: 5, // June
+    name: "Advance Tax — 1st Installment (15%)",
+    statutorySection: "Section 208 / 211, Income Tax Act",
+    shortSummary: "First installment of estimated annual income tax payable for the current financial year.",
+    applicability: "Corporate entities and all individuals whose estimated net tax liability after TDS exceeds ₹10,000.",
+    penaltyClause: "Simple interest at 1% per month u/s 234C on the shortfall below 15% of the total assessed tax.",
+    requiredDocuments: ["Projected profit and loss statement", "Form 26AS TDS credits to date", "Advance tax calculation working sheet"],
   },
   {
     id: "in-itr-non-audit",
     jurisdiction: "india",
-    category: "Income Tax",
-    quarter: "Q2 • Assessment Year",
-    name: "Income Tax Return (Non-Audit)",
-    subTitle: "Annual Tax Return Filing",
-    description: "Statutory deadline for filing personal and partnership tax returns where audit is not mandated.",
-    statutoryRef: "Section 139(1)",
-    applicableTo: "Salaried Individuals, HUFs, Firms & Non-Audit LLPs",
+    category: "income-tax",
+    categoryLabel: "Income Tax",
     day: 31,
-    month: 6, // July 31
+    month: 6, // July
+    name: "Income Tax Return (Non-Audit Cases)",
+    statutorySection: "Section 139(1), Income Tax Act",
+    shortSummary: "Statutory deadline for filing annual income tax returns for individuals and entities not subject to tax audit.",
+    applicability: "Salaried individuals, HUFs, partnership firms, and non-audit LLPs across India.",
+    penaltyClause: "Late fee u/s 234F up to ₹5,000, interest u/s 234A on unpaid tax, and forfeiture of carry-forward business losses.",
+    requiredDocuments: ["Form 16 / 16A", "Annual Information Statement (AIS / TIS)", "Bank account statements for all accounts", "Capital gains statements"],
   },
   {
     id: "in-adv-q2",
     jurisdiction: "india",
-    category: "Advance Tax",
-    quarter: "Q2 • FY 2026-27",
-    name: "Advance Tax — 2nd Installment",
-    subTitle: "Cumulative 45% of Tax Liability",
-    description: "Second milestone for advance tax computation to avoid Section 234C interest penalties.",
-    statutoryRef: "Section 208 / 211",
-    applicableTo: "All Tax Assesses liable for Advance Tax",
+    category: "advance-tax",
+    categoryLabel: "Advance Tax",
     day: 15,
-    month: 8, // September 15
+    month: 8, // September
+    name: "Advance Tax — 2nd Installment (45%)",
+    statutorySection: "Section 208 / 211, Income Tax Act",
+    shortSummary: "Second milestone for advance tax computation, bringing cumulative payment to 45% of total estimated liability.",
+    applicability: "All tax assesses with estimated annual net tax liability exceeding ₹10,000.",
+    penaltyClause: "Interest at 1% per month u/s 234C on any shortfall below the cumulative 45% threshold.",
+    requiredDocuments: ["Q1 & Q2 interim financial statements", "TDS reconciliation against 26AS/AIS", "Challan ITNS 280 payment proofs"],
   },
   {
     id: "in-tax-audit",
     jurisdiction: "india",
-    category: "Audit",
-    quarter: "Q2 • Statutory Audit",
-    name: "Tax Audit Report (Form 3CA/3CD)",
-    subTitle: "Chartered Accountant Attestation",
-    description: "Submission of audit report by practicing Chartered Accountant for accounts covered under audit limits.",
-    statutoryRef: "Section 44AB",
-    applicableTo: "Businesses with turnover > ₹1 Cr (₹10 Cr if 95% digital) & Professionals > ₹50L",
+    category: "income-tax",
+    categoryLabel: "Statutory Audit",
     day: 30,
-    month: 8, // September 30
+    month: 8, // September
+    name: "Tax Audit Report (Form 3CA / 3CD)",
+    statutorySection: "Section 44AB, Income Tax Act",
+    shortSummary: "Mandatory attestation and filing of audited financial accounts by a practicing Chartered Accountant.",
+    applicability: "Businesses with turnover exceeding ₹1 Crore (₹10 Crore if 95% transactions are digital) and professionals exceeding ₹50 Lakhs.",
+    penaltyClause: "Penalty of 0.5% of total turnover or ₹1,50,000 (whichever is less) under Section 271B.",
+    requiredDocuments: ["Signed balance sheet & profit/loss account", "Fixed asset depreciation schedules", "Related-party transaction register", "Statutory dues compliance proof"],
   },
   {
     id: "in-itr-corporate",
     jurisdiction: "india",
-    category: "Income Tax",
-    quarter: "Q3 • Corporate Filings",
-    name: "Income Tax Return (Corporate / Audit)",
-    subTitle: "Audited Entity Return Filing",
-    description: "Filing income tax return for corporate companies and accounts required to get audited under any law.",
-    statutoryRef: "Section 139(1)",
-    applicableTo: "Private & Public Limited Companies, Audited Firms & Partners",
+    category: "income-tax",
+    categoryLabel: "Income Tax",
     day: 31,
-    month: 9, // October 31
+    month: 9, // October
+    name: "Income Tax Return (Corporate & Audit Cases)",
+    statutorySection: "Section 139(1), Income Tax Act",
+    shortSummary: "Annual income tax return submission for corporate companies and all assesses whose accounts require statutory audit.",
+    applicability: "Private and public limited companies, audited partnership firms, and working partners of audited entities.",
+    penaltyClause: "Penal interest u/s 234A, late filing fee u/s 234F, and loss of eligibility to carry forward business and capital losses.",
+    requiredDocuments: ["Uploaded Form 3CA/3CD Tax Audit Report", "Director's Report & MCA disclosures", "Tax payment challans & computation"],
   },
   {
     id: "in-adv-q3",
     jurisdiction: "india",
-    category: "Advance Tax",
-    quarter: "Q3 • FY 2026-27",
-    name: "Advance Tax — 3rd Installment",
-    subTitle: "Cumulative 75% of Tax Liability",
-    description: "Penultimate advance tax installment for the current financial year.",
-    statutoryRef: "Section 208 / 211",
-    applicableTo: "All Advance Tax Assesses",
+    category: "advance-tax",
+    categoryLabel: "Advance Tax",
     day: 15,
-    month: 11, // December 15
+    month: 11, // December
+    name: "Advance Tax — 3rd Installment (75%)",
+    statutorySection: "Section 208 / 211, Income Tax Act",
+    shortSummary: "Penultimate milestone requiring cumulative payment of 75% of the annual estimated tax liability.",
+    applicability: "All corporate and non-salaried taxpayers liable under Section 208.",
+    penaltyClause: "Interest at 1% per month u/s 234C on deficit below the 75% threshold.",
+    requiredDocuments: ["Nine-month financial review", "Forecasted fourth-quarter revenues", "Form 26AS quarterly update"],
   },
   {
     id: "in-gst-annual",
     jurisdiction: "india",
-    category: "GST",
-    quarter: "Q3 • Annual Reconciliation",
-    name: "GSTR-9 & GSTR-9C Annual Return",
-    subTitle: "Annual GST Audit & Reconciliation",
-    description: "Consolidated annual return and self-certified reconciliation statement for financial year.",
-    statutoryRef: "Section 44, CGST Act",
-    applicableTo: "GSTR-9: Aggregate Turnover > ₹2 Cr | GSTR-9C: Turnover > ₹5 Cr",
+    category: "gst",
+    categoryLabel: "GST Annual",
     day: 31,
-    month: 11, // December 31
+    month: 11, // December
+    name: "GSTR-9 & GSTR-9C Annual Reconciliation",
+    statutorySection: "Section 44, CGST Act",
+    shortSummary: "Consolidated annual return and reconciliation statement matching audited accounts with filed monthly returns.",
+    applicability: "GSTR-9 mandatory for turnover exceeding ₹2 Crore; GSTR-9C self-certified reconciliation for turnover exceeding ₹5 Crore.",
+    penaltyClause: "Late fee of ₹200 per day (subject to a maximum of 0.50% of turnover in state).",
+    requiredDocuments: ["Audited financial statements", "Monthly GSTR-1 & 3B filed copies", "Input Tax Credit variance report"],
   },
   {
     id: "in-adv-q4",
     jurisdiction: "india",
-    category: "Advance Tax",
-    quarter: "Q4 • Year End",
-    name: "Advance Tax — 4th Installment",
-    subTitle: "Final 100% Tax Settlement",
-    description: "Final advance tax milestone to settle estimated tax before the close of financial year.",
-    statutoryRef: "Section 208 / 211",
-    applicableTo: "All Tax Assesses liable for Advance Tax",
+    category: "advance-tax",
+    categoryLabel: "Advance Tax",
     day: 15,
-    month: 2, // March 15
+    month: 2, // March
+    name: "Advance Tax — 4th Installment (100%)",
+    statutorySection: "Section 208 / 211, Income Tax Act",
+    shortSummary: "Final installment settling 100% of the estimated annual tax liability before the financial year closes.",
+    applicability: "All taxpayers liable for advance tax under Section 208.",
+    penaltyClause: "Interest u/s 234B (1% per month) if total advance tax paid falls below 90% of assessed tax.",
+    requiredDocuments: ["Full-year profit estimation", "Comprehensive TDS deduction credit report", "Final tax settlement computation"],
   },
 
-  // ── UAE COMPLIANCE ────────────────────────────────────────────────
+  // ── UAE JURISDICTION ───────────────────────────────────────────────
   {
     id: "uae-vat-q1",
     jurisdiction: "uae",
-    category: "VAT",
-    quarter: "Q1 • EmaraTax Filing",
-    name: "UAE VAT 201 Return (Q1)",
-    subTitle: "Quarterly VAT Return & Payment",
-    description: "Submission of VAT return and payment of 5% tax for the tax period ending March 31.",
-    statutoryRef: "Federal Decree-Law No. (8) of 2017",
-    applicableTo: "All VAT-Registered UAE Businesses & Free Zone Entities",
+    category: "vat",
+    categoryLabel: "VAT",
     day: 28,
-    month: 3, // April 28
+    month: 3, // April
+    name: "UAE VAT 201 Return (First Quarter)",
+    statutorySection: "Federal Decree-Law No. (8) of 2017",
+    shortSummary: "Quarterly declaration of standard-rated 5% supplies, zero-rated exports, and input VAT recovery for Jan–Mar.",
+    applicability: "All VAT-registered mainland and free zone entities operating within the UAE.",
+    penaltyClause: "Late filing administrative penalty of AED 1,000 (first offense) and AED 2,000 for repeats, plus monthly unpaid tax interest.",
+    requiredDocuments: ["Sales invoices with valid TRN", "Import declarations from Federal Customs", "Input VAT purchase invoices", "EmaraTax portal access"],
   },
   {
     id: "uae-esr-notification",
     jurisdiction: "uae",
-    category: "ESR & Audit",
-    quarter: "Q2 • Regulatory",
-    name: "ESR Notification Filing",
-    subTitle: "Economic Substance Regulations",
-    description: "Annual ESR notification via Ministry of Finance portal within 6 months from financial year end.",
-    statutoryRef: "Cabinet Resolution No. 57 of 2020",
-    applicableTo: "Licensees undertaking Relevant Activities in UAE & Free Zones",
+    category: "esr",
+    categoryLabel: "ESR",
     day: 30,
-    month: 5, // June 30
+    month: 5, // June
+    name: "Economic Substance (ESR) Notification",
+    statutorySection: "Cabinet Resolution No. 57 of 2020",
+    shortSummary: "Annual notification filing via the Ministry of Finance portal within six months from the end of the financial year.",
+    applicability: "Licensees undertaking Relevant Activities (banking, insurance, fund management, lease-finance, distribution, shipping, holding company).",
+    penaltyClause: "Administrative penalty of AED 20,000 for failure to submit the notification on time.",
+    requiredDocuments: ["Commercial trade license", "Shareholder register & organizational chart", "Financial statement confirming gross income from Relevant Activities"],
   },
   {
     id: "uae-vat-q2",
     jurisdiction: "uae",
-    category: "VAT",
-    quarter: "Q2 • EmaraTax Filing",
-    name: "UAE VAT 201 Return (Q2)",
-    subTitle: "Quarterly VAT Return & Payment",
-    description: "Filing VAT return for period April–June via EmaraTax portal.",
-    statutoryRef: "Federal Decree-Law No. (8) of 2017",
-    applicableTo: "All VAT-Registered Businesses",
+    category: "vat",
+    categoryLabel: "VAT",
     day: 28,
-    month: 6, // July 28
+    month: 6, // July
+    name: "UAE VAT 201 Return (Second Quarter)",
+    statutorySection: "Federal Decree-Law No. (8) of 2017",
+    shortSummary: "Quarterly VAT filing covering standard and exempt supplies executed between April 1 and June 30.",
+    applicability: "All VAT-registered businesses with quarterly tax periods.",
+    penaltyClause: "Administrative penalty of AED 1,000 for late submission plus late payment interest.",
+    requiredDocuments: ["Tax invoices for supplies within UAE", "Commercial export proof (customs exit certificates)", "EmaraTax statement"],
   },
   {
     id: "uae-ct-return",
     jurisdiction: "uae",
-    category: "Corporate Tax",
-    quarter: "Q3 • Corporate Tax",
-    name: "UAE Corporate Tax Return & Payment",
-    subTitle: "9% Corporate Tax Return Filing",
-    description: "Statutory tax return filing and tax payment within 9 months from the end of tax period.",
-    statutoryRef: "Federal Decree-Law No. 47 of 2022",
-    applicableTo: "All Taxable Persons (Mainland & Qualifying Free Zone Entities)",
+    category: "corporate-tax",
+    categoryLabel: "Corporate Tax",
     day: 30,
-    month: 8, // September 30 (for Dec FY end)
+    month: 8, // September
+    name: "UAE Corporate Tax Return & Settlement",
+    statutorySection: "Federal Decree-Law No. 47 of 2022",
+    shortSummary: "Mandatory corporate tax return filing and payment within nine months from the end of the applicable tax period.",
+    applicability: "All taxable persons, including mainland companies, foreign branches, and Qualifying Free Zone Persons.",
+    penaltyClause: "Administrative penalty of AED 500/month for failure to file on time, escalating to AED 1,000/month after seven months.",
+    requiredDocuments: ["IFRS-compliant audited financial statements", "Tax adjustment schedules for non-deductible expenses", "Qualifying income documentation for Free Zone entities"],
   },
   {
     id: "uae-vat-q3",
     jurisdiction: "uae",
-    category: "VAT",
-    quarter: "Q3 • EmaraTax Filing",
-    name: "UAE VAT 201 Return (Q3)",
-    subTitle: "Quarterly VAT Return & Payment",
-    description: "Filing VAT return for period July–September via EmaraTax portal.",
-    statutoryRef: "Federal Decree-Law No. (8) of 2017",
-    applicableTo: "All VAT-Registered Businesses",
+    category: "vat",
+    categoryLabel: "VAT",
     day: 28,
-    month: 9, // October 28
+    month: 9, // October
+    name: "UAE VAT 201 Return (Third Quarter)",
+    statutorySection: "Federal Decree-Law No. (8) of 2017",
+    shortSummary: "Quarterly VAT filing covering supplies, input tax recovery, and adjustments for July 1 through September 30.",
+    applicability: "All active VAT registrants under FTA jurisdiction.",
+    penaltyClause: "Late filing fee of AED 1,000 plus interest on any outstanding tax balances.",
+    requiredDocuments: ["Quarterly sales register", "Expense invoices showing vendor TRNs", "Customs declaration matching records"],
   },
   {
     id: "uae-esr-report",
     jurisdiction: "uae",
-    category: "ESR & Audit",
-    quarter: "Q4 • Compliance Report",
-    name: "ESR Annual Report Submission",
-    subTitle: "Substance Proof & Audited Accounts",
-    description: "Filing detailed ESR report and audited accounts within 12 months of financial year end.",
-    statutoryRef: "Cabinet Resolution No. 57 of 2020",
-    applicableTo: "Relevant Activity Licensees earning gross income",
+    category: "esr",
+    categoryLabel: "ESR Report",
     day: 31,
-    month: 11, // December 31
+    month: 11, // December
+    name: "ESR Detailed Annual Report Submission",
+    statutorySection: "Cabinet Resolution No. 57 of 2020",
+    shortSummary: "Comprehensive economic substance report demonstrating adequate employees, premises, and expenditure within the UAE.",
+    applicability: "Licensees that earn gross income from Relevant Activities and are not exempt under the regulations.",
+    penaltyClause: "Severe administrative fine of AED 50,000 for failure to submit the report within 12 months from financial year end.",
+    requiredDocuments: ["Audited financial reports", "Employee headcount & payroll records", "Lease agreement for UAE office/facility", "Board meeting minutes held in the UAE"],
   },
   {
     id: "uae-vat-q4",
     jurisdiction: "uae",
-    category: "VAT",
-    quarter: "Q4 • EmaraTax Filing",
-    name: "UAE VAT 201 Return (Q4)",
-    subTitle: "Quarterly VAT Return & Payment",
-    description: "Filing VAT return for period October–December via EmaraTax portal.",
-    statutoryRef: "Federal Decree-Law No. (8) of 2017",
-    applicableTo: "All VAT-Registered Businesses",
+    category: "vat",
+    categoryLabel: "VAT",
     day: 28,
-    month: 0, // January 28
+    month: 0, // January
+    name: "UAE VAT 201 Return (Fourth Quarter)",
+    statutorySection: "Federal Decree-Law No. (8) of 2017",
+    shortSummary: "Quarterly VAT return for the final period covering October 1 through December 31.",
+    applicability: "All registered UAE businesses.",
+    penaltyClause: "Late return fee of AED 1,000 plus statutory interest on overdue amounts.",
+    requiredDocuments: ["Fourth-quarter sales ledger", "Annual VAT reconciliation", "Input tax credit adjustment sheets"],
   }
 ];
 
 const MONTH_NAMES = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  "JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 ];
 
 const MONTH_FULL = [
@@ -286,514 +301,413 @@ const MONTH_FULL = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-// Color mapping for category pills with refined editorial styling
-const CATEGORY_STYLES: Record<string, { bg: string; text: string; border: string; accent: string }> = {
-  GST: { bg: "bg-blue-500/10", text: "text-blue-700", border: "border-blue-500/20", accent: "bg-blue-500" },
-  TDS: { bg: "bg-purple-500/10", text: "text-purple-700", border: "border-purple-500/20", accent: "bg-purple-500" },
-  "Advance Tax": { bg: "bg-emerald-500/10", text: "text-emerald-700", border: "border-emerald-500/20", accent: "bg-emerald-500" },
-  "Income Tax": { bg: "bg-amber-500/10", text: "text-amber-800", border: "border-amber-500/20", accent: "bg-amber-600" },
-  Audit: { bg: "bg-rose-500/10", text: "text-rose-700", border: "border-rose-500/20", accent: "bg-rose-500" },
-  "Corporate Tax": { bg: "bg-indigo-500/10", text: "text-indigo-700", border: "border-indigo-500/20", accent: "bg-indigo-500" },
-  VAT: { bg: "bg-teal-500/10", text: "text-teal-700", border: "border-teal-500/20", accent: "bg-teal-500" },
-  "ESR & Audit": { bg: "bg-orange-500/10", text: "text-orange-800", border: "border-orange-500/20", accent: "bg-orange-500" },
-};
-
 export default function TaxComplianceCalendar() {
   const [isClient, setIsClient] = useState(false);
   const [jurisdiction, setJurisdiction] = useState<Jurisdiction>("india");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [expandedId, setExpandedId] = useState<string | null>("in-tax-audit"); // Default open for demonstration
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Update category options based on jurisdiction
-  const categories = useMemo(() => {
+  // Filter categories by jurisdiction
+  const filterOptions = useMemo(() => {
     if (jurisdiction === "india") {
-      return ["All", "GST", "TDS", "Advance Tax", "Income Tax", "Audit"] as IndiaCategory[];
+      return [
+        { id: "all", label: "All Deadlines" },
+        { id: "income-tax", label: "Income Tax & Audit" },
+        { id: "gst", label: "GST Returns" },
+        { id: "advance-tax", label: "TDS & Advance Tax" }
+      ];
     }
-    return ["All", "Corporate Tax", "VAT", "ESR & Audit"] as UAECategory[];
+    return [
+      { id: "all", label: "All Deadlines" },
+      { id: "corporate-tax", label: "Corporate Tax" },
+      { id: "vat", label: "VAT Filings" },
+      { id: "esr", label: "ESR & Substance" }
+    ];
   }, [jurisdiction]);
 
-  // Reset category filter when changing jurisdiction
   const handleJurisdictionChange = (jur: Jurisdiction) => {
     setJurisdiction(jur);
-    setSelectedCategory("All");
+    setActiveCategory("all");
+    // Open a relevant default milestone in the new jurisdiction
+    setExpandedId(jur === "india" ? "in-tax-audit" : "uae-ct-return");
   };
 
-  // Compute "Due This Month" dynamically
-  const thisMonthEvents = useMemo(() => {
-    if (!isClient) return [];
-    const today = new Date();
-    const currentMonth = today.getMonth();
-
-    const filtered = COMPLIANCE_EVENTS.filter((e) => {
-      if (e.jurisdiction !== jurisdiction) return false;
-      return e.month === undefined || e.month === currentMonth;
-    });
-
-    return filtered.sort((a, b) => a.day - b.day);
-  }, [isClient, jurisdiction]);
-
-  // Compute Annual Roadmap events
-  const annualEvents = useMemo(() => {
-    const filtered = COMPLIANCE_EVENTS.filter((e) => {
-      if (e.jurisdiction !== jurisdiction) return false;
-      if (e.month === undefined) return false; // roadmap emphasizes key milestone dates
-      if (selectedCategory !== "All" && e.category !== selectedCategory) return false;
+  // Filtered milestones list
+  const filteredMilestones = useMemo(() => {
+    return MILESTONES.filter((m) => {
+      if (m.jurisdiction !== jurisdiction) return false;
+      if (activeCategory !== "all" && m.category !== activeCategory) return false;
       return true;
-    });
-
-    return filtered.sort((a, b) => {
-      if (a.month! !== b.month!) return a.month! - b.month!;
+    }).sort((a, b) => {
+      // Monthly recurring first or chronological
+      if (a.isMonthly && !b.isMonthly) return -1;
+      if (!a.isMonthly && b.isMonthly) return 1;
+      if (a.month !== undefined && b.month !== undefined) {
+        if (a.month !== b.month) return a.month - b.month;
+      }
       return a.day - b.day;
     });
-  }, [jurisdiction, selectedCategory]);
+  }, [jurisdiction, activeCategory]);
 
-  // Carousel scroll handling
-  const checkScrollability = () => {
-    if (!scrollRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-    setCanScrollLeft(scrollLeft > 10);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-  };
-
-  const handleScroll = (direction: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const offset = direction === "left" ? -340 : 340;
-    scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    checkScrollability();
-    const el = scrollRef.current;
-    if (el) {
-      el.addEventListener("scroll", checkScrollability);
-      return () => el.removeEventListener("scroll", checkScrollability);
-    }
-  }, [annualEvents]);
-
-  // Current month string
-  const currentMonthName = useMemo(() => {
-    if (!isClient) return "Current Month";
+  // Compute next immediate milestone for spotlight card
+  const upcomingSpotlight = useMemo(() => {
+    if (!isClient) return MILESTONES[6]; // Fallback to Tax Audit
     const today = new Date();
-    return `${MONTH_FULL[today.getMonth()]} ${today.getFullYear()}`;
-  }, [isClient]);
+    const currentMonth = today.getMonth();
+    const currentDay = today.getDate();
+
+    // Look for upcoming milestones in the current jurisdiction
+    const futureEvents = MILESTONES.filter((m) => {
+      if (m.jurisdiction !== jurisdiction) return false;
+      if (m.isMonthly) return m.day >= currentDay;
+      if (m.month === undefined) return false;
+      if (m.month > currentMonth) return true;
+      if (m.month === currentMonth) return m.day >= currentDay;
+      return false;
+    }).sort((a, b) => {
+      const aMonth = a.month !== undefined ? a.month : currentMonth;
+      const bMonth = b.month !== undefined ? b.month : currentMonth;
+      if (aMonth !== bMonth) return aMonth - bMonth;
+      return a.day - b.day;
+    });
+
+    return futureEvents[0] || MILESTONES.find(m => m.jurisdiction === jurisdiction && !m.isMonthly) || MILESTONES[0];
+  }, [isClient, jurisdiction]);
+
+  // Calculate days remaining to spotlight
+  const spotlightDaysRemaining = useMemo(() => {
+    if (!isClient || !upcomingSpotlight) return null;
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const targetMonth = upcomingSpotlight.month !== undefined ? upcomingSpotlight.month : today.getMonth();
+    const targetDate = new Date(currentYear, targetMonth, upcomingSpotlight.day);
+    
+    // If target date in the past, roll to next month/year
+    if (targetDate < today) {
+      if (upcomingSpotlight.isMonthly) {
+        targetDate.setMonth(targetDate.getMonth() + 1);
+      } else {
+        targetDate.setFullYear(currentYear + 1);
+      }
+    }
+    
+    const diffTime = targetDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }, [isClient, upcomingSpotlight]);
 
   if (!isClient) {
     return (
-      <div className="w-full min-h-[500px] bg-brand-bg/40 rounded-[32px] animate-pulse border border-brand-divider flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <div className="w-8 h-8 rounded-full border-2 border-brand-accent border-t-transparent animate-spin mx-auto" />
-          <p className="font-mono text-xs uppercase tracking-widest text-brand-secondary">
-            Synchronizing Statutory Calendars...
-          </p>
-        </div>
+      <div className="w-full py-16 text-left">
+        <div className="h-6 w-36 bg-brand-divider/40 rounded animate-pulse mb-4" />
+        <div className="h-12 w-96 bg-brand-divider/40 rounded animate-pulse mb-8" />
+        <div className="h-64 w-full bg-white rounded-2xl border border-brand-border animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="w-full space-y-12">
-      {/* ── 1. LUXURY EDITORIAL HEADER ─────────────────────────────── */}
-      <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-8 pb-4">
-        <div className="max-w-2xl text-left space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-dark/5 border border-brand-border">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-mono text-3xs uppercase tracking-[0.2em] font-semibold text-brand-secondary">
-              Statutory Compliance Schedule • FY 2026-27
+    <div className="w-full text-left" id="tax-calendar">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        {/* ── LEFT COLUMN: STICKY EDITORIAL CONTEXT ───────────────────── */}
+        <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-8">
+          <div>
+            <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
+              Compliance Chronology
             </span>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-brand-primary tracking-tight leading-tight">
+              Tax & Statutory Deadlines
+            </h2>
+            <p className="font-sans text-brand-secondary mt-6 text-base md:text-lg leading-relaxed">
+              Mandatory filing windows, advance tax installments, and audit deadlines governing businesses across India and the United Arab Emirates.
+            </p>
           </div>
 
-          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-brand-primary leading-[1.08]">
-            Statutory Tax & Compliance Calendar
-          </h2>
+          {/* Understated Minimalist Jurisdiction Segment */}
+          <div className="border border-brand-border bg-white rounded-2xl p-1.5 flex items-center shadow-soft">
+            <button
+              onClick={() => handleJurisdictionChange("india")}
+              className={`flex-1 py-3 px-4 rounded-xl font-sans text-xs sm:text-sm font-semibold transition-all duration-300 text-center ${
+                jurisdiction === "india"
+                  ? "bg-brand-primary text-white shadow-sm"
+                  : "text-brand-secondary hover:text-brand-primary"
+              }`}
+            >
+              India Practice
+            </button>
+            <button
+              onClick={() => handleJurisdictionChange("uae")}
+              className={`flex-1 py-3 px-4 rounded-xl font-sans text-xs sm:text-sm font-semibold transition-all duration-300 text-center ${
+                jurisdiction === "uae"
+                  ? "bg-brand-primary text-white shadow-sm"
+                  : "text-brand-secondary hover:text-brand-primary"
+              }`}
+            >
+              UAE Practice
+            </button>
+          </div>
 
-          <p className="font-sans text-base sm:text-lg text-brand-secondary leading-relaxed max-w-xl">
-            Key filing thresholds, advance tax installments, and statutory audit deadlines across India and the UAE to ensure penalty-free compliance.
-          </p>
-        </div>
-
-        {/* Dual Jurisdiction Segmented Control */}
-        <div className="flex items-center p-1.5 rounded-2xl bg-white border border-brand-border shadow-soft self-start md:self-end">
-          <button
-            onClick={() => handleJurisdictionChange("india")}
-            className={`relative flex items-center gap-2 px-5 py-2.5 rounded-xl font-sans text-xs sm:text-sm font-semibold transition-all duration-300 ${
-              jurisdiction === "india"
-                ? "text-white"
-                : "text-brand-secondary hover:text-brand-primary"
-            }`}
-          >
-            {jurisdiction === "india" && (
-              <motion.div
-                layoutId="active-jurisdiction-pill"
-                className="absolute inset-0 bg-brand-primary rounded-xl shadow-md"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              />
-            )}
-            <span className="relative z-10 flex items-center gap-2">
-              <span className="text-base">🇮🇳</span> India Practice
-            </span>
-          </button>
-
-          <button
-            onClick={() => handleJurisdictionChange("uae")}
-            className={`relative flex items-center gap-2 px-5 py-2.5 rounded-xl font-sans text-xs sm:text-sm font-semibold transition-all duration-300 ${
-              jurisdiction === "uae"
-                ? "text-white"
-                : "text-brand-secondary hover:text-brand-primary"
-            }`}
-          >
-            {jurisdiction === "uae" && (
-              <motion.div
-                layoutId="active-jurisdiction-pill"
-                className="absolute inset-0 bg-brand-primary rounded-xl shadow-md"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              />
-            )}
-            <span className="relative z-10 flex items-center gap-2">
-              <span className="text-base">🇦🇪</span> UAE Practice
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* ── 2. EXECUTIVE URGENCY BAR: DUE THIS MONTH ─────────────────── */}
-      <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0c1424] via-[#0f172a] to-[#141e33] border border-white/10 shadow-glass text-white p-6 sm:p-8">
-        {/* Subtle Ambient Background Gradients */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-accent/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 space-y-6">
-          {/* Section Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center shrink-0 text-brand-accent">
-                <CalendarIcon className="w-5 h-5 text-sky-400" />
+          {/* Next Milestone Spotlight Card */}
+          {upcomingSpotlight && (
+            <div className="bg-white border border-brand-border rounded-[28px] p-6 sm:p-7 shadow-soft space-y-5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-3xs uppercase tracking-widest text-brand-accent font-bold bg-brand-accent/10 px-2.5 py-1 rounded-md">
+                  Upcoming Statutory Milestone
+                </span>
+                {spotlightDaysRemaining !== null && (
+                  <span className="font-mono text-xs text-brand-secondary">
+                    {spotlightDaysRemaining === 0
+                      ? "Due Today"
+                      : spotlightDaysRemaining === 1
+                      ? "Due Tomorrow"
+                      : `${spotlightDaysRemaining} days remaining`}
+                  </span>
+                )}
               </div>
+
               <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-display text-2xl font-normal text-white tracking-wide">
-                    Due This Month
-                  </h3>
-                  <span className="px-2 py-0.5 rounded-full bg-white/15 text-3xs font-mono font-medium text-sky-300">
-                    {currentMonthName}
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="font-display text-4xl text-brand-primary font-normal">
+                    {upcomingSpotlight.day.toString().padStart(2, "0")}
+                  </span>
+                  <span className="font-mono text-sm uppercase tracking-wider font-semibold text-brand-primary">
+                    {upcomingSpotlight.month !== undefined
+                      ? MONTH_FULL[upcomingSpotlight.month]
+                      : "Of Every Month"}
                   </span>
                 </div>
-                <p className="font-sans text-xs text-slate-300 mt-0.5">
-                  {thisMonthEvents.length} mandatory compliance filings scheduled for {jurisdiction === "india" ? "Indian entities" : "UAE corporations"}.
+                <h3 className="font-display text-xl sm:text-2xl text-brand-primary font-normal leading-snug">
+                  {upcomingSpotlight.name}
+                </h3>
+                <p className="font-mono text-xs text-brand-accent mt-1">
+                  {upcomingSpotlight.statutorySection}
+                </p>
+                <p className="font-sans text-xs sm:text-sm text-brand-secondary mt-3 leading-relaxed">
+                  {upcomingSpotlight.shortSummary}
                 </p>
               </div>
-            </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-              <Clock className="w-3.5 h-3.5 text-sky-400" />
-              <span>Timely filings avoid interest & penalty notices</span>
-            </div>
-          </div>
-
-          {/* Events Horizontal Strip */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-            {thisMonthEvents.map((event, index) => {
-              const style = CATEGORY_STYLES[event.category] || {
-                bg: "bg-white/10",
-                text: "text-white",
-                border: "border-white/20",
-                accent: "bg-sky-400"
-              };
-
-              // Compute Days Remaining in Current Month
-              const today = new Date();
-              const daysLeft = event.day - today.getDate();
-              const isPast = daysLeft < 0;
-              const isToday = daysLeft === 0;
-
-              return (
-                <motion.div
-                  key={`${event.id}-this-month`}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.4 }}
-                  className="group relative bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-sky-400/40 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between"
+              <div className="pt-4 border-t border-brand-divider flex items-center justify-between">
+                <span className="font-sans text-xs text-brand-secondary">
+                  Partner-led review available
+                </span>
+                <a
+                  href={buildWhatsAppUrl(
+                    "+919061680043",
+                    `Hello CA Joyce, I would like to consult on the upcoming ${upcomingSpotlight.name} deadline.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent transition-colors group"
                 >
-                  <div className="space-y-3">
-                    {/* Top Row: Date & Status Badge */}
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="font-display text-3xl font-medium text-white group-hover:text-sky-300 transition-colors">
-                          {event.day.toString().padStart(2, "0")}
-                        </span>
-                        <span className="font-mono text-xs uppercase tracking-wider text-slate-400">
-                          {MONTH_NAMES[today.getMonth()]}
-                        </span>
-                      </div>
+                  <span>Inquire Now</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </a>
+              </div>
+            </div>
+          )}
 
-                      <span
-                        className={`text-3xs font-mono font-semibold px-2 py-0.5 rounded-full border ${
-                          isPast
-                            ? "bg-slate-700/60 text-slate-400 border-slate-600"
-                            : isToday
-                            ? "bg-rose-500/20 text-rose-300 border-rose-500/40 animate-pulse"
-                            : daysLeft <= 5
-                            ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                            : "bg-sky-500/20 text-sky-300 border-sky-500/30"
-                        }`}
-                      >
-                        {isPast
-                          ? "Completed"
-                          : isToday
-                          ? "Due Today"
-                          : `${daysLeft}d left`}
-                      </span>
-                    </div>
-
-                    {/* Title & Category */}
-                    <div>
-                      <h4 className="font-sans text-sm font-semibold text-white leading-snug line-clamp-1">
-                        {event.name}
-                      </h4>
-                      <p className="font-sans text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                        {event.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Bottom Statutory Reference / Action */}
-                  <div className="pt-3 mt-3 border-t border-white/10 flex items-center justify-between text-3xs font-mono text-slate-400">
-                    <span className="truncate max-w-[120px]">{event.statutoryRef}</span>
-                    <a
-                      href={buildWhatsAppUrl(
-                        `Hello CA Joyce, I have a question regarding upcoming ${event.name} deadline (due ${event.day} ${MONTH_NAMES[today.getMonth()]}). Could you assist?`
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300 transition-colors group-hover:translate-x-0.5"
-                      title="Consult on this filing"
-                    >
-                      <span>Inquire</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </a>
-                  </div>
-                </motion.div>
-              );
-            })}
+          {/* General ICAI / FTA Notice */}
+          <div className="flex items-start gap-3 p-4 rounded-2xl bg-brand-bg border border-brand-border text-brand-secondary">
+            <CalendarDays className="w-5 h-5 text-brand-accent shrink-0 mt-0.5" />
+            <p className="font-sans text-xs leading-relaxed">
+              Statutory deadlines are subject to circular extensions by the Central Board of Direct Taxes (CBDT), GST Council, and the UAE Federal Tax Authority (FTA).
+            </p>
           </div>
         </div>
-      </div>
 
-      {/* ── 3. ANNUAL COMPLIANCE ROADMAP (INTERACTIVE CAROUSEL) ─────── */}
-      <div className="space-y-6">
-        {/* Roadmap Toolbar: Filters + Navigation */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">
-            <span className="font-mono text-xs text-brand-secondary mr-2 shrink-0 font-medium">
-              Filter By:
-            </span>
-            {categories.map((cat) => {
-              const isSelected = selectedCategory === cat;
+        {/* ── RIGHT COLUMN: CHRONOLOGICAL COMPLIANCE LEDGER ──────────── */}
+        <div className="lg:col-span-7 space-y-6">
+          
+          {/* Subtle Category Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-brand-divider no-scrollbar">
+            {filterOptions.map((opt) => {
+              const isActive = activeCategory === opt.id;
               return (
                 <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full font-sans text-xs font-medium transition-all duration-200 shrink-0 border ${
-                    isSelected
-                      ? "bg-brand-primary text-white border-brand-primary shadow-sm"
-                      : "bg-white text-brand-secondary border-brand-border hover:border-brand-primary/40 hover:text-brand-primary"
+                  key={opt.id}
+                  onClick={() => setActiveCategory(opt.id)}
+                  className={`px-4 py-2 rounded-full font-sans text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
+                    isActive
+                      ? "bg-brand-primary text-white shadow-sm"
+                      : "bg-white text-brand-secondary border border-brand-border hover:border-brand-primary/40 hover:text-brand-primary"
                   }`}
                 >
-                  {cat}
+                  {opt.label}
                 </button>
               );
             })}
           </div>
 
-          {/* Carousel Controls */}
-          <div className="flex items-center justify-between lg:justify-end gap-3">
-            <span className="font-mono text-xs text-brand-secondary hidden sm:inline-block">
-              {annualEvents.length} Major Milestones
-            </span>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handleScroll("left")}
-                disabled={!canScrollLeft}
-                aria-label="Previous Milestones"
-                className={`p-2.5 rounded-full border transition-all duration-200 ${
-                  canScrollLeft
-                    ? "bg-white border-brand-border text-brand-primary hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm"
-                    : "bg-brand-bg border-brand-divider text-brand-secondary/30 cursor-not-allowed"
-                }`}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleScroll("right")}
-                disabled={!canScrollRight}
-                aria-label="Next Milestones"
-                className={`p-2.5 rounded-full border transition-all duration-200 ${
-                  canScrollRight
-                    ? "bg-white border-brand-border text-brand-primary hover:bg-brand-accent hover:text-white hover:border-brand-accent shadow-sm"
-                    : "bg-brand-bg border-brand-divider text-brand-secondary/30 cursor-not-allowed"
-                }`}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
+          {/* Ledger Table Rows */}
+          <div className="divide-y divide-brand-divider border-y border-brand-divider">
+            <AnimatePresence mode="wait">
+              {filteredMilestones.map((item) => {
+                const isExpanded = expandedId === item.id;
+                const monthLabel = item.isMonthly 
+                  ? "MONTHLY" 
+                  : (item.month !== undefined ? MONTH_NAMES[item.month] : "ANNUAL");
 
-        {/* Scrollable Cards Horizon */}
-        <div
-          ref={scrollRef}
-          className="flex overflow-x-auto gap-6 pb-6 pt-2 -mx-6 px-6 md:mx-0 md:px-0 snap-x snap-mandatory hide-scrollbar"
-          style={{ scrollBehavior: "smooth" }}
-        >
-          <AnimatePresence mode="popLayout">
-            {annualEvents.map((event, index) => {
-              const style = CATEGORY_STYLES[event.category] || {
-                bg: "bg-slate-100",
-                text: "text-slate-800",
-                border: "border-slate-200",
-                accent: "bg-slate-800"
-              };
-
-              return (
-                <motion.div
-                  key={`${event.id}-annual`}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.35, delay: index * 0.04 }}
-                  className="group relative flex-shrink-0 w-[300px] sm:w-[340px] bg-white border border-brand-border rounded-[28px] p-6 shadow-soft hover:shadow-glass hover:-translate-y-2 transition-all duration-300 snap-start flex flex-col justify-between overflow-hidden"
-                >
-                  {/* Top Ambient Glow on Card Hover */}
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-brand-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <div>
-                    {/* Top Meta: Quarter & Category Badge */}
-                    <div className="flex items-center justify-between gap-2 mb-6">
-                      <span className="font-mono text-3xs uppercase tracking-wider text-brand-secondary font-medium">
-                        {event.quarter || "Statutory Milestone"}
-                      </span>
-                      <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-3xs font-semibold border ${style.bg} ${style.text} ${style.border}`}
-                      >
-                        {event.category}
-                      </span>
-                    </div>
-
-                    {/* Elegant Date Presentation */}
-                    <div className="mb-6 flex items-baseline gap-2.5">
-                      <span className="font-display text-5xl sm:text-6xl font-normal text-brand-primary tracking-tight group-hover:text-brand-accent transition-colors">
-                        {event.day}
-                      </span>
-                      <div className="flex flex-col">
-                        <span className="font-mono text-sm uppercase tracking-widest font-semibold text-brand-primary">
-                          {MONTH_NAMES[event.month!]}
+                return (
+                  <div
+                    key={item.id}
+                    className={`transition-colors duration-200 ${
+                      isExpanded ? "bg-white/80" : "hover:bg-white/40"
+                    }`}
+                  >
+                    {/* Main Row Header */}
+                    <button
+                      onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                      className="w-full py-6 px-2 sm:px-4 flex items-start gap-4 sm:gap-6 text-left focus:outline-none group"
+                      aria-expanded={isExpanded}
+                    >
+                      {/* Date Badge */}
+                      <div className="flex flex-col items-center justify-center w-14 sm:w-16 shrink-0 pt-0.5">
+                        <span className="font-display text-3xl sm:text-4xl font-normal text-brand-primary leading-none group-hover:text-brand-accent transition-colors">
+                          {item.day.toString().padStart(2, "0")}
                         </span>
-                        <span className="font-sans text-3xs text-brand-secondary">
-                          Annual Milestone
+                        <span className="font-mono text-3xs font-bold tracking-widest text-brand-accent mt-1">
+                          {monthLabel}
                         </span>
                       </div>
-                    </div>
 
-                    {/* Content Details */}
-                    <div className="space-y-2">
-                      <h4 className="font-sans text-base font-semibold text-brand-primary group-hover:text-brand-accent transition-colors leading-snug">
-                        {event.name}
-                      </h4>
-                      <p className="font-sans text-xs text-brand-secondary leading-relaxed">
-                        {event.description}
-                      </p>
-                    </div>
+                      {/* Title and Summary */}
+                      <div className="flex-1 min-w-0 pr-2">
+                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                          <span className="font-mono text-3xs text-brand-secondary bg-brand-bg px-2 py-0.5 rounded border border-brand-border">
+                            {item.categoryLabel}
+                          </span>
+                          <span className="font-mono text-3xs text-slate-500">
+                            {item.statutorySection}
+                          </span>
+                        </div>
 
-                    {/* Scope / Who Must Comply */}
-                    <div className="mt-4 pt-3 border-t border-brand-divider space-y-1.5">
-                      <span className="font-mono text-3xs uppercase tracking-wider text-brand-secondary/80 block">
-                        Applicable To:
-                      </span>
-                      <p className="font-sans text-xs text-brand-primary font-medium line-clamp-2">
-                        {event.applicableTo}
-                      </p>
-                    </div>
-                  </div>
+                        <h3 className="font-display text-xl sm:text-2xl text-brand-primary font-normal leading-snug group-hover:text-brand-accent transition-colors">
+                          {item.name}
+                        </h3>
 
-                  {/* Card Footer: Statutory Form & Inquire Link */}
-                  <div className="mt-6 pt-4 border-t border-brand-divider flex items-center justify-between text-xs">
-                    <span className="font-mono text-3xs text-brand-secondary bg-brand-bg px-2 py-1 rounded-md border border-brand-border">
-                      {event.statutoryRef}
-                    </span>
+                        <p className="font-sans text-xs sm:text-sm text-brand-secondary mt-1.5 leading-relaxed line-clamp-2 sm:line-clamp-none">
+                          {item.shortSummary}
+                        </p>
+                      </div>
 
-                    <a
-                      href={buildWhatsAppUrl(
-                        `Hi CA Joyce, I would like to schedule compliance support for ${event.name} scheduled on ${event.day} ${MONTH_NAMES[event.month!]}.`
+                      {/* Expand / Collapse Icon */}
+                      <div className="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center text-brand-secondary group-hover:text-brand-primary group-hover:border-brand-primary/40 transition-all shrink-0 mt-2">
+                        <ChevronDown 
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            isExpanded ? "rotate-180 text-brand-accent" : ""
+                          }`} 
+                        />
+                      </div>
+                    </button>
+
+                    {/* Expandable Technical Details Drawer */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-4 sm:px-8 pb-8 pt-2 space-y-6 text-xs sm:text-sm">
+                            
+                            {/* Applicability & Penalties Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 rounded-2xl bg-brand-bg border border-brand-border">
+                              
+                              {/* Applicability */}
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5 text-brand-primary font-semibold text-xs">
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                                  <span>Who Must File</span>
+                                </div>
+                                <p className="font-sans text-xs text-brand-secondary leading-relaxed pl-5.5">
+                                  {item.applicability}
+                                </p>
+                              </div>
+
+                              {/* Penalties */}
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-1.5 text-brand-primary font-semibold text-xs">
+                                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                                  <span>Statutory Non-Compliance Penalties</span>
+                                </div>
+                                <p className="font-sans text-xs text-brand-secondary leading-relaxed pl-5.5">
+                                  {item.penaltyClause}
+                                </p>
+                              </div>
+
+                            </div>
+
+                            {/* Required Records */}
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2 text-brand-primary font-semibold text-xs uppercase tracking-wider font-mono">
+                                <FileText className="w-3.5 h-3.5 text-brand-accent" />
+                                <span>Key Verification Documents & Schedules</span>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {item.requiredDocuments.map((doc, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="px-3 py-1.5 rounded-lg bg-white border border-brand-border text-xs text-brand-secondary"
+                                  >
+                                    {doc}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Direct WhatsApp Consultation CTA */}
+                            <div className="pt-3 border-t border-brand-divider flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                              <span className="font-sans text-xs text-brand-secondary">
+                                Have questions regarding eligibility or calculations for this filing?
+                              </span>
+                              <a
+                                href={buildWhatsAppUrl(
+                                  "+919061680043",
+                                  `Hi CA Joyce, I would like to discuss our compliance status for ${item.name} (${item.statutorySection}).`
+                                )}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-brand-primary hover:bg-brand-accent text-white font-sans text-xs font-semibold transition-all duration-300 self-start sm:self-auto"
+                              >
+                                <span>Consult with CA Joyce</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </a>
+                            </div>
+
+                          </div>
+                        </motion.div>
                       )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-sans text-xs font-semibold text-brand-primary hover:text-brand-accent transition-colors"
-                    >
-                      <span>Inquire</span>
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                    </a>
+                    </AnimatePresence>
                   </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* ── 4. STATUTORY ADVISORY & CONSULTATION BANNER ────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-6 sm:p-8 rounded-[28px] bg-white border border-brand-border shadow-soft">
-        <div className="lg:col-span-8 flex items-start gap-4">
-          <div className="w-10 h-10 rounded-2xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center shrink-0 text-brand-accent mt-0.5">
-            <ShieldCheck className="w-5 h-5 text-brand-accent" />
+                );
+              })}
+            </AnimatePresence>
           </div>
-          <div className="space-y-1 text-left">
-            <h4 className="font-sans text-sm sm:text-base font-semibold text-brand-primary">
-              Proactive Audit & Tax Planning Advisory
-            </h4>
-            <p className="font-sans text-xs sm:text-sm text-brand-secondary leading-relaxed">
-              Statutory deadlines are subject to government notifications, extension circulars, and turnover classifications under ICAI and FTA regulations. Schedule a preliminary session to prepare books of accounts ahead of peak filing periods.
+
+          {/* Footer Note */}
+          <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-sans text-brand-secondary">
+            <p>
+              Looking for corporate annual compliance packages?
             </p>
+            <a
+              href="/contact"
+              className="font-semibold text-brand-primary hover:text-brand-accent underline underline-offset-4 transition-colors"
+            >
+              Schedule a Firm Compliance Review →
+            </a>
           </div>
+
         </div>
 
-        <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
-          <a
-            href={buildWhatsAppUrl(
-              "Hello CA Joyce, I would like to consult on my upcoming tax filings and statutory compliance requirements."
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-primary hover:bg-brand-accent text-white font-sans text-xs sm:text-sm font-semibold transition-all duration-300 shadow-soft"
-          >
-            <MessageSquare className="w-4 h-4" />
-            <span>Consult on WhatsApp</span>
-          </a>
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-bg hover:bg-white text-brand-primary border border-brand-border font-sans text-xs sm:text-sm font-semibold transition-all duration-300"
-          >
-            <span>Request Schedule Review</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
       </div>
-
-      <style jsx global>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 }
