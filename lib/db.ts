@@ -405,7 +405,7 @@ export async function getDbPageSettings(pageKey: string): Promise<any> {
   const getFallback = () => {
     if (pageKey === "home_settings") {
       return {
-        heroTitle: "CA JOYCE J CHARUVILA & ASSOCIATES",
+        heroTitle: "JOYCE J CHARUVILA & ASSOCIATES",
         heroSubtitle: "Chartered Accountants handling audits, tax filings, and bookkeeping for businesses and individuals in India and the United Arab Emirates.",
         heroImage: "/images/hero/hero-office.webp",
         objectiveText: "Independent Chartered Accountant practice based in Omalloor, Pathanamthitta. We provide hands-on statutory audit, Indian income tax and GST compliance, alongside UAE Corporate Tax and VAT advisory."
