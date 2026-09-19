@@ -15,6 +15,7 @@ interface ComplianceEvent {
   category: TaxCategory;
   name: string;
   subTitle: string;
+  quarter?: string;
   day: number;
   month?: number; // 0-indexed: 0 = Jan, 11 = Dec. Undefined = monthly
 }
@@ -26,23 +27,23 @@ const EVENTS: ComplianceEvent[] = [
   { id: "in-gst-3b", jurisdiction: "india", category: "GST", name: "GSTR-3B & Payment", subTitle: "Monthly Tax Settlement", day: 20 },
   
   // Roadmap
-  { id: "in-adv-4", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "4th Installment (100%)", day: 15, month: 2 }, // Mar 15
-  { id: "in-adv-1", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "1st Installment (15%)", day: 15, month: 5 }, // Jun 15
-  { id: "in-itr-ind", jurisdiction: "india", category: "Income Tax", name: "Income Tax Return", subTitle: "Individual & Non-Audit", day: 31, month: 6 }, // Jul 31
-  { id: "in-adv-2", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "2nd Installment (45%)", day: 15, month: 8 }, // Sep 15
-  { id: "in-audit", jurisdiction: "india", category: "Audit", name: "Tax Audit Report", subTitle: "Form 3CA / 3CD", day: 30, month: 8 }, // Sep 30
-  { id: "in-itr-corp", jurisdiction: "india", category: "Income Tax", name: "Income Tax Return", subTitle: "Corporate & Audit Cases", day: 31, month: 9 }, // Oct 31
-  { id: "in-adv-3", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "3rd Installment (75%)", day: 15, month: 11 }, // Dec 15
-  { id: "in-gst-annual", jurisdiction: "india", category: "GST", name: "GSTR-9 & 9C", subTitle: "Annual Reconciliation", day: 31, month: 11 }, // Dec 31
+  { id: "in-adv-4", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "4th Installment (100%)", quarter: "Q4", day: 15, month: 2 }, // Mar 15
+  { id: "in-adv-1", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "1st Installment (15%)", quarter: "Q1", day: 15, month: 5 }, // Jun 15
+  { id: "in-itr-ind", jurisdiction: "india", category: "Income Tax", name: "Income Tax Return", subTitle: "Individual & Non-Audit", quarter: "Q2", day: 31, month: 6 }, // Jul 31
+  { id: "in-adv-2", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "2nd Installment (45%)", quarter: "Q2", day: 15, month: 8 }, // Sep 15
+  { id: "in-audit", jurisdiction: "india", category: "Audit", name: "Tax Audit Report", subTitle: "Form 3CA / 3CD", quarter: "Q2", day: 30, month: 8 }, // Sep 30
+  { id: "in-itr-corp", jurisdiction: "india", category: "Income Tax", name: "Income Tax Return", subTitle: "Corporate & Audit Cases", quarter: "Q3", day: 31, month: 9 }, // Oct 31
+  { id: "in-adv-3", jurisdiction: "india", category: "Advance Tax", name: "Advance Tax", subTitle: "3rd Installment (75%)", quarter: "Q3", day: 15, month: 11 }, // Dec 15
+  { id: "in-gst-annual", jurisdiction: "india", category: "GST", name: "GSTR-9 & 9C", subTitle: "Annual Reconciliation", quarter: "Q3", day: 31, month: 11 }, // Dec 31
 
   // ── UAE ───────────────────────────────────────────────────────────
-  { id: "uae-vat-q1", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q1 Filing (Jan–Mar)", day: 28, month: 3 }, // Apr 28
-  { id: "uae-esr-notif", jurisdiction: "uae", category: "ESR", name: "ESR Notification", subTitle: "Annual MoF Notification", day: 30, month: 5 }, // Jun 30
-  { id: "uae-vat-q2", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q2 Filing (Apr–Jun)", day: 28, month: 6 }, // Jul 28
-  { id: "uae-ct-return", jurisdiction: "uae", category: "Corporate Tax", name: "Corporate Tax Return", subTitle: "9% Corporate Tax Settlement", day: 30, month: 8 }, // Sep 30
-  { id: "uae-vat-q3", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q3 Filing (Jul–Sep)", day: 28, month: 9 }, // Oct 28
-  { id: "uae-esr-rep", jurisdiction: "uae", category: "ESR", name: "ESR Annual Report", subTitle: "Detailed Economic Substance", day: 31, month: 11 }, // Dec 31
-  { id: "uae-vat-q4", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q4 Filing (Oct–Dec)", day: 28, month: 0 }, // Jan 28
+  { id: "uae-vat-q1", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q1 Filing (Jan–Mar)", quarter: "Q1", day: 28, month: 3 }, // Apr 28
+  { id: "uae-esr-notif", jurisdiction: "uae", category: "ESR", name: "ESR Notification", subTitle: "Annual MoF Notification", quarter: "Q2", day: 30, month: 5 }, // Jun 30
+  { id: "uae-vat-q2", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q2 Filing (Apr–Jun)", quarter: "Q2", day: 28, month: 6 }, // Jul 28
+  { id: "uae-ct-return", jurisdiction: "uae", category: "Corporate Tax", name: "Corporate Tax Return", subTitle: "9% Corporate Tax Settlement", quarter: "Q3", day: 30, month: 8 }, // Sep 30
+  { id: "uae-vat-q3", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q3 Filing (Jul–Sep)", quarter: "Q3", day: 28, month: 9 }, // Oct 28
+  { id: "uae-esr-rep", jurisdiction: "uae", category: "ESR", name: "ESR Annual Report", subTitle: "Detailed Economic Substance", quarter: "Q4", day: 31, month: 11 }, // Dec 31
+  { id: "uae-vat-q4", jurisdiction: "uae", category: "VAT", name: "UAE VAT Return", subTitle: "Q4 Filing (Oct–Dec)", quarter: "Q4", day: 28, month: 0 }, // Jan 28
 ];
 
 const MONTH_NAMES = [
@@ -56,14 +57,14 @@ const MONTH_FULL = [
 ];
 
 const CATEGORY_COLORS: Record<TaxCategory, string> = {
-  GST: "bg-blue-50 text-blue-700 border-blue-200/60",
-  TDS: "bg-purple-50 text-purple-700 border-purple-200/60",
-  "Advance Tax": "bg-emerald-50 text-emerald-700 border-emerald-200/60",
-  "Income Tax": "bg-amber-50 text-amber-700 border-amber-200/60",
-  Audit: "bg-rose-50 text-rose-700 border-rose-200/60",
-  VAT: "bg-teal-50 text-teal-700 border-teal-200/60",
-  "Corporate Tax": "bg-indigo-50 text-indigo-700 border-indigo-200/60",
-  ESR: "bg-orange-50 text-orange-700 border-orange-200/60",
+  GST: "bg-blue-500/10 text-blue-700 border-blue-500/20",
+  TDS: "bg-purple-500/10 text-purple-700 border-purple-500/20",
+  "Advance Tax": "bg-emerald-500/10 text-emerald-700 border-emerald-500/20",
+  "Income Tax": "bg-amber-500/10 text-amber-700 border-amber-500/20",
+  Audit: "bg-rose-500/10 text-rose-700 border-rose-500/20",
+  VAT: "bg-teal-500/10 text-teal-700 border-teal-500/20",
+  "Corporate Tax": "bg-indigo-500/10 text-indigo-700 border-indigo-500/20",
+  ESR: "bg-orange-500/10 text-orange-700 border-orange-500/20",
 };
 
 export default function TaxComplianceCalendar() {
@@ -90,6 +91,14 @@ export default function TaxComplianceCalendar() {
 
     return filtered.sort((a, b) => a.day - b.day);
   }, [isClient, jurisdiction]);
+
+  // Identify next upcoming due item this month
+  const nextDueId = useMemo(() => {
+    if (!isClient) return null;
+    const currentDay = new Date().getDate();
+    const upcoming = thisMonthEvents.find((e) => e.day >= currentDay);
+    return upcoming ? upcoming.id : null;
+  }, [isClient, thisMonthEvents]);
 
   // Compute "Annual Roadmap"
   const annualEvents = useMemo(() => {
@@ -182,27 +191,36 @@ export default function TaxComplianceCalendar() {
           </span>
         </div>
 
-        <div className="bg-white border border-brand-border rounded-2xl p-5 shadow-soft overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-sm border border-brand-border rounded-2xl p-5 shadow-soft overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 overflow-x-auto no-scrollbar">
-            {thisMonthEvents.map((event, i) => (
-              <div 
-                key={`${event.id}-month`}
-                className="flex items-center gap-3 shrink-0 whitespace-nowrap group"
-              >
-                <div className="text-2xl font-display font-medium text-brand-primary group-hover:text-brand-accent transition-colors">
-                  {event.day.toString().padStart(2, "0")}
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-brand-secondary/40" />
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-brand-primary">{event.name}</span>
-                  <span className="text-xs text-brand-secondary">{event.category}</span>
-                </div>
+            {thisMonthEvents.map((event, i) => {
+              const isNextDue = event.id === nextDueId;
 
-                {i < thisMonthEvents.length - 1 && (
-                  <div className="hidden md:block w-px h-8 bg-brand-divider ml-4" />
-                )}
-              </div>
-            ))}
+              return (
+                <div 
+                  key={`${event.id}-month`}
+                  className={`flex items-center gap-3 shrink-0 whitespace-nowrap group transition-all duration-200 ${
+                    isNextDue ? "bg-brand-accent/5 px-3 py-1.5 rounded-xl border border-brand-accent/15" : ""
+                  }`}
+                >
+                  <div className="text-2xl font-display font-medium text-brand-primary group-hover:text-brand-accent transition-colors flex items-baseline gap-1">
+                    <span>{event.day.toString().padStart(2, "0")}</span>
+                    {isNextDue && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-accent inline-block animate-pulse" />
+                    )}
+                  </div>
+                  <ArrowRight className="w-3.5 h-3.5 text-brand-secondary/40" />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-brand-primary">{event.name}</span>
+                    <span className="text-xs text-brand-secondary">{event.category}</span>
+                  </div>
+
+                  {i < thisMonthEvents.length - 1 && (
+                    <div className="hidden md:block w-px h-8 bg-brand-divider ml-4" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -260,13 +278,26 @@ export default function TaxComplianceCalendar() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04, duration: 0.3 }}
-                className="group flex-shrink-0 w-[260px] sm:w-[280px] bg-white border border-brand-border rounded-2xl p-6 shadow-soft hover:shadow-md hover:-translate-y-1 transition-all duration-300 snap-start flex flex-col justify-between"
+                className="group relative flex-shrink-0 w-[260px] sm:w-[280px] bg-white/90 backdrop-blur-sm border border-brand-border/80 rounded-2xl p-6 shadow-soft hover:shadow-[0_16px_40px_rgba(0,0,0,0.06)] hover:border-brand-accent/30 hover:-translate-y-1 transition-all duration-300 snap-start flex flex-col justify-between overflow-hidden"
               >
-                <div>
-                  {/* Category Pill */}
-                  <div className="mb-6">
+                {/* Subtle illuminated top line on hover */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Translucent Quarter Watermark in Background */}
+                {event.quarter && (
+                  <div className="absolute right-3 -bottom-2 text-7xl font-display font-bold text-slate-900/[0.03] select-none pointer-events-none group-hover:text-brand-accent/[0.06] transition-colors duration-300">
+                    {event.quarter}
+                  </div>
+                )}
+
+                <div className="relative z-10">
+                  {/* Category Pill + Serial Tag */}
+                  <div className="flex items-center justify-between gap-2 mb-6">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${CATEGORY_COLORS[event.category]}`}>
                       {event.category}
+                    </span>
+                    <span className="font-mono text-3xs text-brand-secondary/40 font-semibold tracking-wider">
+                      // 0{i + 1}
                     </span>
                   </div>
 
