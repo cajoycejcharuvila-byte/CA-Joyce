@@ -525,7 +525,7 @@ export default function HomePageClient({
             <div className="lg:col-span-6 flex flex-col justify-between gap-6">
               {latestArticles.map((article, idx) => {
                 const articleImages = [
-                  "/images/services/tax-filing.webp",
+                  "/images/services/india-tax-filing.webp",
                   "/images/hero/hero-office.webp",
                   "/images/services/audit-documents.webp"
                 ];

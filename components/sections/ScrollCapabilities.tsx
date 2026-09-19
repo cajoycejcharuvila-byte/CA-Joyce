@@ -10,12 +10,12 @@ interface ScrollCapabilitiesProps {
 
 export default function ScrollCapabilities({ capabilities }: ScrollCapabilitiesProps) {
   const images = [
-    "/images/capabilities/audit-assurance.jpg",
-    "/images/capabilities/tax-compliance.jpg",
-    "/images/capabilities/financial-reporting.jpg",
-    "/images/capabilities/business-advisory.jpg",
-    "/images/capabilities/crossborder-tax.jpg",
-    "/images/capabilities/internal-controls.jpg"
+    "/images/capabilities/audit-assurance.webp",
+    "/images/capabilities/tax-compliance.webp",
+    "/images/capabilities/financial-reporting.webp",
+    "/images/capabilities/business-advisory.webp",
+    "/images/capabilities/crossborder-tax.webp",
+    "/images/capabilities/internal-controls.webp"
   ];
 
   const practiceLinks = [
@@ -24,7 +24,7 @@ export default function ScrollCapabilities({ capabilities }: ScrollCapabilitiesP
     "/services/india/accounting-bookkeeping-india",
     "/services/uae/audit-support",
     "/services/uae/corporate-tax-filing",
-    "/services/india/statutory-audit"
+    "/services/india/internal-audit-business-advisory"
   ];
 
   return (
