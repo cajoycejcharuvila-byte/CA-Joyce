@@ -454,117 +454,85 @@ export default function HomePageClient({
         </div>
       </section>
 
-      {/* SECTION 04: UPDATES & INSIGHTS (Editorial Split Layout) */}
-      <section className="py-16 md:py-28 bg-white border-t border-brand-divider">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+      {/* SECTION 04: UPDATES & INSIGHTS (Compact 3-Card Grid) */}
+      <section className="py-12 md:py-20 bg-white border-t border-brand-divider">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-left">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-12 gap-4">
             <div>
-              <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-4 block">
+              <span className="font-sans text-xs uppercase tracking-[0.3em] text-brand-accent font-bold mb-3 block">
                 Resource Library
               </span>
-              <h2 className="font-display text-4xl md:text-6xl font-normal text-brand-primary tracking-tight">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-normal text-brand-primary tracking-tight">
                 Updates & Insights
               </h2>
             </div>
             <Link 
               href="/insights" 
-              className="font-sans text-xs font-bold text-brand-accent hover:underline flex items-center space-x-1"
+              className="font-sans text-xs font-bold text-brand-accent hover:underline flex items-center space-x-1 self-start sm:self-auto"
             >
               <span>View all bulletins</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-            
-            {/* Left: Featured Article (6 cols) */}
-            <div className="lg:col-span-6">
-              {featuredArticle && (
-                <Link href={`/insights/${featuredArticle.slug}`} className="block group h-full">
-                  <div className="bg-brand-bg border border-brand-border rounded-[32px] overflow-hidden shadow-soft hover:shadow-glass hover:border-brand-primary/20 transition-all duration-500 h-full flex flex-col justify-between">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {insights.slice(0, 3).map((article, idx) => {
+              const fallbackImages = [
+                "/images/services/audit-documents.webp",
+                "/images/services/india-tax-filing.webp",
+                "/images/hero/hero-office.webp"
+              ];
+              const imgSrc = article.image || fallbackImages[idx % fallbackImages.length];
+
+              return (
+                <Link 
+                  key={article.slug} 
+                  href={`/insights/${article.slug}`} 
+                  className="block group h-full"
+                >
+                  <div className="bg-brand-bg border border-brand-border rounded-[24px] overflow-hidden p-5 shadow-soft hover:shadow-glass hover:border-brand-primary/20 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col justify-between">
                     
-                    <div className="relative w-full h-[240px] md:h-[280px] bg-slate-100 overflow-hidden">
-                      <Image
-                        src="/images/services/audit-documents.webp"
-                        alt={featuredArticle.title}
-                        fill
-                        sizes="(max-w-768px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        loading="lazy"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="font-sans text-[10px] uppercase tracking-widest bg-brand-primary text-white px-3 py-1.5 rounded-full font-bold">
-                          Featured - {featuredArticle.category}
-                        </span>
+                    <div>
+                      {/* Image Thumbnail */}
+                      <div className="relative w-full aspect-[16/10] rounded-[16px] overflow-hidden bg-slate-100 mb-4">
+                        <Image
+                          src={imgSrc}
+                          alt={article.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute top-3 left-3">
+                          <span className="font-sans text-3xs uppercase tracking-wider bg-brand-primary/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-full font-semibold">
+                            {article.category}
+                          </span>
+                        </div>
                       </div>
+
+                      {/* Content */}
+                      <span className="font-mono text-3xs text-slate-400 block mb-2">
+                        {article.date}
+                      </span>
+                      <h3 className="font-display text-xl md:text-2xl font-normal text-brand-primary leading-snug line-clamp-2 group-hover:text-brand-accent transition-colors mb-2">
+                        {article.title}
+                      </h3>
+                      <p className="font-sans text-xs text-brand-secondary leading-relaxed line-clamp-2">
+                        {article.excerpt}
+                      </p>
                     </div>
 
-                    <div className="p-8 md:p-10 flex-1 flex flex-col justify-between text-left">
-                      <div>
-                        <span className="font-mono text-3xs text-slate-400 block mb-3">{featuredArticle.date}</span>
-                        <h3 className="font-display text-2xl md:text-3xl font-normal text-brand-primary mb-4 leading-tight group-hover:text-brand-accent transition-colors">
-                          {featuredArticle.title}
-                        </h3>
-                        <p className="font-sans text-sm text-brand-secondary leading-relaxed line-clamp-3 mb-6">
-                          {featuredArticle.excerpt}
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-1.5 font-sans text-xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors pt-4 border-t border-brand-divider">
-                        <span>Read Full Analysis</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                      </div>
+                    {/* Bottom CTA */}
+                    <div className="flex items-center space-x-1 font-sans text-xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors pt-3 border-t border-brand-divider mt-4">
+                      <span>Read Article</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
 
                   </div>
                 </Link>
-              )}
-            </div>
-
-            {/* Right: Latest 3 Articles stacked list with Image Cards (6 cols) */}
-            <div className="lg:col-span-6 flex flex-col justify-between gap-6">
-              {latestArticles.map((article, idx) => {
-                const articleImages = [
-                  "/images/services/india-tax-filing.webp",
-                  "/images/hero/hero-office.webp",
-                  "/images/services/audit-documents.webp"
-                ];
-                return (
-                  <Link key={article.slug} href={`/insights/${article.slug}`} className="block group">
-                    <div className="bg-brand-bg border border-brand-border rounded-[24px] p-6 md:p-8 shadow-soft hover:shadow-glass hover:border-brand-primary/20 transition-all duration-300 flex flex-col sm:flex-row gap-6 text-left">
-                      <div className="relative w-full sm:w-32 h-28 shrink-0 rounded-[16px] overflow-hidden bg-slate-100">
-                        <Image
-                          src={article.image || articleImages[idx % articleImages.length]}
-                          alt={article.title}
-                          fill
-                          sizes="128px"
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-sans text-3xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full uppercase tracking-wider">
-                              {article.category}
-                            </span>
-                            <span className="font-mono text-3xs text-slate-400">{article.date}</span>
-                          </div>
-                          <h3 className="font-display text-xl md:text-2xl font-normal text-brand-primary mb-2 leading-snug group-hover:text-brand-accent transition-colors">
-                            {article.title}
-                          </h3>
-                        </div>
-                        <div className="flex items-center space-x-1 font-sans text-2xs font-semibold text-brand-primary group-hover:text-brand-accent transition-colors pt-2 border-t border-brand-divider mt-3">
-                          <span>Read Article</span>
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
+              );
+            })}
           </div>
 
         </div>
