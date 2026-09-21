@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquare, Mail, MapPin, Send, CheckCircle } from "lucide-react";
+import { MessageSquare, Mail, MapPin, Send, CheckCircle, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -127,6 +127,17 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                   <div>
                     <h3 className="font-semibold text-brand-primary mb-1">Office Location</h3>
                     <p>{company.location.city}, {company.location.state}, {company.location.country}</p>
+                    {company.contact.googleMapsLink && (
+                      <a
+                        href={company.contact.googleMapsLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-xs text-brand-accent hover:underline font-semibold mt-2"
+                      >
+                        <span>View on Google Maps / Directions</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
                   </div>
                 </div>
 
@@ -171,6 +182,40 @@ export default function ContactPageClient({ company, services }: ContactPageClie
                       {company.contact.email}
                     </a>
                   </div>
+                </div>
+
+                {/* Social Channels */}
+                <div className="pt-2 flex items-center space-x-3">
+                  {company.contact.social?.instagram && (
+                    <a
+                      href={company.contact.social.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white border border-brand-border text-xs font-semibold text-brand-primary hover:border-brand-accent hover:text-brand-accent transition-all duration-200"
+                    >
+                      <svg className="w-3.5 h-3.5 text-pink-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                      </svg>
+                      <span>Instagram</span>
+                    </a>
+                  )}
+                  {company.contact.social?.linkedin && (
+                    <a
+                      href={company.contact.social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white border border-brand-border text-xs font-semibold text-brand-primary hover:border-brand-accent hover:text-brand-accent transition-all duration-200"
+                    >
+                      <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect width="4" height="12" x="2" y="9"/>
+                        <circle cx="4" cy="4" r="2"/>
+                      </svg>
+                      <span>LinkedIn</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

@@ -15,6 +15,7 @@ export interface CompanyInfo {
     googleMapsLink: string;
     social: {
       linkedin: string;
+      instagram?: string;
       twitter: string;
       whatsappDirect: string;
     };

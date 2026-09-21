@@ -180,6 +180,12 @@ export default function HomePageClient({
                     }
                   ]
                 },
+                "hasMap": "https://share.google/VHblokVtgi6iydA9t",
+                "sameAs": [
+                  "https://www.instagram.com/cajoyce2026",
+                  "https://www.linkedin.com/in/ca-joyce-j-charuvila-35b785148",
+                  "https://share.google/VHblokVtgi6iydA9t"
+                ],
                 "priceRange": "$$"
               },
               {

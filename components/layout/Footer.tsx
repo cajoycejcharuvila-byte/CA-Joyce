@@ -59,12 +59,17 @@ export default function Footer({ companyInfo }: FooterProps) {
               Chartered Accountants
             </span>
             <div className="space-y-3 font-sans text-sm text-slate-400">
-              <div className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-brand-accent mt-1 shrink-0" />
+              <a
+                href={company.contact.googleMapsLink || "https://share.google/VHblokVtgi6iydA9t"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start space-x-2 hover:text-white transition-colors group"
+              >
+                <MapPin className="w-4 h-4 text-brand-accent mt-1 shrink-0 group-hover:scale-110 transition-transform" />
                 <span>
                   {company.location.city}, {company.location.state}, {company.location.country}
                 </span>
-              </div>
+              </a>
               <div className="flex items-center space-x-2">
                 <MessageSquare className="w-4 h-4 text-brand-accent shrink-0" />
                 <span>WhatsApp: {company.contact.phoneDisplay}</span>
@@ -73,6 +78,54 @@ export default function Footer({ companyInfo }: FooterProps) {
                 <Mail className="w-4 h-4 text-brand-accent shrink-0" />
                 <span>{company.contact.email}</span>
               </div>
+            </div>
+
+            {/* Social & Location Links */}
+            <div className="flex items-center space-x-2.5 pt-6">
+              {company.contact.social?.instagram && (
+                <a
+                  href={company.contact.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-accent hover:text-white flex items-center justify-center text-slate-300 transition-colors"
+                  title="Follow on Instagram"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                  </svg>
+                </a>
+              )}
+              {company.contact.social?.linkedin && (
+                <a
+                  href={company.contact.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-accent hover:text-white flex items-center justify-center text-slate-300 transition-colors"
+                  title="Connect on LinkedIn"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect width="4" height="12" x="2" y="9"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </a>
+              )}
+              {company.contact.googleMapsLink && (
+                <a
+                  href={company.contact.googleMapsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Google Business Location"
+                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-accent hover:text-white flex items-center justify-center text-slate-300 transition-colors"
+                  title="View Google Business Location"
+                >
+                  <MapPin className="w-4 h-4" />
+                </a>
+              )}
             </div>
           </div>
 
