@@ -96,7 +96,7 @@ export function getLocalBusinessSchema() {
       "streetAddress": "Joyce J Charuvila & Associates, Omalloor, Pathanamthitta",
       "addressLocality": "Omalloor",
       "addressRegion": "Kerala",
-      "postalCode": "689645",
+      "postalCode": "689647",
       "addressCountry": "IN"
     },
     "geo": {
@@ -205,7 +205,7 @@ export function getProfessionalServiceSchema(serviceTitle: string, serviceDescri
       "streetAddress": "Joyce J Charuvila & Associates, Omalloor, Pathanamthitta",
       "addressLocality": "Omalloor",
       "addressRegion": "Kerala",
-      "postalCode": "689645",
+      "postalCode": "689647",
       "addressCountry": "IN"
     },
     "serviceType": serviceTitle,

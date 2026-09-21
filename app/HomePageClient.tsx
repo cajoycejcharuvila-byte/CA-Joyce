@@ -96,7 +96,7 @@ export default function HomePageClient({
                   "streetAddress": company.contact.address,
                   "addressLocality": "Omalloor",
                   "addressRegion": "Kerala",
-                  "postalCode": "689645",
+                  "postalCode": "689647",
                   "addressCountry": "IN"
                 },
                 "geo": {
