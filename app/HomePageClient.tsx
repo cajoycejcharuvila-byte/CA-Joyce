@@ -79,6 +79,7 @@ export default function HomePageClient({
                   "CA Joyce Charuvila & Associates",
                   "Joyce J Charuvila & Associates, Chartered Accountants"
                 ],
+                "description": "Chartered Accountant in Pathanamthitta & Omalloor, Kerala. Statutory audit, tax audit, GST filing, Income Tax filing, accounting, and UAE Corporate Tax compliance.",
                 "founder": {
                   "@type": "Person",
                   "name": "CA Joyce J Charuvila",
@@ -93,9 +94,15 @@ export default function HomePageClient({
                 "address": {
                   "@type": "PostalAddress",
                   "streetAddress": company.contact.address,
-                  "addressLocality": company.location.city,
-                  "addressRegion": company.location.state,
+                  "addressLocality": "Omalloor",
+                  "addressRegion": "Kerala",
+                  "postalCode": "689645",
                   "addressCountry": "IN"
+                },
+                "geo": {
+                  "@type": "GeoCoordinates",
+                  "latitude": "9.2648",
+                  "longitude": "76.7870"
                 },
                 "openingHoursSpecification": [
                   {
@@ -111,6 +118,68 @@ export default function HomePageClient({
                     "closes": "13:30"
                   }
                 ],
+                "areaServed": [
+                  { "@type": "City", "name": "Pathanamthitta" },
+                  { "@type": "City", "name": "Omalloor" },
+                  { "@type": "City", "name": "Adoor" },
+                  { "@type": "City", "name": "Thiruvalla" },
+                  { "@type": "City", "name": "Kozhencherry" },
+                  { "@type": "AdministrativeArea", "name": "Kerala" },
+                  { "@type": "Country", "name": "India" },
+                  { "@type": "Country", "name": "United Arab Emirates" }
+                ],
+                "knowsAbout": [
+                  "Chartered Accountant in Pathanamthitta",
+                  "Chartered Accountant in Omalloor",
+                  "GST Filing in Pathanamthitta",
+                  "Income Tax Filing in Pathanamthitta",
+                  "Auditor in Pathanamthitta",
+                  "CA Firm in Omalloor",
+                  "Statutory Audit",
+                  "Tax Audit under Section 44AB",
+                  "Internal Audit & Risk Advisory",
+                  "UAE Corporate Tax & VAT Compliance",
+                  "NRI Taxation & Cross-Border Advisory",
+                  "Company Registration & Financial Reporting"
+                ],
+                "hasOfferCatalog": {
+                  "@type": "OfferCatalog",
+                  "name": "Audit & Financial Services",
+                  "itemListElement": [
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Statutory & Tax Audit in Pathanamthitta",
+                        "description": "Comprehensive audit services ensuring statutory compliance and financial accuracy for businesses in Pathanamthitta and Kerala."
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "GST Registration & Return Filing",
+                        "description": "Timely GST registration, monthly GSTR-1, GSTR-3B filings, and annual returns for enterprises."
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "Income Tax Return (ITR) Filing & Advisory",
+                        "description": "Strategic tax planning, ITR filing for individuals, firms, companies, and NRI clients."
+                      }
+                    },
+                    {
+                      "@type": "Offer",
+                      "itemOffered": {
+                        "@type": "Service",
+                        "name": "UAE Corporate Tax & VAT Advisory",
+                        "description": "FTA registration, UAE corporate tax return filing, and VAT compliance for UAE businesses and NRIs."
+                      }
+                    }
+                  ]
+                },
                 "priceRange": "$$"
               },
               {

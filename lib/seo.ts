@@ -90,10 +90,11 @@ export function getLocalBusinessSchema() {
     "url": SITE_URL,
     "telephone": "+919061680043",
     "email": "cajoycejcharuvilauae@gmail.com",
+    "description": "Chartered Accountant in Pathanamthitta & Omalloor, Kerala. Providing statutory audit, tax audit, GST filing, Income Tax filing, accounting, and UAE Corporate Tax compliance.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Joyce J Charuvila & Associates, Omalloor, Pathanamthitta",
-      "addressLocality": "Omalloor, Pathanamthitta",
+      "addressLocality": "Omalloor",
       "addressRegion": "Kerala",
       "postalCode": "689645",
       "addressCountry": "IN"
@@ -118,15 +119,67 @@ export function getLocalBusinessSchema() {
       }
     ],
     "areaServed": [
-      {
-        "@type": "AdministrativeArea",
-        "name": "India"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "United Arab Emirates"
-      }
+      { "@type": "City", "name": "Pathanamthitta" },
+      { "@type": "City", "name": "Omalloor" },
+      { "@type": "City", "name": "Adoor" },
+      { "@type": "City", "name": "Thiruvalla" },
+      { "@type": "City", "name": "Kozhencherry" },
+      { "@type": "AdministrativeArea", "name": "Kerala" },
+      { "@type": "Country", "name": "India" },
+      { "@type": "Country", "name": "United Arab Emirates" }
     ],
+    "knowsAbout": [
+      "Chartered Accountant in Pathanamthitta",
+      "Chartered Accountant in Omalloor",
+      "GST Filing in Pathanamthitta",
+      "Income Tax Filing in Pathanamthitta",
+      "Auditor in Pathanamthitta",
+      "CA Firm in Omalloor",
+      "Statutory Audit",
+      "Tax Audit under Section 44AB",
+      "Internal Audit & Risk Advisory",
+      "UAE Corporate Tax & VAT Compliance",
+      "NRI Taxation & Cross-Border Advisory",
+      "Company Registration & Financial Reporting"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Audit & Financial Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Statutory & Tax Audit in Pathanamthitta",
+            "description": "Comprehensive audit services ensuring statutory compliance and financial accuracy for businesses in Pathanamthitta and Kerala."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "GST Registration & Return Filing",
+            "description": "Timely GST registration, monthly GSTR-1, GSTR-3B filings, and annual returns for enterprises."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Income Tax Return (ITR) Filing & Advisory",
+            "description": "Strategic tax planning, ITR filing for individuals, firms, companies, and NRI clients."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "UAE Corporate Tax & VAT Advisory",
+            "description": "FTA registration, UAE corporate tax return filing, and VAT compliance for UAE businesses and NRIs."
+          }
+        }
+      ]
+    },
     "priceRange": "$$"
   };
 }
@@ -144,21 +197,22 @@ export function getProfessionalServiceSchema(serviceTitle: string, serviceDescri
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Joyce J Charuvila & Associates, Omalloor, Pathanamthitta",
-      "addressLocality": "Omalloor, Pathanamthitta",
+      "addressLocality": "Omalloor",
       "addressRegion": "Kerala",
+      "postalCode": "689645",
       "addressCountry": "IN"
     },
     "serviceType": serviceTitle,
     "description": serviceDescription,
     "areaServed": [
-      {
-        "@type": "AdministrativeArea",
-        "name": "India"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "United Arab Emirates"
-      }
+      { "@type": "City", "name": "Pathanamthitta" },
+      { "@type": "City", "name": "Omalloor" },
+      { "@type": "City", "name": "Adoor" },
+      { "@type": "City", "name": "Thiruvalla" },
+      { "@type": "City", "name": "Kozhencherry" },
+      { "@type": "AdministrativeArea", "name": "Kerala" },
+      { "@type": "Country", "name": "India" },
+      { "@type": "Country", "name": "United Arab Emirates" }
     ]
   };
 }
